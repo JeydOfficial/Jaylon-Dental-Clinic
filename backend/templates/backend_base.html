@@ -1,527 +1,514 @@
 <!DOCTYPE html>
 {% load static %}
 <html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=Edge">
+        <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+        <title>Admin | Jaylon Dental Clinic</title>
+        <!-- Favicon-->
+        <link rel="icon" href="{% static 'images/favicon.png' %}" type="image/x-icon">
 
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=Edge">
-    <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
-    <title>Jaylon Dental Clinic Scheduling and Appointment System</title>
-    <!-- Favicon-->
-    <link rel="icon" href="{% static 'images/favicon.png' %}" type="image/x-icon">
+        <!-- Google Fonts -->
+        <link href="https://fonts.googleapis.com/css?family=Roboto:400,700&subset=latin,cyrillic-ext" rel="stylesheet"
+              type="text/css">
+        <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" type="text/css">
 
-    <!-- Google Fonts -->
-    <link href="https://fonts.googleapis.com/css?family=Roboto:400,700&subset=latin,cyrillic-ext" rel="stylesheet"
-          type="text/css">
-    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" type="text/css">
+        <!-- Bootstrap Core Css -->
+        <link href="{% static 'plugins/bootstrap/css/bootstrap.css' %}" rel="stylesheet">
 
-    <!-- Bootstrap Core Css -->
-    <link href="{% static 'plugins/bootstrap/css/bootstrap.css' %}" rel="stylesheet">
+        <!-- Waves Effect Css -->
+        <link href="{% static 'plugins/node-waves/waves.css' %}" rel="stylesheet"/>
 
-    <!-- Waves Effect Css -->
-    <link href="{% static 'plugins/node-waves/waves.css' %}" rel="stylesheet"/>
+        <!-- Animation Css -->
+        <link href="{% static 'plugins/animate-css/animate.css' %}" rel="stylesheet"/>
 
-    <!-- Animation Css -->
-    <link href="{% static 'plugins/animate-css/animate.css' %}" rel="stylesheet"/>
+        <!-- Bootstrap Material Datetime Picker Css -->
+        <link href="{% static 'plugins/bootstrap-material-datetimepicker/css/bootstrap-material-datetimepicker.css' %}"
+              rel="stylesheet"/>
 
-    <!-- Bootstrap Material Datetime Picker Css -->
-    <link href="{% static 'plugins/bootstrap-material-datetimepicker/css/bootstrap-material-datetimepicker.css' %}"
-          rel="stylesheet"/>
+        <!-- Bootstrap DatePicker Css -->
+        <link href="{% static 'plugins/bootstrap-datepicker/css/bootstrap-datepicker.css' %}" rel="stylesheet"/>
 
-    <!-- Bootstrap DatePicker Css -->
-    <link href="{% static 'plugins/bootstrap-datepicker/css/bootstrap-datepicker.css' %}" rel="stylesheet"/>
+        <!-- Wait Me Css -->
+        <link href="{% static 'plugins/waitme/waitMe.css" rel="stylesheet' %}"/>
 
-    <!-- Wait Me Css -->
-    <link href="{% static 'plugins/waitme/waitMe.css" rel="stylesheet' %}"/>
+        <!-- Bootstrap Select Css -->
+        <link href="{% static 'plugins/bootstrap-select/css/bootstrap-select.css' %}" rel="stylesheet"/>
 
-    <!-- Bootstrap Select Css -->
-    <link href="{% static 'plugins/bootstrap-select/css/bootstrap-select.css' %}" rel="stylesheet"/>
+        <!-- JQuery DataTable Css -->
+        <link href="{% static 'plugins/jquery-datatable/skin/bootstrap/css/dataTables.bootstrap.css' %}" rel="stylesheet">
 
-    <!-- JQuery DataTable Css -->
-    <link href="{% static 'plugins/jquery-datatable/skin/bootstrap/css/dataTables.bootstrap.css' %}" rel="stylesheet">
+        <!-- Custom Css -->
+        <link href="{% static 'css/style.css' %}" rel="stylesheet">
 
-    <!-- Custom Css -->
-    <link href="{% static 'css/style.css' %}" rel="stylesheet">
+        <!-- AdminBSB Themes. You can choose a theme from css/themes instead of get all themes -->
+        <link href="{% static 'css/themes/all-themes.css' %}" rel="stylesheet"/>
 
-    <!-- AdminBSB Themes. You can choose a theme from css/themes instead of get all themes -->
-    <link href="{% static 'css/themes/all-themes.css' %}" rel="stylesheet"/>
+        <!-- Toastr CSS -->
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
 
-    <!-- Toastr CSS -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
+        <style>
+            .image-container {
+                position: relative;
+                display: inline-block;
+                width: 100%;
+                max-width: 500px; /* Limit the maximum width of the image */
+                height: 300px;
+            }
 
-    <style>
-        .image-container {
-            position: relative;
-            display: inline-block;
-            width: 100%;
-            max-width: 500px; /* Limit the maximum width of the image */
-            height: 300px;
-        }
+            .badge-delete-button {
+                position: absolute;
+                top: 1%;
+                right: 1%;
+                background: red; /* Red background for the badge */
+                color: white; /* White color for the icon */
+                border: none;
+                border-radius: 50%;
+                width: 30px;
+                height: 30px;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                cursor: pointer;
+                z-index: 10; /* Ensure it stays on top of the image */
+                transition: background 0.3s ease, transform 0.3s ease; /* Smooth transition for hover effects */
+            }
 
-        .badge-delete-button {
-            position: absolute;
-            top: 1%;
-            right: 1%;
-            background: red; /* Red background for the badge */
-            color: white; /* White color for the icon */
-            border: none;
-            border-radius: 50%;
-            width: 30px;
-            height: 30px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            cursor: pointer;
-            z-index: 10; /* Ensure it stays on top of the image */
-            transition: background 0.3s ease, transform 0.3s ease; /* Smooth transition for hover effects */
-        }
+            .badge-delete-button:hover {
+                text-decoration: none;
+            }
 
-        .badge-delete-button:hover {
-            text-decoration: none;
-        }
+            .img-responsive {
+                width: 100%; /* Make the image fully responsive */
+                height: 100%;
+                object-fit: cover; /* Maintain aspect ratio and cover the container */
+            }
+        </style>
 
-        .img-responsive {
-            width: 100%; /* Make the image fully responsive */
-            height: 100%;
-            object-fit: cover; /* Maintain aspect ratio and cover the container */
-        }
+    </head>
 
-
-
-    </style>
-
-</head>
-
-<body class="theme-cyan">
-
-<!-- Page Loader -->
-<div class="page-loader-wrapper">
-    <div class="loader">
-        <div class="preloader">
-            <div class="spinner-layer pl-red">
-                <div class="circle-clipper left">
-                    <div class="circle"></div>
+    <body class="theme-cyan">
+        <!-- Page Loader -->
+        <div class="page-loader-wrapper">
+            <div class="loader">
+                <div class="preloader">
+                    <div class="spinner-layer pl-red">
+                        <div class="circle-clipper left">
+                            <div class="circle"></div>
+                        </div>
+                        <div class="circle-clipper right">
+                            <div class="circle"></div>
+                        </div>
+                    </div>
                 </div>
-                <div class="circle-clipper right">
-                    <div class="circle"></div>
+                <p>Please wait...</p>
+            </div>
+        </div>
+        <!-- #END# Page Loader -->
+
+        <!-- Overlay For Sidebars -->
+        <div class="overlay"></div>
+        <!-- #END# Overlay For Sidebars -->
+
+        <!-- Top Bar -->
+        <nav class="navbar">
+            <div class="container-fluid">
+                <div class="navbar-header">
+                    <a href="javascript:void(0);" class="navbar-toggle collapsed" data-toggle="collapse"
+                       data-target="#navbar-collapse" aria-expanded="false"></a>
+                    <a href="javascript:void(0);" class="bars"></a>
+                    <a class="navbar-brand" href="javascript:void(0);"><strong>ADMIN | JAYLON DENTAL CLINIC</strong></a>
+                </div>
+                <div class="collapse navbar-collapse" id="navbar-collapse">
+                    <ul class="nav navbar-nav navbar-right">
+                        <li>
+                            <a href="{% url 'admin_profile' %}" toggle="tooltip" placement="bottom" title="Profile">
+                                <i class="material-icons">person</i>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="{% url 'logout' %}" toggle="tooltip" placement="bottom" title="Sign-out">
+                                <i class="material-icons">input</i>
+                            </a>
+                        </li>
+                    </ul>
                 </div>
             </div>
-        </div>
-        <p>Please wait...</p>
-    </div>
-</div>
-<!-- #END# Page Loader -->
+        </nav>
 
-<!-- Overlay For Sidebars -->
-<div class="overlay"></div>
-<!-- #END# Overlay For Sidebars -->
+        <!-- #Top Bar -->
 
-<!-- Top Bar -->
-<nav class="navbar">
-    <div class="container-fluid">
-        <div class="navbar-header">
-            <a href="javascript:void(0);" class="navbar-toggle collapsed" data-toggle="collapse"
-               data-target="#navbar-collapse" aria-expanded="false"></a>
-            <a href="javascript:void(0);" class="bars"></a>
-            <a class="navbar-brand" href="javascript:void(0);">ADMIN - JAYLON DENTAL CLINIC SCHEDULING AND APPOINTMENT
-                SYSTEM</a>
-        </div>
-        <div class="collapse navbar-collapse" id="navbar-collapse">
-            <ul class="nav navbar-nav navbar-right">
-                <li>
-                    <a href="{% url 'admin_profile' %}" toggle="tooltip" placement="bottom" title="Profile">
-                        <i class="material-icons">person</i>
-                    </a>
-                </li>
-                <li>
-                    <a href="{% url 'logout' %}" toggle="tooltip" placement="bottom" title="Sign-out">
-                        <i class="material-icons">input</i>
-                    </a>
-                </li>
-            </ul>
-        </div>
-    </div>
-</nav>
+        <section>
+            <!-- Left Sidebar -->
+            <aside id="leftsidebar" class="sidebar">
+                <!-- User Info -->
+                <div class="user-info" style="display: flex; justify-content: center; align-items: center;">
+                    <div class="image" style="">
+                        <img src="{% static 'images/user.png' %}" width="120" height="120" alt="User"/>
+                    </div>
+                </div>
+                <!-- #User Info -->
+                <!-- Menu -->
+                <div class="menu">
+                    <ul class="list">
+                        <li class="header">MAIN NAVIGATION</li>
 
-<!-- #Top Bar -->
+                        <li class="{% if request.resolver_match.url_name == 'dashboard' %}active{% endif %}">
+                            <a href="{% url 'dashboard' %}">
+                                <i class="material-icons">event</i>
+                                <span>Appointment</span>
+                            </a>
+                        </li>
+                        <li class="{% if request.resolver_match.url_name == 'services' %}active{% endif %}">
+                            <a href="{% url 'services' %}">
+                                <i class="material-icons">medical_services</i>
+                                <span>Services</span>
+                            </a>
+                        </li>
+                        <li class="{% if request.resolver_match.url_name == 'gallery' %}active{% endif %}">
+                            <a href="{% url 'gallery' %}">
+                                <i class="material-icons">photo_library</i>
+                                <span>Gallery</span>
+                            </a>
+                        </li>
+                        <li class="{% if request.resolver_match.url_name == 'accounts' %}active{% endif %}">
+                            <a href="{% url 'accounts' %}">
+                                <i class="material-icons">group</i>
+                                <span>Accounts</span>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+                <!-- #Menu -->
+                <!-- Footer -->
+                <div class="legal">
+                    <div class="copyright">
+                        &copy; 2024 <a href="javascript:void(0);">Jaylon Dental Clinic</a>.
+                    </div>
+                    <div class="version">
+                        <b>Version: </b> 2.0
+                    </div>
+                </div> <!-- #Footer -->
+            </aside> <!-- #END# Left Sidebar -->
+        </section>
 
-<section>
-    <!-- Left Sidebar -->
-    <aside id="leftsidebar" class="sidebar">
-        <!-- User Info -->
-        <div class="user-info" style="display: flex; justify-content: center; align-items: center;">
-            <div class="image" style="">
-                <img src="{% static 'images/user.png' %}" width="120" height="120" alt="User"/>
-            </div>
-        </div>
-        <!-- #User Info -->
-        <!-- Menu -->
-        <div class="menu">
-            <ul class="list">
-                <li class="header">MAIN NAVIGATION</li>
+        {% block content %}{% endblock %}
 
-                <li class="{% if request.resolver_match.url_name == 'dashboard' %}active{% endif %}">
-                    <a href="{% url 'dashboard' %}">
-                        <i class="material-icons">event</i>
-                        <span>Appointment</span>
-                    </a>
-                </li>
-                <li class="{% if request.resolver_match.url_name == 'services' %}active{% endif %}">
-                    <a href="{% url 'services' %}">
-                        <i class="material-icons">medical_services</i>
-                        <span>Services</span>
-                    </a>
-                </li>
-                <li class="{% if request.resolver_match.url_name == 'gallery' %}active{% endif %}">
-                    <a href="{% url 'gallery' %}">
-                        <i class="material-icons">photo_library</i>
-                        <span>Gallery</span>
-                    </a>
-                </li>
-                <li class="{% if request.resolver_match.url_name == 'accounts' %}active{% endif %}">
-                    <a href="{% url 'accounts' %}">
-                        <i class="material-icons">group</i>
-                        <span>Accounts</span>
-                    </a>
-                </li>
-            </ul>
-        </div>
-        <!-- #Menu -->
-        <!-- Footer -->
-        <div class="legal">
-            <div class="copyright">
-                &copy; 2024 <a href="javascript:void(0);">Jaylon Dental Clinic</a>.
-            </div>
-            <div class="version">
-                <b>Version: </b> 1.0
-            </div>
-        </div>
-        <!-- #Footer -->
-    </aside>
-    <!-- #END# Left Sidebar -->
-</section>
+        <!-- Jquery Core Js -->
+        <script src="{% static 'plugins/jquery/jquery.min.js' %}"></script>
 
-{% block content %}{% endblock %}
+        <!-- Bootstrap Core Js -->
+        <script src="{% static 'plugins/bootstrap/js/bootstrap.js' %}"></script>
 
-<!-- Jquery Core Js -->
-<script src="{% static 'plugins/jquery/jquery.min.js' %}"></script>
+        <!-- Select Plugin Js -->
+        <script src="{% static 'plugins/bootstrap-select/js/bootstrap-select.js' %}"></script>
 
-<!-- Bootstrap Core Js -->
-<script src="{% static 'plugins/bootstrap/js/bootstrap.js' %}"></script>
+        <!-- Slimscroll Plugin Js -->
+        <script src="{% static 'plugins/jquery-slimscroll/jquery.slimscroll.js' %}"></script>
 
-<!-- Select Plugin Js -->
-<script src="{% static 'plugins/bootstrap-select/js/bootstrap-select.js' %}"></script>
+        <!-- Waves Effect Plugin Js -->
+        <script src="{% static 'plugins/node-waves/waves.js' %}"></script>
 
-<!-- Slimscroll Plugin Js -->
-<script src="{% static 'plugins/jquery-slimscroll/jquery.slimscroll.js' %}"></script>
+        <!-- Jquery CountTo Plugin Js -->
+        <script src="{% static 'plugins/jquery-countto/jquery.countTo.js' %}"></script>
 
-<!-- Waves Effect Plugin Js -->
-<script src="{% static 'plugins/node-waves/waves.js' %}"></script>
+        <!-- Morris Plugin Js -->
+        <script src="{% static 'plugins/raphael/raphael.min.js' %}"></script>
+        <script src="{% static 'plugins/morrisjs/morris.js' %}"></script>
 
-<!-- Jquery CountTo Plugin Js -->
-<script src="{% static 'plugins/jquery-countto/jquery.countTo.js' %}"></script>
+        <!-- Jquery DataTable Plugin Js -->
+        <script src="{% static 'plugins/jquery-datatable/jquery.dataTables.js' %}"></script>
+        <script src="{% static 'plugins/jquery-datatable/skin/bootstrap/js/dataTables.bootstrap.js' %}"></script>
+        <script src="{% static 'plugins/jquery-datatable/extensions/export/dataTables.buttons.min.js' %}"></script>
+        <script src="{% static 'plugins/jquery-datatable/extensions/export/buttons.flash.min.js' %}"></script>
+        <script src="{% static 'plugins/jquery-datatable/extensions/export/jszip.min.js' %}"></script>
+        <script src="{% static 'plugins/jquery-datatable/extensions/export/pdfmake.min.js' %}"></script>
+        <script src="{% static 'plugins/jquery-datatable/extensions/export/vfs_fonts.js' %}"></script>
+        <script src="{% static 'plugins/jquery-datatable/extensions/export/buttons.html5.min.js' %}"></script>
+        <script src="{% static 'plugins/jquery-datatable/extensions/export/buttons.print.min.js' %}"></script>
 
-<!-- Morris Plugin Js -->
-<script src="{% static 'plugins/raphael/raphael.min.js' %}"></script>
-<script src="{% static 'plugins/morrisjs/morris.js' %}"></script>
+        <!-- Autosize Plugin Js -->
+        <script src="{% static 'plugins/autosize/autosize.js' %}"></script>
 
-<!-- Jquery DataTable Plugin Js -->
-<script src="{% static 'plugins/jquery-datatable/jquery.dataTables.js' %}"></script>
-<script src="{% static 'plugins/jquery-datatable/skin/bootstrap/js/dataTables.bootstrap.js' %}"></script>
-<script src="{% static 'plugins/jquery-datatable/extensions/export/dataTables.buttons.min.js' %}"></script>
-<script src="{% static 'plugins/jquery-datatable/extensions/export/buttons.flash.min.js' %}"></script>
-<script src="{% static 'plugins/jquery-datatable/extensions/export/jszip.min.js' %}"></script>
-<script src="{% static 'plugins/jquery-datatable/extensions/export/pdfmake.min.js' %}"></script>
-<script src="{% static 'plugins/jquery-datatable/extensions/export/vfs_fonts.js' %}"></script>
-<script src="{% static 'plugins/jquery-datatable/extensions/export/buttons.html5.min.js' %}"></script>
-<script src="{% static 'plugins/jquery-datatable/extensions/export/buttons.print.min.js' %}"></script>
+        <!-- Moment Plugin Js -->
+        <script src="{% static 'plugins/momentjs/moment.js' %}"></script>
 
-<!-- Autosize Plugin Js -->
-<script src="{% static 'plugins/autosize/autosize.js' %}"></script>
+        <!-- Bootstrap Material Datetime Picker Plugin Js -->
+        <script src="{% static 'plugins/bootstrap-material-datetimepicker/js/bootstrap-material-datetimepicker.js' %}"></script>
 
-<!-- Moment Plugin Js -->
-<script src="{% static 'plugins/momentjs/moment.js' %}"></script>
+        <!-- Bootstrap Datepicker Plugin Js -->
+        <script src="{% static 'plugins/bootstrap-datepicker/js/bootstrap-datepicker.js' %}"></script>
 
-<!-- Bootstrap Material Datetime Picker Plugin Js -->
-<script src="{% static 'plugins/bootstrap-material-datetimepicker/js/bootstrap-material-datetimepicker.js' %}"></script>
+        <!-- Custom Js -->
+        <script src="{% static 'js/admin.js' %}"></script>
+        <script src="{% static 'js/pages/tables/jquery-datatable.js' %}"></script>
+        <script src="{% static 'js/pages/forms/basic-form-elements.js' %}"></script>
 
-<!-- Bootstrap Datepicker Plugin Js -->
-<script src="{% static 'plugins/bootstrap-datepicker/js/bootstrap-datepicker.js' %}"></script>
+        <!-- Demo Js -->
+        <script src="{% static 'js/demo.js' %}"></script>
 
-<!-- Custom Js -->
-<script src="{% static 'js/admin.js' %}"></script>
-<script src="{% static 'js/pages/tables/jquery-datatable.js' %}"></script>
-<script src="{% static 'js/pages/forms/basic-form-elements.js' %}"></script>
+        <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
-<!-- Demo Js -->
-<script src="{% static 'js/demo.js' %}"></script>
+        <!-- Toastr JS -->
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
 
-<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-
-<!-- Toastr JS -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
-
-<script>
-// Responsive font size calculation
-function calculateFontSize() {
-    return window.innerWidth < 768 ? 10 : 12;
-}
-
-// Common chart options
-const commonOptions = {
-    responsive: true,
-    maintainAspectRatio: false,
-    plugins: {
-        legend: {
-            display: false
-        },
-        tooltip: {
-            backgroundColor: 'rgba(0, 0, 0, 0.8)',
-            titleFont: {
-                size: 14,
-                weight: 'bold'
-            },
-            bodyFont: {
-                size: 12
-            },
-            padding: 10,
-            cornerRadius: 4,
-            displayColors: false
-        }
-    },
-    scales: {
-        x: {
-            grid: {
-                display: false
-            },
-            ticks: {
-                font: {
-                    size: calculateFontSize()
-                },
-                color: '#666'
+        <script>
+            // Responsive font size calculation
+            function calculateFontSize() {
+                return window.innerWidth < 768 ? 10 : 12;
             }
-        },
-        y: {
-            beginAtZero: true,
-            grid: {
-                color: 'rgba(0, 0, 0, 0.1)',
-                drawBorder: false
-            },
-            ticks: {
-                font: {
-                    size: calculateFontSize()
+
+            // Common chart options
+            const commonOptions = {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: {
+                        display: false
+                    },
+                    tooltip: {
+                        backgroundColor: 'rgba(0, 0, 0, 0.8)',
+                        titleFont: {
+                            size: 14,
+                            weight: 'bold'
+                        },
+                        bodyFont: {
+                            size: 12
+                        },
+                        padding: 10,
+                        cornerRadius: 4,
+                        displayColors: false
+                    }
                 },
-                color: '#666',
-                padding: 10
-            },
-            title: {
-                display: true,
-                text: 'Number of Appointments',
-                color: '#333',
-                font: {
-                    size: calculateFontSize() + 2,
-                    weight: 'bold'
+                scales: {
+                    x: {
+                        grid: {
+                            display: false
+                        },
+                        ticks: {
+                            font: {
+                                size: calculateFontSize()
+                            },
+                            color: '#666'
+                        }
+                    },
+                    y: {
+                        beginAtZero: true,
+                        grid: {
+                            color: 'rgba(0, 0, 0, 0.1)',
+                            drawBorder: false
+                        },
+                        ticks: {
+                            font: {
+                                size: calculateFontSize()
+                            },
+                            color: '#666',
+                            padding: 10
+                        },
+                        title: {
+                            display: true,
+                            text: 'Number of Appointments',
+                            color: '#333',
+                            font: {
+                                size: calculateFontSize() + 2,
+                                weight: 'bold'
+                            }
+                        }
+                    }
                 }
-            }
-        }
-    }
-};
+            };
 
-// Monthly Appointments Chart
-const ctxMonthly = document.getElementById('monthlyAppointmentsChart').getContext('2d');
-const gradientFill = ctxMonthly.createLinearGradient(0, 0, 0, 400);
-gradientFill.addColorStop(0, 'rgba(75, 192, 192, 0.6)');
-gradientFill.addColorStop(1, 'rgba(75, 192, 192, 0.1)');
+            // Monthly Appointments Chart
+            const ctxMonthly = document.getElementById('monthlyAppointmentsChart').getContext('2d');
+            const gradientFill = ctxMonthly.createLinearGradient(0, 0, 0, 400);
+            gradientFill.addColorStop(0, 'rgba(75, 192, 192, 0.6)');
+            gradientFill.addColorStop(1, 'rgba(75, 192, 192, 0.1)');
 
-const monthlyAppointmentsChart = new Chart(ctxMonthly, {
-    type: 'line',
-    data: {
-        labels: {{ months|safe }},
-        datasets: [{
-            label: 'Monthly Appointments',
-            data: {{ monthly_totals|safe }},
-            backgroundColor: gradientFill,
-            borderColor: 'rgba(75, 192, 192, 1)',
-            borderWidth: 2,
-            pointBackgroundColor: 'rgba(75, 192, 192, 1)',
-            pointBorderColor: '#fff',
-            pointBorderWidth: 2,
-            pointRadius: 4,
-            pointHoverRadius: 6,
-            fill: true,
-            tension: 0.4
-        }]
-    },
-    options: {
-        ...commonOptions,
-        plugins: {
-            ...commonOptions.plugins,
-            title: {
-                display: true,
-                text: 'Monthly Appointment Analysis',
-                font: {
-                    size: calculateFontSize() + 4,
-                    weight: 'bold'
+            const monthlyAppointmentsChart = new Chart(ctxMonthly, {
+                type: 'line',
+                data: {
+                    labels: {{ months|safe }},
+                    datasets: [{
+                        label: 'Monthly Appointments',
+                        data: {{ monthly_totals|safe }},
+                        backgroundColor: gradientFill,
+                        borderColor: 'rgba(75, 192, 192, 1)',
+                        borderWidth: 2,
+                        pointBackgroundColor: 'rgba(75, 192, 192, 1)',
+                        pointBorderColor: '#fff',
+                        pointBorderWidth: 2,
+                        pointRadius: 4,
+                        pointHoverRadius: 6,
+                        fill: true,
+                        tension: 0.4
+                    }]
                 },
-                padding: {
-                    top: 10,
-                    bottom: 30
+                options: {
+                    ...commonOptions,
+                    plugins: {
+                        ...commonOptions.plugins,
+                        title: {
+                            display: true,
+                            text: 'Monthly Appointment Analysis',
+                            font: {
+                                size: calculateFontSize() + 4,
+                                weight: 'bold'
+                            },
+                            padding: {
+                                top: 10,
+                                bottom: 30
+                            }
+                        }
+                    }
                 }
-            }
-        }
-    }
-});
+            });
 
-// Daily Appointments Chart
-const ctxDaily = document.getElementById('dailyAppointmentsChart').getContext('2d');
-const dailyGradient = ctxDaily.createLinearGradient(0, 0, 0, 400);
-dailyGradient.addColorStop(0, 'rgba(54, 162, 235, 0.8)');
-dailyGradient.addColorStop(1, 'rgba(54, 162, 235, 0.2)');
+            // Daily Appointments Chart
+            const ctxDaily = document.getElementById('dailyAppointmentsChart').getContext('2d');
+            const dailyGradient = ctxDaily.createLinearGradient(0, 0, 0, 400);
+            dailyGradient.addColorStop(0, 'rgba(54, 162, 235, 0.8)');
+            dailyGradient.addColorStop(1, 'rgba(54, 162, 235, 0.2)');
 
-const dailyAppointmentsChart = new Chart(ctxDaily, {
-    type: 'bar',
-    data: {
-        labels: {{ days|safe }},
-        datasets: [{
-            label: 'Daily Appointments',
-            data: {{ daily_totals|safe }},
-            backgroundColor: dailyGradient,
-            borderColor: 'rgba(54, 162, 235, 1)',
-            borderWidth: 1,
-            borderRadius: 4,
-            barThickness: 'flex',
-            maxBarThickness: 30
-        }]
-    },
-    options: {
-        ...commonOptions,
-        plugins: {
-            ...commonOptions.plugins,
-            title: {
-                display: true,
-                text: 'Daily Appointment Analysis',
-                font: {
-                    size: calculateFontSize() + 4,
-                    weight: 'bold'
+            const dailyAppointmentsChart = new Chart(ctxDaily, {
+                type: 'bar',
+                data: {
+                    labels: {{ days|safe }},
+                    datasets: [{
+                        label: 'Daily Appointments',
+                        data: {{ daily_totals|safe }},
+                        backgroundColor: dailyGradient,
+                        borderColor: 'rgba(54, 162, 235, 1)',
+                        borderWidth: 1,
+                        borderRadius: 4,
+                        barThickness: 'flex',
+                        maxBarThickness: 30
+                    }]
                 },
-                padding: {
-                    top: 10,
-                    bottom: 30
+                options: {
+                    ...commonOptions,
+                    plugins: {
+                        ...commonOptions.plugins,
+                        title: {
+                            display: true,
+                            text: 'Daily Appointment Analysis',
+                            font: {
+                                size: calculateFontSize() + 4,
+                                weight: 'bold'
+                            },
+                            padding: {
+                                top: 10,
+                                bottom: 30
+                            }
+                        }
+                    }
                 }
-            }
-        }
-    }
-});
+            });
 
-// Resize listener for responsiveness
-window.addEventListener('resize', () => {
-    const newFontSize = calculateFontSize();
-    [monthlyAppointmentsChart, dailyAppointmentsChart].forEach(chart => {
-        chart.options.scales.x.ticks.font.size = newFontSize;
-        chart.options.scales.y.ticks.font.size = newFontSize;
-        chart.options.scales.y.title.font.size = newFontSize + 2;
-        chart.options.plugins.title.font.size = newFontSize + 4;
-        chart.update();
-    });
-});
-
-
-</script>
-
-<script>
-    // Toastr configuration
-    toastr.options = {
-      "closeButton": true,
-      "debug": false,
-      "newestOnTop": true,
-      "progressBar": true,
-      "positionClass": "toast-top-right",
-      "preventDuplicates": false,
-      "onclick": null,
-      "showDuration": "300",
-      "hideDuration": "1000",
-      "timeOut": "5000",
-      "extendedTimeOut": "1000",
-      "showEasing": "swing",
-      "hideEasing": "linear",
-      "showMethod": "fadeIn",
-      "hideMethod": "fadeOut"
-    }
-
-    // Check for success message in Django messages
-    {% if messages %}
-        {% for message in messages %}
-            {% if message.tags == 'success' %}
-                toastr.success("{{ message }}");
-            {% elif message.tags == 'error' %}
-                toastr.error("{{ message }}");
-            {% endif %}
-        {% endfor %}
-    {% endif %}
-
-
-</script>
-
-<script>
-    $(document).ready(function() {
-        function updateTimeSlots(data) {
-            var timeSlotSelect = $('#timeSlotSelect');
-            timeSlotSelect.empty();
-            timeSlotSelect.append($('<option></option>').attr('value', '').text('--Select Time--'));
-            if (data.available_slots && data.available_slots.length > 0) {
-                $.each(data.available_slots, function(index, slot) {
-                    var optionText = slot.start + ' - ' + slot.end;
-                    console.log('Adding option:', optionText);
-                    timeSlotSelect.append($('<option></option>').attr('value', optionText).text(optionText));
+            // Resize listener for responsiveness
+            window.addEventListener('resize', () => {
+                const newFontSize = calculateFontSize();
+                [monthlyAppointmentsChart, dailyAppointmentsChart].forEach(chart => {
+                    chart.options.scales.x.ticks.font.size = newFontSize;
+                    chart.options.scales.y.ticks.font.size = newFontSize;
+                    chart.options.scales.y.title.font.size = newFontSize + 2;
+                    chart.options.plugins.title.font.size = newFontSize + 4;
+                    chart.update();
                 });
-            } else {
-                console.log('No available slots');
-                timeSlotSelect.append($('<option></option>').attr('value', '').text('No available slots'));
+            });
+        </script>
+
+        <script>
+            // Toastr configuration
+            toastr.options = {
+              "closeButton": true,
+              "debug": false,
+              "newestOnTop": true,
+              "progressBar": true,
+              "positionClass": "toast-top-right",
+              "preventDuplicates": false,
+              "onclick": null,
+              "showDuration": "300",
+              "hideDuration": "1000",
+              "timeOut": "5000",
+              "extendedTimeOut": "1000",
+              "showEasing": "swing",
+              "hideEasing": "linear",
+              "showMethod": "fadeIn",
+              "hideMethod": "fadeOut"
             }
 
-            // Try to refresh the enhanced select plugin
-            try {
-                timeSlotSelect.selectpicker('refresh');
-            } catch (e) {
-                console.log('SelectPicker not available, falling back to native select');
-                // If the plugin is not available or throws an error, show the native select
-                timeSlotSelect.show();
-            }
+            // Check for success message in Django messages
+            {% if messages %}
+                {% for message in messages %}
+                    {% if message.tags == 'success' %}
+                        toastr.success("{{ message }}");
+                    {% elif message.tags == 'error' %}
+                        toastr.error("{{ message }}");
+                    {% endif %}
+                {% endfor %}
+            {% endif %}
+        </script>
 
-            console.log('Time slot options:', timeSlotSelect.html());
-        }
+        <script>
+            $(document).ready(function() {
+                function updateTimeSlots(data) {
+                    var timeSlotSelect = $('#timeSlotSelect');
+                    timeSlotSelect.empty();
+                    timeSlotSelect.append($('<option></option>').attr('value', '').text('--Select Time--'));
+                    if (data.available_slots && data.available_slots.length > 0) {
+                        $.each(data.available_slots, function(index, slot) {
+                            var optionText = slot.start + ' - ' + slot.end;
+                            console.log('Adding option:', optionText);
+                            timeSlotSelect.append($('<option></option>').attr('value', optionText).text(optionText));
+                        });
+                    } else {
+                        console.log('No available slots');
+                        timeSlotSelect.append($('<option></option>').attr('value', '').text('No available slots'));
+                    }
 
-        $('#serviceSelect, #dateInput').change(function() {
-            var serviceId = $('#serviceSelect').val();
-            var date = $('#dateInput').val();
+                    // Try to refresh the enhanced select plugin
+                    try {
+                        timeSlotSelect.selectpicker('refresh');
+                    } catch (e) {
+                        console.log('SelectPicker not available, falling back to native select');
+                        // If the plugin is not available or throws an error, show the native select
+                        timeSlotSelect.show();
+                    }
 
-            console.log('Service ID:', serviceId);
-            console.log('Date:', date);
+                    console.log('Time slot options:', timeSlotSelect.html());
+                }
 
-            if (serviceId && date) {
-                $.ajax({
-                    url: '{% url "get_available_time_slots" %}',
-                    data: {
-                        'service_id': serviceId,
-                        'date': date
-                    },
-                    dataType: 'json',
-                    success: function(data) {
-                        console.log('Received data:', data);
-                        updateTimeSlots(data);
-                    },
-                    error: function(jqXHR, textStatus, errorThrown) {
-                        console.error('AJAX error:', textStatus, errorThrown);
-                        alert('Error fetching time slots. Please try again.');
+                $('#serviceSelect, #dateInput').change(function() {
+                    var serviceId = $('#serviceSelect').val();
+                    var date = $('#dateInput').val();
+
+                    console.log('Service ID:', serviceId);
+                    console.log('Date:', date);
+
+                    if (serviceId && date) {
+                        $.ajax({
+                            url: '{% url "get_available_time_slots" %}',
+                            data: {
+                                'service_id': serviceId,
+                                'date': date
+                            },
+                            dataType: 'json',
+                            success: function(data) {
+                                console.log('Received data:', data);
+                                updateTimeSlots(data);
+                            },
+                            error: function(jqXHR, textStatus, errorThrown) {
+                                console.error('AJAX error:', textStatus, errorThrown);
+                                alert('Error fetching time slots. Please try again.');
+                            }
+                        });
+                    } else {
+                        console.log('Service ID or Date not selected');
+                        updateTimeSlots({available_slots: []});
                     }
                 });
-            } else {
-                console.log('Service ID or Date not selected');
-                updateTimeSlots({available_slots: []});
-            }
-        });
-    });
-</script>
-
-</body>
+            });
+        </script>
+    </body>
 </html>

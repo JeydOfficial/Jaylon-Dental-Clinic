@@ -150,7 +150,7 @@ def get_operating_hours(date):
         return datetime.combine(date, datetime.min.time().replace(hour=9, minute=0)), \
                datetime.combine(date, datetime.min.time().replace(hour=13, minute=0))
     else:  # Monday to Saturday
-        return datetime.combine(date, datetime.min.time().replace(hour=6, minute=0)), \
+        return datetime.combine(date, datetime.min.time().replace(hour=8, minute=30)), \
                datetime.combine(date, datetime.min.time().replace(hour=16, minute=0))
 
 
