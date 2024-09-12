@@ -1,0 +1,283 @@
+{% extends "backend_base.html" %}
+{% load static %}
+{% block content %}
+
+
+<section class="content">
+    <div class="container-fluid">
+        <div class="block-header">
+            <h2>DASHBOARD</h2>
+        </div>
+
+        <!-- Widgets -->
+        <div class="row clearfix">
+            <div class="col-md-4">
+                <div class="info-box bg-cyan hover-expand-effect">
+                    <div class="icon">
+                        <i class="material-icons">event_note</i>
+                    </div>
+                    <div class="content">
+                        <div class="text">ALL APPOINTMENTS</div>
+                        <div class="number">{{ all_appointments }}</div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="info-box bg-indigo hover-expand-effect">
+                    <div class="icon">
+                        <i class="material-icons">today</i>
+                    </div>
+                    <div class="content">
+                        <div class="text">TODAY APPOINTMENTS</div>
+                        <div class="number">{{ todays_appointments }}</div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="info-box bg-orange hover-expand-effect">
+                    <div class="icon">
+                        <i class="material-icons">schedule</i>
+                    </div>
+                    <div class="content">
+                        <div class="text">PENDING APPOINTMENTS</div>
+                        <div class="number">{{ pending_appointments }}</div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="info-box bg-blue-grey hover-expand-effect">
+                    <div class="icon">
+                        <i class="material-icons">check</i>
+                    </div>
+                    <div class="content">
+                        <div class="text">APPROVED APPOINTMENTS</div>
+                        <div class="number">{{ approved_appointments }}</div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="info-box bg-red hover-expand-effect">
+                    <div class="icon">
+                        <i class="material-icons">block</i>
+                    </div>
+                    <div class="content">
+                        <div class="text">CANCELLED APPOINTMENTS</div>
+                        <div class="number">{{ cancelled_appointments }}</div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="info-box bg-green hover-expand-effect">
+                    <div class="icon">
+                        <i class="material-icons">done_all</i>
+                    </div>
+                    <div class="content">
+                        <div class="text">DONE APPOINTMENTS</div>
+                        <div class="number">{{ done_appointments }}</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- #END# Widgets -->
+        <!-- Exportable Table -->
+        <div class="card">
+                <div class="header" style="display: flex; justify-content: space-between; align-items: center;">
+                    <h2>APPOINTMENT LIST</h2>
+                    <button type="button" class="btn bg-cyan btn-sm waves-effect" data-toggle="modal"
+                            data-target="#AddModal"><i class="material-icons">add</i>
+                        <span>NEW APPOINTMENT</span>
+                    </button>
+                    <!-- Add Appointment Modal -->
+                    <div class="modal fade" id="AddModal" tabindex="-1" role="dialog">
+                        <div class="modal-dialog" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header bg-cyan">
+                                    <h4 class="modal-title p-b-10" id="AddModalLabel">ADD NEW APPOINTMENT</h4>
+                                </div>
+                                <form id="addAppointmentForm" method="POST" action="{% url 'dashboard' %}">
+                                    {% csrf_token %}
+                                    <div class="modal-body" style="padding-bottom: 0px;">
+                                        <label for="user">User</label>
+                                        <div class="form-group">
+                                            <select class="form-control show-tick" name="user" id="user" required>
+                                                <option value="">--Select User--</option>
+                                                {% for user in users %}
+                                                    <option value="{{ user.id }}">{{ user.first_name }} {{ user.last_name }}</option>
+                                                {% endfor %}
+                                            </select>
+                                        </div>
+                                        <label for="serviceSelect">Service</label>
+                                        <div class="form-group">
+                                            <select class="form-control show-tick" name="service" id="serviceSelect" required>
+                                                <option value="">--Select Service--</option>
+                                                {% for service in services %}
+                                                    <option value="{{ service.id }}">{{ service.title }}</option>
+                                                {% endfor %}
+                                            </select>
+                                        </div>
+                                        <label for="dateInput">Date</label>
+                                        <div class="form-group">
+                                            <div class="form-line">
+                                                <input type="date" class="form-control" name="date" id="dateInput" placeholder="--Select Date--" required>
+                                            </div>
+                                        </div>
+                                        <label for="timeSlotSelect">Time</label>
+                                        <div class="form-group">
+                                            <select class="form-control show-tick" name="time_slot" id="timeSlotSelect" required>
+                                                <option value="">--Select Time--</option>
+                                            </select>
+                                        </div>
+                                        <label for="status">Status</label>
+                                        <div class="form-group">
+                                            <select class="form-control show-tick" name="status" id="status" required>
+                                                <option value="">--Select Status--</option>
+                                                <option value="Pending">Pending</option>
+                                                <option value="Approved">Approved</option>
+                                                <option value="Cancelled">Cancelled</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-link waves-effect" data-dismiss="modal">CANCEL</button>
+                                        <button type="submit" class="btn btn-link waves-effect">SUBMIT</button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="body">
+                    <div class="table-responsive">
+                        <table class="table table-bordered table-striped table-hover dataTable js-exportable">
+                            <thead>
+                            <tr>
+                                <th>Name</th>
+                                <th>Service</th>
+                                <th>Date</th>
+                                <th>Time</th>
+                                <th>Current Address</th>
+                                <th>Age</th>
+                                <th>Phone Number</th>
+                                <th>Status</th>
+                                <th>Attended</th>
+                                <th>Action</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            {% for appointment in appointments %}
+                            <tr>
+                                <td>{{ appointment.user.first_name }} {{ appointment.user.last_name }}</td>
+                                <td>{{ appointment.service.title }}</td>
+                                <td>{{ appointment.date }}</td>
+                                <td>{{ appointment.start_time }} - {{ appointment.end_time }}</td>
+                                <td>{{ appointment.user.current_address }}</td>
+                                <td>{{ appointment.user.age }}</td>
+                                <td>{{ appointment.user.phone_number }}</td>
+                                <td>
+                                    <form method="POST"
+                                          action="{% url 'update_appointment_status' appointment.id %}"
+                                          style="display: inline;">
+                                        {% csrf_token %}
+                                        <select name="status" onchange="this.form.submit()">
+                                            <option value="Pending" {% if appointment.status == 'Pending' %}
+                                            selected{% endif %}>Pending</option>
+                                            <option value="Approved" {% if appointment.status == 'Approved' %}
+                                            selected{% endif %}>Approved</option>
+                                            <option value="Cancelled" {% if appointment.status == 'Cancelled' %}
+                                            selected{% endif %}>Cancelled</option>
+                                        </select>
+                                    </form>
+                                </td>
+                                <td class="text-center">
+                                    <form method="post" action="{% url 'update_appointment_attendance' appointment.id %}">
+                                    {% csrf_token %}
+                                    <div class="form-check">
+                                        <input type="checkbox"
+                                               name="attended"
+                                               id="check-in-{{ appointment.id }}"
+                                               class="filled-in"
+                                               {% if appointment.attended %}checked{% endif %}
+                                               onchange="this.form.submit()"
+                                               {% if appointment.status != 'Approved' %}disabled{% endif %}>
+                                        <label class="form-check-label" for="check-in-{{ appointment.id }}"></label>
+                                    </div>
+
+                                    </form>
+                                </td>
+                                <td>
+                                    <div style="display: flex;">
+                                        <a href="{% url 'user_details' appointment.user.id %}"
+                                           class="btn bg-cyan btn-xs"
+                                           style="margin: 2px;">
+                                            <i class="material-icons">visibility</i>
+                                        </a>
+                                        <button type="button" class="btn btn-danger btn-xs" style="margin: 2px;"
+                                                data-toggle="modal" data-target="#deleteModal{{ appointment.id }}">
+                                            <i class="material-icons">delete</i>
+                                        </button>
+                                    </div>
+                                </td>
+                            </tr>
+
+                            <!-- Delete Confirmation Modal -->
+                            <div class="modal fade" id="deleteModal{{ appointment.id }}" tabindex="-1" role="dialog">
+                                <div class="modal-dialog modal-sm" role="document">
+                                    <div class="modal-content">
+                                        <div class="modal-header bg-red">
+                                            <h4 class="modal-title p-b-10" id="deleteModalLabel">DELETE APPOINTMENT</h4>
+                                        </div>
+                                        <div class="modal-body">
+                                            Are you sure you want to delete this appointment for <span class="font-bold">{{ appointment.user.first_name }} {{ appointment.user.last_name }}</span>?
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn bg-grey waves-effect" data-dismiss="modal">CANCEL</button>
+                                            <a href="{% url 'delete_appointment' appointment.id %}" class="btn btn-danger waves-effect">DELETE</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        <!-- #END# Exportable Table -->
+
+        <div class="row clearfix">
+            <!-- Line Chart -->
+            <div class="col-md-6">
+                <div class="card">
+                    <div class="header">
+                        <h2>MONTHLY APPOINTMENT ANALYSIS</h2>
+                    </div>
+                    <div class="body">
+                        <!-- Line Chart for Monthly Appointments -->
+                        <div style="height: 300px;">
+                            <canvas id="monthlyAppointmentsChart"></canvas>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- #END# Line Chart -->
+            <!-- Bar Chart -->
+            <div class="col-md-6">
+                <div class="card">
+                    <div class="header">
+                        <h2>DAILY APPOINTMENT ANALYSIS</h2>
+                    </div>
+                    <div class="body">
+                        <!-- Bar Chart for Last 7 Days Appointments -->
+                        <div style="height: 300px;">
+                            <canvas id="dailyAppointmentsChart"></canvas>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- #END# Bar Chart -->
+        </div>
+    </div>
+</section>
+
+{% endblock %}

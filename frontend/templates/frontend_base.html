@@ -1,0 +1,781 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge">
+    <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+    <title>Jaylon Dental Clinic</title>
+    <!-- Favicon-->
+    <link rel="icon" href="{% static 'images/favicon.png' %}" type="image/x-icon">
+
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+
+    <!-- Font Awesome for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+
+    <!-- AOS CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.css" rel="stylesheet">
+
+    <!-- jQuery (required for Toastr) -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+
+    <!-- Toastr CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
+
+    <!-- DataTable CSS -->
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.11.5/css/dataTables.bootstrap5.min.css">
+
+
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: #f8f9fa;
+        }
+
+        .navbar {
+            box-shadow: 0 2px 4px rgba(0,0,0,.1);
+        }
+
+        .navbar-brand {
+            font-weight: 600;
+            font-size: 1.5rem;
+        }
+
+        .nav-link {
+            font-weight: 400;
+            transition: color 0.3s ease;
+        }
+
+        .nav-link:hover {
+            color: #007bff;
+        }
+
+        h1, h2, h3, h4, h5, h6 {
+            font-weight: 600;
+        }
+
+        #scrollspyHome, #scrollspyServices, #scrollspyGallery, #scrollspyContacts, #scrollspyPrivacy {
+            padding: 3rem;
+            background-color: white;
+            border-radius: 15px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            margin-bottom: 2rem;
+        }
+
+        .card {
+            transition: transform 0.3s ease;
+            border: none;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+        }
+
+        .btn {
+            border-radius: 8px;
+            transition: all 0.3s ease;
+            padding: 0.5rem 1.5rem;
+        }
+
+        footer {
+            background-color: #333;
+            color: white;
+            padding: 2rem 0;
+        }
+
+        .social-icon {
+            color: white;
+            transition: transform 0.3s ease, color 0.3s ease;
+        }
+        .social-icon:hover {
+            transform: scale(1.2);
+            color: #f8f9fa;
+        }
+
+        [data-aos] {
+            transition-duration: 800ms;
+        }
+
+        [data-aos="fade-right"] {
+            transform: translateX(-50px);
+        }
+
+        [data-aos="fade-left"] {
+            transform: translateX(50px);
+        }
+
+        [data-aos="fade-right"].aos-animate,
+        [data-aos="fade-left"].aos-animate {
+            transform: translateX(0);
+        }
+
+    </style>
+</head>
+<body>
+
+    {% if request.user.is_restricted %}
+    <div class="alert alert-warning alert-dismissible fade show position-fixed w-100 text-center mb-0"
+         style="z-index: 1060;" role="alert">
+        <i class="fas fa-exclamation-triangle"></i>
+        <strong>Account Restricted:</strong> Due to missed appointments, you can't book new appointments until
+        {{ request.user.restriction_end_time|date:"F d, Y" }} at {{ request.user.restriction_end_time|time:"g:i A" }}.
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+    {% endif %}
+
+    <nav id="navbar-example2" class="navbar navbar-expand-lg sticky-top bg-white px-3">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="{% url 'client_dashboard' %}"><i class="fas fa-tooth mr-2 text-primary"></i>
+                Jaylon Dental Clinic</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+                    aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav nav-pills me-auto my-1">
+                    <li class="nav-item">
+                        <a class="nav-link px-2" href="#scrollspyHome"><i class="fas fa-home"></i> Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link px-2" href="#scrollspyServices"><i class="fas fa-tools"></i> Services</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link px-2" href="#scrollspyGallery"><i class="fas fa-images"></i> Gallery</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link px-2" href="#scrollspyContacts"><i class="fas fa-envelope"></i> Contacts</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link px-2" href="#scrollspyPrivacy"><i class="fas fa-user-shield"></i> Privacy and
+                            Agreement</a>
+                    </li>
+                </ul>
+                <ul class="navbar-nav nav-pills">
+                    {% if request.user.is_authenticated and not request.user.is_superuser %}
+                    <li class="nav-item ms-auto">
+                        <a class="btn btn-outline-primary btn-sm" href="{% url 'client_profile' %}"><i
+                                class="fas fa-user"></i> Profile</a>
+                        <a class="btn btn-outline-danger btn-sm" href="{% url 'client_logout' %}"><i
+                                class="fas fa-sign-out-alt"></i> Logout</a>
+                    </li>
+                    {% else %}
+                    <li class="nav-item ms-auto">
+                        <a class="btn btn-primary" href="{% url 'client_login' %}"><i class="fas fa-calendar-check"></i>
+                            BOOK NOW</a>
+                    </li>
+                    {% endif %}
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <div data-bs-spy="scroll" data-bs-target="#navbar-example2" data-bs-root-margin="0px 0px -40%"  data-bs-smooth-scroll="true" data-bs-offset="300" class="scrollspy-example bg-body-tertiary p-3 rounded-2" tabindex="0">
+
+        <div id="scrollspyHome" class="mt-4" data-aos="fade-up">
+            {% if request.user.is_authenticated and not request.user.is_superuser %}
+            <div class="row gy-5">
+                <div class="col-md-6">
+                    <h3><i class="fas fa-calendar-plus text-primary"></i> Book an Appointment</h3>
+                    <form method="post" id="appointment-form">
+                        {% csrf_token %}
+                        <div class="mb-3">
+                            <label for="serviceSelect" class="form-label">Service</label>
+                            <select class="form-select" name="service" id="serviceSelect" required>
+                                <option value="">--Select Service--</option>
+                                {% for service in services %}
+                                <option value="{{ service.id }}">{{ service.title }}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                        <div class="mb-3">
+                            <label for="dateInput" class="form-label">Preferred Date</label>
+                            <input type="date" class="form-control" name="date" id="dateInput" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="timeSlotSelect" class="form-label">Preferred Time</label>
+                            <select class="form-select" name="time_slot" id="timeSlotSelect" required>
+                                <option value="">--Select Time--</option>
+                            </select>
+                        </div>
+                        <div class="mb-3">
+                            <div class="g-recaptcha" data-sitekey="{{ recaptcha_site_key }}"></div>
+                        </div>
+                        <div class="d-grid">
+                            <button type="submit" class="btn btn-primary"><i class="fas fa-check"></i> Book Appointment
+                            </button>
+                        </div>
+                    </form>
+                </div>
+                <div class="col-md-6">
+                    <h3><i class="fas fa-history text-primary"></i> Appointment History</h3>
+                    <div class="table-responsive py-4">
+                        <table id="appointmentHistoryTable" class="table table-striped py-2">
+                            <thead>
+                            <tr>
+                                <th>Service</th>
+                                <th>Date</th>
+                                <th>Time</th>
+                                <th>Status</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            {% for appointment in appointments %}
+                            <tr>
+                                <td>{{ appointment.service }}</td>
+                                <td>{{ appointment.date }}</td>
+                                <td>{{ appointment.start_time }} - {{ appointment.end_time }}</td>
+                                <td>
+                                    {% if appointment.status == 'Approved' and appointment.attended %}
+                                    <span class="badge bg-success"><i class="fas fa-check-double"></i> Done</span>
+                                    {% elif appointment.status == 'Approved' %}
+                                    <span class="badge bg-success"><i class="fas fa-check-circle"></i> {{ appointment.status }}</span>
+                                    {% elif appointment.status == 'Pending' %}
+                                    <span class="badge bg-warning"><i
+                                            class="fas fa-clock"></i> {{ appointment.status }}</span>
+                                    {% else %}
+                                    <span class="badge bg-danger"><i class="fas fa-times-circle"></i> {{ appointment.status }}</span>
+                                    {% endif %}
+                                </td>
+                            </tr>
+                            {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            {% else %}
+            <h1 class="text-center mb-4">Welcome to Jaylon Dental Clinic</h1>
+            <p class="lead text-center">Your journey to a brighter smile starts here!</p>
+            <div class="text-center">
+                <a href="{% url 'client_login' %}" class="btn btn-primary btn-lg"><i class="fas fa-calendar-check"></i> Book
+                    Your Appointment Now</a>
+            </div>
+            {% endif %}
+        </div>
+
+        <div id="scrollspyServices" class="mt-4" aos="fade-up">
+            <h3 class="mb-4" aos="fade-right">Our Services</h3>
+            <p>Discover the range of dental services we offer to keep your smile healthy and beautiful.</p>
+
+            <div class="row">
+                {% for service in services %}
+                <div class="col-md-6 col-lg-4 mb-4" aos="zoom-in"
+                     aos-delay="{{ forloop.counter0|divisibleby:3|yesno:'0,100,200' }}">
+                    <div class="card h-100 shadow-sm">
+                        <img src="{{ service.image.url }}" class="card-img-top service-image" alt="{{ service.title }}"
+                             style="height: 200px; object-fit: cover;" data-bs-toggle="modal"
+                             data-bs-target="#servicesModal" data-bs-slide-to="{{ forloop.counter0 }}">
+                        <div class="card-body d-flex flex-column">
+                            <h5 class="card-title">{{ service.title }}</h5>
+                            <p class="card-text flex-grow-1">{{ service.description|truncatewords:20 }}</p>
+                            <div class="mt-auto">
+                                <small class="text-muted">Duration: {{ service.duration }} minutes</small>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+
+        <!-- Services Modal -->
+        <div class="modal fade" id="servicesModal" tabindex="-1" aria-labelledby="servicesModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered modal-lg">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="servicesModalLabel">Our Services</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body p-0">
+                        <div id="servicesCarousel" class="carousel slide" data-bs-ride="carousel">
+                            <div class="carousel-inner">
+                                {% for service in services %}
+                                <div class="carousel-item {% if forloop.first %}active{% endif %}">
+                                    <img src="{{ service.image.url }}" class="d-block w-100" alt="{{ service.title }}"
+                                         style="height: 300px; object-fit: cover;">
+                                    <div class="carousel-caption d-block bg-dark bg-opacity-75 text-start p-3">
+                                        <h5 class="mb-2">{{ service.title }}</h5>
+                                        <p class="mb-2 small">{{ service.description }}</p>
+                                        <p class="mb-0"><small>Duration: {{ service.duration }} minutes</small></p>
+                                    </div>
+                                </div>
+                                {% endfor %}
+                            </div>
+                            <button class="carousel-control-prev" type="button" data-bs-target="#servicesCarousel"
+                                    data-bs-slide="prev">
+                                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                                <span class="visually-hidden">Previous</span>
+                            </button>
+                            <button class="carousel-control-next" type="button" data-bs-target="#servicesCarousel"
+                                    data-bs-slide="next">
+                                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                                <span class="visually-hidden">Next</span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div id="scrollspyGallery" class="mt-4" aos="fade-up">
+          <h3 class="mb-4" aos="fade-right">Clinic Gallery</h3>
+          <p>Take a virtual tour of our state-of-the-art facilities.</p>
+
+          <div class="row">
+            {% for image in images %}
+            <div class="col-md-4 col-lg-3 mb-4" aos="flip-left" aos-delay="{{ forloop.counter0|divisibleby:4|yesno:'0,100,200,300' }}">
+              <div class="card">
+                <img src="{{ image.image.url }}" class="img-thumbnail gallery-image" alt="Clinic Image {{ forloop.counter }}" style="height: 300px; object-fit: cover;" data-bs-toggle="modal" data-bs-target="#galleryModal" data-bs-slide-to="{{ forloop.counter0 }}">
+              </div>
+            </div>
+            {% endfor %}
+          </div>
+        </div>
+
+        <!-- Gallery Modal -->
+        <div class="modal fade" id="galleryModal" tabindex="-1" aria-labelledby="galleryModalLabel" aria-hidden="true">
+          <div class="modal-dialog modal-dialog-centered modal-lg">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title" id="galleryModalLabel">Clinic Gallery</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+              </div>
+              <div class="modal-body">
+                <div id="galleryCarousel" class="carousel slide" data-bs-ride="carousel">
+                  <div class="carousel-inner">
+                    {% for image in images %}
+                    <div class="carousel-item {% if forloop.first %}active{% endif %}">
+                      <img src="{{ image.image.url }}" class="d-block w-100" alt="Clinic Image {{ forloop.counter }}">
+                    </div>
+                    {% endfor %}
+                  </div>
+                  <button class="carousel-control-prev" type="button" data-bs-target="#galleryCarousel" data-bs-slide="prev">
+                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                    <span class="visually-hidden">Previous</span>
+                  </button>
+                  <button class="carousel-control-next" type="button" data-bs-target="#galleryCarousel" data-bs-slide="next">
+                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                    <span class="visually-hidden">Next</span>
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div id="scrollspyContacts" class="mt-4" data-aos="fade-up">
+            <h3 class="mb-4" data-aos="fade-right"><i class="fas fa-envelope text-primary"></i> Contact Us</h3>
+            <p class="lead" data-aos="fade-left">We're here to answer your questions and address your concerns.</p>
+            <div class="row gy-5">
+                <div class="col-md-6" data-aos="fade-up">
+                    <form method="post" id="contactForm">
+                        {% csrf_token %}
+                        <div class="mb-3">
+                            <label for="contactName" class="form-label">Name</label>
+                            <input type="text" class="form-control" id="contactName" name="name" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="contactEmail" class="form-label">Email</label>
+                            <input type="email" class="form-control" id="contactEmail" name="email" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="contactMessage" class="form-label">Message</label>
+                            <textarea class="form-control" id="contactMessage" rows="4" name="message" required></textarea>
+                        </div>
+                        <div class="d-grid">
+                            <button type="submit" class="btn btn-primary"><i class="fas fa-paper-plane"></i> Send Message
+                            </button>
+                        </div>
+                    </form>
+                </div>
+                <div class="col-md-5 offset-md-1" data-aos="fade-up">
+                    <h4><i class="fas fa-info-circle"></i> Clinic Information</h4>
+                    <p><i class="fas fa-map-marker-alt"></i> <strong>Address:</strong> Dayao St, Kidapawan City, Cotabato
+                    </p>
+                    <p><i class="fas fa-phone"></i> <strong>Phone:</strong> 09876543210</p>
+                    <p><i class="fas fa-envelope"></i> <strong>Email:</strong> info@jaylondentalclinic.com</p>
+                    <h4 class="mt-4"><i class="far fa-clock"></i> Office Hours</h4>
+                    <p>Monday - Saturday: 8:30 AM - 4:00 PM</p>
+                    <p>Sunday: 9:00 AM - 12:00 PM</p>
+                </div>
+            </div>
+            <div class="row mt-4">
+                <div class="col-12" data-aos="zoom-in">
+                    <h4><i class="fas fa-map-marked-alt"></i> Find Us</h4>
+                    <div class="embed-responsive embed-responsive-16by9">
+                        <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3959.967304180738!2d125.08718601145742!3d7.013128192959139!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x32f8f9e289b147af%3A0xa6fd91898c8910a0!2sJaylon%20Dental%20group!5e0!3m2!1sen!2sph!4v1725349059605!5m2!1sen!2sph"
+                                width="100%" height="450" style="border:0;" allowfullscreen="" loading="lazy"></iframe>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div id="scrollspyPrivacy" class="mt-4" data-aos="fade-up">
+            <h3 class="mb-4" data-aos="fade-right"><i class="fas fa-user-shield text-primary"></i> Privacy and Agreement</h3>
+            <div class="row">
+                <div class="col-md-12" data-aos="fade-up" data-aos-delay="100">
+                    <p>At Jaylon Dental Clinic, we value your privacy and are committed to protecting your personal information. By using our services, you agree to the terms outlined in our privacy policy and user agreement.</p>
+                    <p>For more details, please read our full <a href="#" data-bs-toggle="modal" data-bs-target="#privacyModal">Privacy Policy and User Agreement</a>.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Privacy Policy Modal -->
+        <div class="modal fade" id="privacyModal" tabindex="-1" aria-labelledby="privacyModalLabel" aria-hidden="true"
+             data-bs-backdrop="static" data-bs-keyboard="false">
+            <div class="modal-dialog modal-lg">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="privacyModalLabel">Policy and Agreement - Jaylon Dental Clinic</h5>
+                        {% if not has_agreed_privacy_policy %}
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        {% endif %}
+                    </div>
+                    <div class="modal-body" style="max-height: 70vh; overflow-y: auto;">
+                        <p class="fw-bold">PLEASE READ THIS TO AVOID INCONVENIENCE AT JAYLON DENTAL CLINIC</p>
+
+                        <h6 class="mt-4">1. Appointment Booking</h6>
+                        <ul>
+                            <li>Appointments can be booked via phone, clinic website, or in-person.</li>
+                            <li>Patients are encouraged to book appointments in advance to secure their preferred date and
+                                time.
+                            </li>
+                        </ul>
+
+                        <h6 class="mt-4">2. Appointment Approval and Reminders</h6>
+                        <ul>
+                            <li>All appointments must be approved at least 24 hours before the selected date and time.</li>
+                            <li>Patients will receive a reminder 30 minutes before their scheduled appointment.</li>
+                        </ul>
+
+                        <h6 class="mt-4">3. Medical-Dental Questionnaire</h6>
+                        <ul>
+                            <li>The questionnaire is accessible on your profile after you log in.</li>
+                            <li>Please update it whenever there are changes in your medical condition by checking the
+                                relevant checkboxes (Yes/No) or selecting your health status (Good/Fair/Poor).
+                            </li>
+                        </ul>
+
+                        <h6 class="mt-4">4. Cancellation and Rescheduling</h6>
+                        <ul>
+                            <li>If a mistake is made in selecting a service, date, or time, the client must choose the next
+                                available day instead of correcting the mistake on the same day.
+                            </li>
+                            <li>Only the first approved appointment will be honored for any single service and time slot.
+                                Any duplicate appointments for the same service at different times will be
+                                <strong>ignored</strong>.
+                            </li>
+                            <li>Once an appointment is created, it cannot be canceled or rescheduled due to the busy
+                                schedules of our dentists.
+                            </li>
+                        </ul>
+
+                        <h6 class="mt-4">5. Walk-in Policy</h6>
+                        <ul>
+                            <li>Walk-ins are accepted but will be served based on availability.</li>
+                            <li>Scheduled appointments will take priority over walk-ins.</li>
+                        </ul>
+
+                        <h6 class="mt-4">6. Late Arrivals</h6>
+                        <ul>
+                            <li>Patients who book through our clinic's website will be given priority based on their
+                                selected date and time. To ensure a smooth flow inside the clinic, patients are advised to
+                                arrive 10-15 minutes early.
+                            </li>
+                            <li>If a patient arrives 15 minutes late, their appointment will be canceled. The patient must
+                                book a new appointment.
+                            </li>
+                        </ul>
+
+                        <h6 class="mt-4">7. No-Show Policy</h6>
+                        <ul>
+                            <li>If a patient is a no-show 15 minutes without a notice, their appointment will be canceled.
+                            </li>
+                            <li>Repeated no-shows may result in a restricted account and limited booking options.</li>
+                            <ul>
+                                <li>Three Consecutive times -- 12hrs account restriction</li>
+                                <li>Five Consecutive times -- 24hrs account restriction</li>
+                            </ul>
+                        </ul>
+
+                        <h6 class="mt-4">8. Emergency Appointments</h6>
+                        <ul>
+                            <li>Emergency cases will be given priority and fitted into the schedule as soon as possible.
+                            </li>
+                            <li>If there are no available slots, emergency patients may be referred to the nearest available
+                                clinic.
+                            </li>
+                        </ul>
+
+                        <h6 class="mt-4">9. Service Duration Estimates (Maximum Range)</h6>
+                        <ul>
+                            <li>Tooth Extraction -- 10mins.</li>
+                            <li>Tooth Filling -- 15mins.</li>
+                            <li>Odontectomy -- 30mins.</li>
+                            <li>Dentures -- 20mins.</li>
+                            <li>Veneers -- 20mins.</li>
+                            <li>Ortho Braces (Upper and Lower) -- 1hr and 10mins (70mins).</li>
+                            <li>Ortho Braces (Upper or Lower) -- 40mins.</li>
+                            <li>Crowns Fixed Bridge -- 20mins.</li>
+                            <li>Denture Repair -- 15mins.</li>
+                            <li>Oral Prophylaxis (Moderate) -- 45mins.</li>
+                            <li>Oral Prophylaxis (Hard) -- 1hr (60mins).</li>
+                            <li>Root Canal Treatment (Anterior) -- 1hr (60mins).</li>
+                            <li>Root Canal Treatment (Posteriors) -- 1hr and 30mins (90mins).</li>
+                        </ul>
+
+                        <h6 class="mt-4">10. Patient Records and Privacy</h6>
+                        <ul>
+                            <li>Patient information is kept confidential and used solely for appointment scheduling and
+                                treatment purposes.
+                            </li>
+                            <li>Patients are <strong>required</strong> to update their contact details to ensure timely
+                                communication.
+                            </li>
+                        </ul>
+
+                        <h6 class="mt-4">11. Feedback and Complaints</h6>
+                        <ul>
+                            <li>We welcome feedback to continuously improve our services.</li>
+                            <li>You can contact us through the "Contacts" section on our clinic website via Gmail, phone
+                                call, or connect with us on Facebook and Instagram for updates.
+                            </li>
+                        </ul>
+
+                        <div class="form-check mt-4">
+                            <input class="form-check-input" type="checkbox" id="agreeCheckbox" {% if has_agreed_privacy_policy %}checked disabled{% endif %}>
+                            <label class="form-check-label" for="agreeCheckbox">
+                                I have read and agree to the Policy and Agreement of Jaylon Dental Clinic
+                            </label>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        {% if has_agreed_privacy_policy %}
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                        {% else %}
+                        <button type="button" class="btn btn-primary" id="agreeButton" disabled>I Agree</button>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer class="bg-secondary text-light py-3" data-aos="fade-down">
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-md-8 text-center">
+                    <h5 class="mb-4">Connect With Us</h5>
+                    <div class="d-flex justify-content-center">
+                        <a href="https://www.facebook.com/profile.php?id=100083282165584" target="_blank"
+                           class="social-icon mx-3">
+                            <i class="fab fa-facebook fa-2x"></i>
+                        </a>
+                        <a href="https://www.instagram.com/dr_jaylon?utm_source=ig_web_button_share_sheet&igsh=ZDNlZDc0MzIxNw=="
+                           target="_blank" class="social-icon mx-3">
+                            <i class="fab fa-instagram fa-2x"></i>
+                        </a>
+                    </div>
+                    <p class="mt-2">&copy; 2024 Jaylon Dental Clinic. All rights reserved.</p>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+        <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+            integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
+            crossorigin="anonymous"></script>
+
+        <!-- DataTable JS -->
+    <script type="text/javascript" src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.min.js"></script>
+    <script type="text/javascript" src="https://cdn.datatables.net/1.11.5/js/dataTables.bootstrap5.min.js"></script>
+
+    <!-- Initialize DataTable -->
+    <script>
+        $(document).ready(function() {
+            $('#appointmentHistoryTable').DataTable({
+                "order": [[1, "desc"]], // Sort by date column (index 1) in descending order
+                "pageLength": 5, // Show 5 entries per page
+                "lengthChange": false, // Remove the "Show X entries" dropdown
+                "language": {
+                    "info": "Showing _START_ to _END_ of _TOTAL_ appointments",
+                    "infoEmpty": "Showing 0 to 0 of 0 appointments",
+                    "infoFiltered": "(filtered from _MAX_ total appointments)"
+                }
+            });
+        });
+    </script>
+
+    <!-- AOS JS -->
+    <script src="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.js"></script>
+    <script>
+        AOS.init({
+            duration: 1000,
+            offset: 100,
+        });
+    </script>
+
+    <!-- Toastr JS -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
+
+    <script>
+        // Toastr configuration
+        toastr.options = {
+          "closeButton": true,
+          "debug": false,
+          "newestOnTop": true,
+          "progressBar": true,
+          "positionClass": "toast-top-right",
+          "preventDuplicates": false,
+          "onclick": null,
+          "showDuration": "300",
+          "hideDuration": "1000",
+          "timeOut": "5000",
+          "extendedTimeOut": "1000",
+          "showEasing": "swing",
+          "hideEasing": "linear",
+          "showMethod": "fadeIn",
+          "hideMethod": "fadeOut"
+        }
+
+        // Check for success message in Django messages
+        {% if messages %}
+            {% for message in messages %}
+                {% if message.tags == 'success' %}
+                    toastr.success("{{ message }}");
+                {% elif message.tags == 'error' %}
+                    toastr.error("{{ message }}");
+                {% endif %}
+            {% endfor %}
+        {% endif %}
+    </script>
+
+    <script>
+        $(document).ready(function() {
+            function updateTimeSlots(data) {
+                var timeSlotSelect = $('#timeSlotSelect');
+                timeSlotSelect.empty();
+                timeSlotSelect.append($('<option></option>').attr('value', '').text('--Select Time--'));
+                if (data.available_slots && data.available_slots.length > 0) {
+                    $.each(data.available_slots, function(index, slot) {
+                        var optionText = slot.start + ' - ' + slot.end;
+                        console.log('Adding option:', optionText);
+                        timeSlotSelect.append($('<option></option>').attr('value', optionText).text(optionText));
+                    });
+                } else {
+                    console.log('No available slots');
+                    timeSlotSelect.append($('<option></option>').attr('value', '').text('No available slots'));
+                }
+
+                // Try to refresh the enhanced select plugin
+                try {
+                    timeSlotSelect.selectpicker('refresh');
+                } catch (e) {
+                    console.log('SelectPicker not available, falling back to native select');
+                    // If the plugin is not available or throws an error, show the native select
+                    timeSlotSelect.show();
+                }
+
+                console.log('Time slot options:', timeSlotSelect.html());
+            }
+
+            $('#serviceSelect, #dateInput').change(function() {
+                var serviceId = $('#serviceSelect').val();
+                var date = $('#dateInput').val();
+
+                console.log('Service ID:', serviceId);
+                console.log('Date:', date);
+
+                if (serviceId && date) {
+                    $.ajax({
+                        url: '{% url "client_get_available_time_slots" %}',
+                        data: {
+                            'service_id': serviceId,
+                            'date': date
+                        },
+                        dataType: 'json',
+                        success: function(data) {
+                            console.log('Received data:', data);
+                            updateTimeSlots(data);
+                        },
+                        error: function(jqXHR, textStatus, errorThrown) {
+                            console.error('AJAX error:', textStatus, errorThrown);
+                            alert('Error fetching time slots. Please try again.');
+                        }
+                    });
+                } else {
+                    console.log('Service ID or Date not selected');
+                    updateTimeSlots({available_slots: []});
+                }
+            });
+        });
+    </script>
+
+    <script src="https://www.google.com/recaptcha/api.js" async defer></script>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            var showPrivacyModal = {% if show_privacy_modal %}true{% else %}false{% endif %};
+            var privacyModal = new bootstrap.Modal(document.getElementById('privacyModal'), {
+                backdrop: 'static',
+                keyboard: false
+            });
+            var agreeCheckbox = document.getElementById('agreeCheckbox');
+            var agreeButton = document.getElementById('agreeButton');
+
+            if (showPrivacyModal) {
+                privacyModal.show();
+            }
+
+            agreeCheckbox.addEventListener('change', function() {
+                agreeButton.disabled = !this.checked;
+            });
+
+            agreeButton.addEventListener('click', function() {
+                if (agreeCheckbox.checked) {
+                    // You might want to send an AJAX request here to update the user's agreement status
+                    privacyModal.hide();
+                }
+            });
+        });
+    </script>
+
+    <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      var galleryModal = document.getElementById('galleryModal');
+      var carousel = document.getElementById('galleryCarousel');
+
+      galleryModal.addEventListener('show.bs.modal', function(event) {
+        var button = event.relatedTarget;
+        var slideIndex = button.getAttribute('data-bs-slide-to');
+        var carouselInstance = bootstrap.Carousel.getInstance(carousel);
+        carouselInstance.to(parseInt(slideIndex));
+      });
+    });
+    </script>
+
+    <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      var servicesModal = document.getElementById('servicesModal');
+      var carousel = document.getElementById('servicesCarousel');
+
+      servicesModal.addEventListener('show.bs.modal', function(event) {
+        var button = event.relatedTarget;
+        var slideIndex = button.getAttribute('data-bs-slide-to');
+        var carouselInstance = bootstrap.Carousel.getInstance(carousel);
+        carouselInstance.to(parseInt(slideIndex));
+      });
+    });
+    </script>
+
+</body>
+</html>
