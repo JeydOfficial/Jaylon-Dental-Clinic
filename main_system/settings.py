@@ -82,8 +82,8 @@ DATABASES = {
         'ENGINE': 'django.db.backends.postgresql',
         'NAME': 'verceldb',
         'USER': 'default',
-        'PASSWORD': 'lbCEqn5KGXD4',
-        'HOST': 'ep-quiet-sound-a1wv4pst-pooler.ap-southeast-1.aws.neon.tech',
+        'PASSWORD': '7Wxso9mLPCQw',
+        'HOST': 'ep-crimson-mode-a1qul73v-pooler.ap-southeast-1.aws.neon.tech',
         'PORT': '5432',
     }
 }
@@ -143,9 +143,9 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 MEDIA_URL = 'media/'
 
 CLOUDINARY_STORAGE = {
-    'CLOUD_NAME': 'djefvzr2g',
-    'API_KEY': '298175314535528',
-    'API_SECRET': 'IKhwkkE6aiUdHZkICLig0UfGTn0',
+    'CLOUD_NAME': 'dfvljbihc',
+    'API_KEY': '132685271178381',
+    'API_SECRET': 'NJSeGfB1m-N8uo-Q4gaY0GTThzw',
 }
 
 DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
