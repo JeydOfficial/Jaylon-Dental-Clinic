@@ -1,206 +1,209 @@
 {% extends "backend_base.html" %}
 {% load static %}
 {% block content %}
-
-<section class="content">
-    <div class="container-fluid">
-        <!-- Custom Content -->
-        <div class="card">
-            <div class="header" style="display: flex; justify-content: space-between; align-items: center;">
-                <h2>
-                    SERVICES OFFERED
-                </h2>
-                <button type="button" class="btn bg-cyan btn-sm waves-effect" data-toggle="modal"
-                        data-target="#AddModal"><i class="material-icons">local_hospital</i>
-                    <span>NEW SERVICE</span>
-                </button>
-                <!-- Add Service Modal -->
-                <div class="modal fade" id="AddModal" tabindex="-1" role="dialog">
-                    <div class="modal-dialog" role="document">
-                        <div class="modal-content">
-                            <div class="modal-header bg-cyan">
-                                <h4 class="modal-title p-b-10" id="AddModalLabel">ADD NEW SERVICE</h4>
-                            </div>
-                            <form method="POST" enctype="multipart/form-data">
-                                {% csrf_token %}
-                                <div class="modal-body" style="padding-bottom: 0px;">
-                                    <label for="title">Service Title</label>
-                                    <div class="form-group">
-                                        <div class="form-line">
-                                            <input type="text" id="title" name="title" class="form-control"
-                                                   placeholder="Write the service title..." required>
-                                        </div>
-                                    </div>
-                                    <label for="desription">Description</label>
-                                    <div class="form-group">
-                                        <div class="form-line">
-                                                    <textarea id="desription" rows="2" name="description"
-                                                              class="form-control no-resize"
-                                                              placeholder="Write the description..."
-                                                              required></textarea>
-                                        </div>
-                                    </div>
-                                    <label for="duration">Duration (in minutes)</label>
-                                    <div class="form-group">
-                                        <div class="form-line">
-                                            <input type="number" id="duration" name="duration"
-                                                   class="form-control"
-                                                   placeholder="Write the duration..." required>
-                                        </div>
-                                    </div>
-                                    <label for="image">Image</label>
-                                    <div class="form-group">
-                                        <div class="form-line">
-                                            <input type="file" id="image" name="image" class="form-control"
-                                                   accept="image/*"
-                                                   required>
-                                        </div>
-                                    </div>
-
-                                </div>
-                                <div class="modal-footer">
-                                    <button type="button" class="btn bg-grey waves-effect"
-                                            data-dismiss="modal">
-                                        CANCEL
-                                    </button>
-
-                                    <button type="submit" class="btn bg-cyan waves-effect">SUBMIT</button>
-                                </div>
-                            </form>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="body">
-                <div class="row clearfix">
-                    {% for service in services %}
-                    <div class="col-xs-6 col-sm-6 col-md-4 col-lg-3">
-                        <div class="thumbnail"
-                             style="width: 100%; height: 100%; overflow: hidden; position: relative;">
-                            <a href="{{ service.image.url }}">
-                                <img src="{{ service.image.url }}" alt="{{ service.title }}"
-                                     style="width: 500px; height: 200px; object-fit: cover;">
-                            </a>
-                            <div class="caption" style="padding: 5px;">
-                                <h3>{{ service.title }}</h3>
-                                <p style="max-height: 75px; overflow-y: auto; margin: 0;">
-                                    {{ service.description }}
-                                </p>
-                                <div class="font-15 font-bold m-t-5">
-                                    Duration: <span
-                                        class="font-12 text-muted">{{ service.duration }} minutes</span>
-                                    <!-- Container for the buttons -->
-                                    <div class="button-container"
-                                         style="position: absolute; bottom: 5px; right: 5px;">
-                                        <!-- Edit Button -->
-                                        <button class="btn bg-cyan btn-xs waves-effect" style="margin-right: 5px;"
-                                                data-toggle="modal" data-target="#EditModal{{ service.id }}">
-                                            <i class="material-icons">edit</i>
-                                        </button>
-                                        <!-- Delete Button -->
-                                        <button type="button" class="btn btn-danger btn-xs" data-toggle="modal" data-target="#deleteModal{{ service.id }}">
-                                            <i class="material-icons">delete</i>
-                                        </button>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Edit Service Modal -->
-                    <div class="modal fade" id="EditModal{{ service.id }}" tabindex="-1" role="dialog">
+    <section class="content">
+        <div class="container-fluid">
+            <!-- Custom Content -->
+            <div class="card">
+                <div class="header" style="display: flex; justify-content: space-between; align-items: center;">
+                    <h2>
+                        SERVICES OFFERED
+                    </h2>
+                    <button type="button" class="btn bg-cyan btn-sm waves-effect" data-toggle="modal"
+                            data-target="#AddModal"><i class="material-icons">local_hospital</i>
+                        <span>NEW SERVICE</span>
+                    </button>
+                    <!-- Add Service Modal -->
+                    <div class="modal fade" id="AddModal" tabindex="-1" role="dialog">
                         <div class="modal-dialog" role="document">
                             <div class="modal-content">
                                 <div class="modal-header bg-cyan">
-                                    <h4 class="modal-title p-b-10">EDIT SERVICE</h4>
+                                    <h4 class="modal-title p-b-10" id="AddModalLabel">ADD NEW SERVICE</h4>
                                 </div>
                                 <form method="POST" enctype="multipart/form-data">
                                     {% csrf_token %}
-                                    <input type="hidden" name="service_id" value="{{ service.id }}">
                                     <div class="modal-body" style="padding-bottom: 0px;">
-                                        <label for="edit_title">Service Title</label>
+                                        <label for="title">Service Title</label>
                                         <div class="form-group">
                                             <div class="form-line">
-                                                <input type="text" id="edit_title" name="title"
-                                                       class="form-control"
-                                                       value="{{ service.title }}"
-                                                       placeholder="Write the service title..." required>
+                                                <input type="text" id="title" name="title" class="form-control"
+                                                       placeholder="Write the service title..." required
+                                                >
                                             </div>
                                         </div>
-                                        <label for="edit_description">Description</label>
+                                        <label for="desription">Description</label>
                                         <div class="form-group">
                                             <div class="form-line">
-                            <textarea id="edit_description" rows="2" name="description"
-                                      class="form-control no-resize"
-                                      placeholder="Write the description..."
-                                      required>{{ service.description }}</textarea>
+                                                        <textarea id="desription" rows="2" name="description"
+                                                                  class="form-control no-resize"
+                                                                  placeholder="Write the description..."
+                                                                  required>
+                                                        </textarea>
                                             </div>
                                         </div>
-                                        <label for="edit_duration">Duration (in minutes)</label>
+                                        <label for="duration">Duration (in minutes)</label>
                                         <div class="form-group">
                                             <div class="form-line">
-                                                <input type="number" id="edit_duration" name="duration"
+                                                <input type="number" id="duration" name="duration"
                                                        class="form-control"
-                                                       value="{{ service.duration }}"
-                                                       placeholder="Write the duration..." required>
+                                                       placeholder="Write the duration..." required
+                                                >
+                                            </div>
+                                        </div>
+                                        <label for="image">Image</label>
+                                        <div class="form-group">
+                                            <div class="form-line">
+                                                <input type="file" id="image" name="image" class="form-control"
+                                                       accept="image/*"
+                                                       required
+                                                >
                                             </div>
                                         </div>
 
-                                        <!-- Display the current image -->
-                                        <div class="form-group">
-                                            <label>Current Image</label>
-                                            <div class="form-line">
-                                                <img src="{{ service.image.url }}" alt="{{ service.title }}"
-                                                     style="width: 100%; height: 200px; object-fit: cover;">
-                                            </div>
-                                        </div>
-                                        <!-- Input for new image -->
-                                        <label for="edit_image">Change Current Image (optional)</label>
-                                        <div class="form-group">
-                                            <div class="form-line">
-                                                <input type="file" id="edit_image" name="image"
-                                                       class="form-control" accept="image/*">
-                                            </div>
-                                        </div>
                                     </div>
                                     <div class="modal-footer">
                                         <button type="button" class="btn bg-grey waves-effect"
                                                 data-dismiss="modal">
                                             CANCEL
                                         </button>
-                                        <button type="submit" class="btn bg-cyan waves-effect">SAVE CHANGES</button>
+
+                                        <button type="submit" class="btn bg-cyan waves-effect">SUBMIT</button>
                                     </div>
                                 </form>
                             </div>
                         </div>
                     </div>
-
-                    <!-- Delete Confirmation Modal -->
-                    <div class="modal fade" id="deleteModal{{ service.id }}" tabindex="-1" role="dialog">
-                        <div class="modal-dialog modal-sm" role="document">
-                            <div class="modal-content">
-                                <div class="modal-header bg-red">
-                                    <h4 class="modal-title p-b-10" id="deleteModalLabel">DELETE SERVICE</h4>
-                                </div>
-                                <div class="modal-body">
-                                    Are you sure you want to delete this <span class="font-bold">{{ service.title }}</span> service?
-                                </div>
-                                <div class="modal-footer">
-                                    <button type="button" class="btn bg-grey waves-effect" data-dismiss="modal">CANCEL</button>
-                                    <a href="{% url 'delete_service' service.id %}" class="btn btn-danger waves-effect">DELETE</a>
+                </div>
+                <!-- Service Card -->
+                <div class="body">
+                    <div class="row clearfix">
+                        {% for service in services %}
+                            <div class="col-xs-6 col-sm-6 col-md-4 col-lg-3">
+                                <div class="thumbnail"
+                                     style="width: 100%; height: 100%; overflow: hidden; position: relative;">
+                                    <a href="{{ service.image.url }}">
+                                        <img src="{{ service.image.url }}" alt="{{ service.title }}"
+                                             style="width: 500px; height: 200px; object-fit: cover;"
+                                        >
+                                    </a>
+                                    <div class="caption" style="padding: 5px;">
+                                        <h3>{{ service.title }}</h3>
+                                        <p style="max-height: 75px; overflow-y: auto; margin: 0;">
+                                            {{ service.description }}
+                                        </p>
+                                        <div class="font-15 font-bold m-t-5">
+                                            Duration: <span
+                                                class="font-12 text-muted">{{ service.duration }} minutes
+                                            </span>
+                                            <!-- Container for the buttons -->
+                                            <div class="button-container"
+                                                 style="position: absolute; bottom: 5px; right: 5px;">
+                                                <!-- Edit Button -->
+                                                <button class="btn bg-cyan btn-xs waves-effect" style="margin-right: 5px;"
+                                                        data-toggle="modal" data-target="#EditModal{{ service.id }}">
+                                                    <i class="material-icons">edit</i>
+                                                </button>
+                                                <!-- Delete Button -->
+                                                <button type="button" class="btn btn-danger btn-xs" data-toggle="modal" data-target="#deleteModal{{ service.id }}">
+                                                    <i class="material-icons">delete</i>
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
+
+                            <!-- Edit Service Modal -->
+                            <div class="modal fade" id="EditModal{{ service.id }}" tabindex="-1" role="dialog">
+                                <div class="modal-dialog" role="document">
+                                    <div class="modal-content">
+                                        <div class="modal-header bg-cyan">
+                                            <h4 class="modal-title p-b-10">EDIT SERVICE</h4>
+                                        </div>
+                                        <form method="POST" enctype="multipart/form-data">
+                                            {% csrf_token %}
+                                            <input type="hidden" name="service_id" value="{{ service.id }}">
+                                            <div class="modal-body" style="padding-bottom: 0px;">
+                                                <label for="edit_title">Service Title</label>
+                                                <div class="form-group">
+                                                    <div class="form-line">
+                                                        <input type="text" id="edit_title" name="title"
+                                                               class="form-control"
+                                                               value="{{ service.title }}"
+                                                               placeholder="Write the service title..." required>
+                                                    </div>
+                                                </div>
+                                                <label for="edit_description">Description</label>
+                                                <div class="form-group">
+                                                    <div class="form-line">
+                                    <textarea id="edit_description" rows="2" name="description"
+                                              class="form-control no-resize"
+                                              placeholder="Write the description..."
+                                              required>{{ service.description }}</textarea>
+                                                    </div>
+                                                </div>
+                                                <label for="edit_duration">Duration (in minutes)</label>
+                                                <div class="form-group">
+                                                    <div class="form-line">
+                                                        <input type="number" id="edit_duration" name="duration"
+                                                               class="form-control"
+                                                               value="{{ service.duration }}"
+                                                               placeholder="Write the duration..." required>
+                                                    </div>
+                                                </div>
+
+                                                <!-- Display the current image -->
+                                                <div class="form-group">
+                                                    <label>Current Image</label>
+                                                    <div class="form-line">
+                                                        <img src="{{ service.image.url }}" alt="{{ service.title }}"
+                                                             style="width: 100%; height: 200px; object-fit: cover;">
+                                                    </div>
+                                                </div>
+                                                <!-- Input for new image -->
+                                                <label for="edit_image">Change Current Image (optional)</label>
+                                                <div class="form-group">
+                                                    <div class="form-line">
+                                                        <input type="file" id="edit_image" name="image"
+                                                               class="form-control" accept="image/*">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn bg-grey waves-effect"
+                                                        data-dismiss="modal">
+                                                    CANCEL
+                                                </button>
+                                                <button type="submit" class="btn bg-cyan waves-effect">SAVE CHANGES</button>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Delete Confirmation Modal -->
+                            <div class="modal fade" id="deleteModal{{ service.id }}" tabindex="-1" role="dialog">
+                                <div class="modal-dialog modal-sm" role="document">
+                                    <div class="modal-content">
+                                        <div class="modal-header bg-red">
+                                            <h4 class="modal-title p-b-10" id="deleteModalLabel">DELETE SERVICE</h4>
+                                        </div>
+                                        <div class="modal-body">
+                                            Are you sure you want to delete this <span class="font-bold">{{ service.title }}</span> service?
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn bg-grey waves-effect" data-dismiss="modal">CANCEL</button>
+                                            <a href="{% url 'delete_service' service.id %}" class="btn btn-danger waves-effect">DELETE</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        {% empty %}
+                            <div class="font-15 text-center">No Services Available</div>
+                        {% endfor %}
                     </div>
-
-                    {% empty %}
-                    <div class="font-15 text-center">No Services Available</div>
-                    {% endfor %}
                 </div>
-            </div>
+            </div> <!-- #END# Custom Content -->
         </div>
-        <!-- #END# Custom Content -->
-    </div>
-</section>
-
+    </section>
 {% endblock %}

@@ -1,35 +1,37 @@
+<!-- INACTIVE HTML FILE -->
+<!-- EMAIL REMINDER TEMPLATE -->
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Appointment Reminder</title>
-</head>
-<body style="font-family: Arial, sans-serif; line-height: 1.6; color: #333; max-width: 600px; margin: 0 auto; padding: 20px;">
-    <div style="background-color: #0D6EFD; color: white; text-align: center; padding: 10px;">
-        <h1>Appointment Reminder - Jaylon Dental Clinic</h1>
-    </div>
-    <div style="background-color: #f9f9f9; border: 1px solid #ddd; padding: 20px; border-radius: 5px;">
-        <p>Dear {{appointment.user.first_name}},</p>
-        <p>This is a friendly reminder about your upcoming appointment at Jaylon Dental Clinic. Here are the details:</p>
-        <table style="width: 100%; border-collapse: collapse; margin-top: 20px;">
-            <tr>
-                <th style="text-align: left; padding: 10px; border-bottom: 1px solid #ddd; background-color: #f2f2f2;">Service</th>
-                <td style="padding: 10px; border-bottom: 1px solid #ddd;">{{appointment.service.title}}</td>
-            </tr>
-            <tr>
-                <th style="text-align: left; padding: 10px; border-bottom: 1px solid #ddd; background-color: #f2f2f2;">Date</th>
-                <td style="padding: 10px; border-bottom: 1px solid #ddd;">{{appointment.date|date:"F d, Y"}}</td>
-            </tr>
-            <tr>
-                <th style="text-align: left; padding: 10px; border-bottom: 1px solid #ddd; background-color: #f2f2f2;">Time</th>
-                <td style="padding: 10px; border-bottom: 1px solid #ddd;">{{appointment.start_time|time:"g:i A"}} - {{appointment.end_time|time:"g:i A"}}</td>
-            </tr>
-        </table>
-        <p style="margin-top: 20px;">We look forward to seeing you soon! If you need to reschedule or have any questions, please contact us as soon as possible.</p>
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Appointment Reminder</title>
+    </head>
+    <body style="font-family: Arial, sans-serif; line-height: 1.6; color: #333; max-width: 600px; margin: 0 auto; padding: 20px;">
+        <div style="background-color: #0D6EFD; color: white; text-align: center; padding: 10px;">
+            <h1>Appointment Reminder - Jaylon Dental Clinic</h1>
+        </div>
+        <div style="background-color: #f9f9f9; border: 1px solid #ddd; padding: 20px; border-radius: 5px;">
+            <p>Dear {{appointment.user.first_name}},</p>
+            <p>This is a friendly reminder about your upcoming appointment at Jaylon Dental Clinic. Here are the details:</p>
+            <table style="width: 100%; border-collapse: collapse; margin-top: 20px;">
+                <tr>
+                    <th style="text-align: left; padding: 10px; border-bottom: 1px solid #ddd; background-color: #f2f2f2;">Service</th>
+                    <td style="padding: 10px; border-bottom: 1px solid #ddd;">{{appointment.service.title}}</td>
+                </tr>
+                <tr>
+                    <th style="text-align: left; padding: 10px; border-bottom: 1px solid #ddd; background-color: #f2f2f2;">Date</th>
+                    <td style="padding: 10px; border-bottom: 1px solid #ddd;">{{appointment.date|date:"F d, Y"}}</td>
+                </tr>
+                <tr>
+                    <th style="text-align: left; padding: 10px; border-bottom: 1px solid #ddd; background-color: #f2f2f2;">Time</th>
+                    <td style="padding: 10px; border-bottom: 1px solid #ddd;">{{appointment.start_time|time:"g:i A"}} - {{appointment.end_time|time:"g:i A"}}</td>
+                </tr>
+            </table>
+            <p style="margin-top: 20px;">We look forward to seeing you soon! If you need to reschedule or have any questions, please contact us as soon as possible.</p>
 
-        <p>Thank you for choosing Jaylon Dental Clinic for your dental care needs.</p>
-        <p>Best regards,<br>The Jaylon Dental Clinic Team</p>
-    </div>
-</body>
+            <p>Thank you for choosing Jaylon Dental Clinic for your dental care needs.</p>
+            <p>Best regards,<br>The Jaylon Dental Clinic Team</p>
+        </div>
+    </body>
 </html>

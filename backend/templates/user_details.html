@@ -1,294 +1,299 @@
 {% extends "backend_base.html" %}
 {% load static %}
 {% block content %}
-
-
-<section class="content">
-    <div class="container-fluid">
-        <!-- Exportable Table -->
-        <div class="card">
-            <div class="header" style="display: flex; justify-content: space-between; align-items: center;">
-                <h2>ACCOUNT DETAILS for {{ user.first_name }} {{ user.last_name }}</h2>
-                <button type="button" class="btn btn-danger btn-sm waves-effect" data-toggle="modal" data-target="#deleteUserModal">
-                    <i class="material-icons">delete</i><span>DELETE ACCOUNT</span>
-                </button>
-            </div>
-
-            <!-- Delete Confirmation Modal -->
-            <div class="modal fade" id="deleteUserModal" tabindex="-1" role="dialog">
-                <div class="modal-dialog modal-sm" role="document">
-                    <div class="modal-content">
-                        <div class="modal-header bg-red">
-                            <h4 class="modal-title p-b-10" id="deleteUserModalLabel">DELETE USER</h4>
-                        </div>
-                        <div class="modal-body">
-                            Are you sure you want to delete this user <span class="font-bold">{{ user.first_name }} {{ user.last_name }}</span>?
-                        </div>
-                        <div class="modal-footer">
-                            <button type="button" class="btn bg-grey waves-effect" data-dismiss="modal">CANCEL</button>
-                            <a href="{% url 'delete_user' user.id %}" class="btn btn-danger waves-effect">DELETE</a>
-                        </div>
-                    </div>
+    <section class="content">
+        <div class="container-fluid">
+            <!-- Exportable Table -->
+            <div class="card">
+                <div class="header" style="display: flex; justify-content: space-between; align-items: center;">
+                    <!-- ACCOUNT DETAILS of {{ user.first_name }} {{ user.last_name }} -->
+                    <h2>ACCOUNT DETAILS</h2>
+                    <button type="button" class="btn btn-danger btn-sm waves-effect" data-toggle="modal" data-target="#deleteUserModal">
+                        <i class="material-icons">delete</i><span>DELETE ACCOUNT</span>
+                    </button>
                 </div>
-            </div>
 
-            <div class="body">
-                <div class="row clearfix">
-                    <div class="col-sm-12 col-md-5">
-                        <div class="card">
-                            <div class="header bg-cyan">
-                                <h2>EDIT USER</h2>
+                <!-- Delete Confirmation Modal -->
+                <div class="modal fade" id="deleteUserModal" tabindex="-1" role="dialog">
+                    <div class="modal-dialog modal-sm" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header bg-red">
+                                <h4 class="modal-title p-b-10" id="deleteUserModalLabel">DELETE USER</h4>
                             </div>
-                            <div class="body">
-                                <form method="POST" enctype="multipart/form-data">
-                                    {% csrf_token %}
-                                    <!-- Form fields -->
-                                    <div class="row clearfix">
-                                        <div class="col-sm-12 col-md-6">
-                                            <label for="first_name">First Name</label>
-                                            <div class="form-group">
-                                                <div class="form-line">
-                                                    <input type="text" id="first_name" name="first_name"
-                                                           class="form-control" value="{{ user.first_name }}"
-                                                           placeholder="Write the first name"
-                                                           required>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="col-sm-12 col-md-6">
-                                            <label for="last_name">Last Name</label>
-                                            <div class="form-group">
-                                                <div class="form-line">
-                                                    <input type="text" id="last_name" name="last_name"
-                                                           class="form-control" value="{{ user.last_name }}"
-                                                           placeholder="Write the last name"
-                                                           required>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <!-- Additional form fields -->
-                                    <div class="row clearfix">
-                                        <div class="col-sm-12 col-md-6">
-                                            <label for="email">Email Address</label>
-                                            <div class="form-group">
-                                                <div class="form-line">
-                                                    <input type="email" id="email" name="email"
-                                                           class="form-control" value="{{ user.email }}"
-                                                           placeholder="Write the email address" required>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="col-sm-12 col-md-6">
-                                            <label for="phone_number">Phone Number</label>
-                                            <div class="form-group">
-                                                <div class="form-line">
-                                                    <input type="number" id="phone_number" name="phone_number"
-                                                           class="form-control" value="{{ user.phone_number }}"
-                                                           placeholder="Write the phone number"
-                                                           required>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <!-- Sex, Address, Birthday, and Age fields -->
-                                    <div class="row clearfix">
-                                        <div class="col-sm-12 col-md-6">
-                                            <div class="form-group">
-                                                <label>Sex</label><br>
-                                                <div class="form-check form-check-inline">
-                                                    <input class="form-check-input" type="radio" name="sex" id="male"
-                                                           value="Male" {% if user.sex == 'Male' %}checked{% endif %}
-                                                    required>
-                                                    <label class="form-check-label" for="male">Male</label>
-                                                </div>
-                                                <div class="form-check form-check-inline">
-                                                    <input class="form-check-input" type="radio" name="sex" id="female"
-                                                           value="Female" {% if user.sex == 'Female' %}checked{% endif %}
-                                                    required>
-                                                    <label class="form-check-label" for="female">Female</label>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="col-sm-12 col-md-6">
-                                            <label for="current_address">Current Address</label>
-                                            <div class="form-group">
-                                                <div class="form-line">
-                                                        <textarea id="current_address" rows="2" name="current_address"
-                                                                  class="form-control no-resize"
-                                                                  placeholder="Write the current address"
-                                                                  required>{{ user.current_address }}</textarea>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <!-- Birthday and Age fields -->
-                                    <div class="row clearfix">
-                                        <div class="col-sm-12 col-md-6">
-                                            <label for="birthday">Birthday</label>
-                                            <div class="form-group">
-                                                <div class="form-line">
-                                                    <input type="date" id="birthday" name="birthday"
-                                                           class="form-control" value="{{ user.birthday|date:'Y-m-d' }}"
-                                                           required>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="col-sm-12 col-md-6">
-                                            <label for="age">Age</label>
-                                            <div class="form-group">
-                                                <div class="form-line">
-                                                    <input type="number" id="age" name="age" class="form-control"
-                                                           value="{{ user.age }}"
-                                                           placeholder="Write the age" required>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <!-- Password fields -->
-                                    <div class="row clearfix">
-                                        <div class="col-sm-12 col-md-6">
-                                            <label for="password">*Change Password</label>
-                                            <div class="form-group">
-                                                <div class="form-line">
-                                                    <input type="password" id="password" name="password"
-                                                           class="form-control"
-                                                           placeholder="New password (leave blank to keep current)">
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="col-sm-12 col-md-6">
-                                            <label for="confirm_password">*Confirm Password</label>
-                                            <div class="form-group">
-                                                <div class="form-line">
-                                                    <input type="password" id="confirm_password"
-                                                           name="confirm_password"
-                                                           class="form-control" placeholder="Confirm password">
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                    <div style="display: flex; justify-content: end; gap: 5px;">
-                                        <a href="{% url 'accounts' %}" class="btn bg-light waves-effect">Back to
-                                            Accounts</a>
-                                        <button type="submit" class="btn bg-cyan waves-effect">Save Changes</button>
-                                    </div>
-                                </form>
+                            <div class="modal-body">
+                                Are you sure you want to delete this user <span class="font-bold">{{ user.first_name }} {{ user.last_name }}</span>?
                             </div>
-                        </div>
-                    </div>
-
-                    <!-- Medical Questionnaire -->
-                    <div class="col-sm-12 col-md-7">
-                        <div class="card">
-                            <div class="header bg-cyan">
-                                <h2>MEDICAL QUESTIONNAIRE</h2>
-                            </div>
-                            <div class="body">
-                                <div class="table-responsive">
-                                    <table class="table table-hover">
-                                        <tbody>
-                                            {% if medical_questionnaire %}
-                                                {% for question, answer in medical_questionnaire_data %}
-                                                <tr>
-                                                    <td>{{ question }}</td>
-                                                    <td>
-                                                        {% if answer == True %}
-                                                            <span class="badge bg-green">Yes</span>
-                                                        {% elif answer == False %}
-                                                            <span class="badge bg-red">No</span>
-                                                        {% else %}
-                                                            <span class="badge bg-blue">{{ answer }}</span>
-                                                        {% endif %}
-                                                    </td>
-                                                </tr>
-                                                {% endfor %}
-                                            {% else %}
-                                                <tr>
-                                                    <td colspan="2" class="text-center"><strong>The user hasn't filled out the questionnaire yet.</strong></td>
-                                                </tr>
-                                            {% endif %}
-                                        </tbody>
-                                    </table>
-                                </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn bg-grey waves-effect" data-dismiss="modal">CANCEL</button>
+                                <a href="{% url 'delete_user' user.id %}" class="btn btn-danger waves-effect">DELETE</a>
                             </div>
                         </div>
                     </div>
                 </div>
-                <!-- Appointment History -->
-                <div class="card">
-                            <div class="header" style="display: flex; justify-content: space-between; align-items: center;">
-                                <h2>APPOINTMENTS HISTORY</h2>
-                                <button type="button" class="btn bg-cyan btn-sm waves-effect" data-toggle="modal"
-                                        data-target="#AddModal"><i class="material-icons">add</i>
-                                    <span>CREATE APPOINTMENT</span>
-                                </button>
 
-                                <!-- Create Appointment Modal -->
-                                <div class="modal fade" id="AddModal" tabindex="-1" role="dialog">
-                                    <div class="modal-dialog" role="document">
-                                        <div class="modal-content">
-                                            <div class="modal-header bg-cyan">
-                                                <h4 class="modal-title p-b-10">CREATE APPOINTMENT for {{ user.first_name }} {{ user.last_name }}</h4>
+                <div class="body">
+                    <div class="row clearfix">
+                        <div class="col-sm-12 col-md-5">
+                            <div class="card">
+                                <div class="header bg-cyan">
+                                    <h2>EDIT USER</h2>
+                                </div>
+                                <div class="body">
+                                    <form method="POST" enctype="multipart/form-data">
+                                        {% csrf_token %}
+                                        <!-- First Name and Last Name form fields -->
+                                        <div class="row clearfix">
+                                            <div class="col-sm-12 col-md-6">
+                                                <label for="first_name">First Name</label>
+                                                <div class="form-group">
+                                                    <div class="form-line">
+                                                        <input type="text" id="first_name" name="first_name"
+                                                               class="form-control" value="{{ user.first_name }}"
+                                                               placeholder="Write the first name"
+                                                               required
+                                                        >
+                                                    </div>
+                                                </div>
                                             </div>
-                                            <form method="POST" enctype="multipart/form-data">
-                                                {% csrf_token %}
-                                                <div class="modal-body" style="padding-bottom: 0px;">
-
-                                                    <label for="user">User</label>
-                                                    <div class="form-group">
-                                                        <div class="form-line">
-                                                            <input type="text" class="form-control" value="{{ user }}" id="user" disabled>
-                                                        </div>
-                                                    </div>
-                                                    <label for="serviceSelect">Service</label>
-                                                    <div class="form-group">
-                                                        <select class="form-control show-tick" name="service" id="serviceSelect" required>
-                                                            <option value="">--Select Service--</option>
-                                                            {% for service in services %}
-                                                                <option value="{{ service.id }}">{{ service.title }}</option>
-                                                            {% endfor %}
-                                                        </select>
-                                                    </div>
-                                                    <label for="dateInput">Date</label>
-                                                    <div class="form-group">
-                                                        <div class="form-line">
-                                                            <input type="date" class="form-control" name="date" id="dateInput" placeholder="--Select Date--" required>
-                                                        </div>
-                                                    </div>
-                                                    <label for="timeSlotSelect">Time</label>
-                                                    <div class="form-group">
-                                                        <select class="form-control show-tick" name="time_slot" id="timeSlotSelect" required>
-                                                            <option value="">--Select Time--</option>
-                                                        </select>
-                                                    </div>
-                                                    <label for="status">Status</label>
-                                                    <div class="form-group">
-                                                        <select class="form-control show-tick" name="status" id="status" required>
-                                                            <option value="">--Select Status--</option>
-                                                            <option value="Pending">Pending</option>
-                                                            <option value="Approved">Approved</option>
-                                                            <option value="Cancelled">Cancelled</option>
-                                                        </select>
+                                            <div class="col-sm-12 col-md-6">
+                                                <label for="last_name">Last Name</label>
+                                                <div class="form-group">
+                                                    <div class="form-line">
+                                                        <input type="text" id="last_name" name="last_name"
+                                                               class="form-control" value="{{ user.last_name }}"
+                                                               placeholder="Write the last name"
+                                                               required
+                                                        >
                                                     </div>
                                                 </div>
-                                                <div class="modal-footer">
-                                                    <button type="button" class="btn bg-grey waves-effect"
-                                                            data-dismiss="modal">
-                                                        CANCEL
-                                                    </button>
-                                                    <button type="submit" class="btn bg-cyan waves-effect">SUBMIT</button>
-                                                </div>
-                                            </form>
+                                            </div>
                                         </div>
+                                        <!-- Email Address and Phon Number form fields -->
+                                        <div class="row clearfix">
+                                            <div class="col-sm-12 col-md-6">
+                                                <label for="email">Email Address</label>
+                                                <div class="form-group">
+                                                    <div class="form-line">
+                                                        <input type="email" id="email" name="email"
+                                                               class="form-control" value="{{ user.email }}"
+                                                               placeholder="Write the email address" required
+                                                        >
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-12 col-md-6">
+                                                <label for="phone_number">Phone Number</label>
+                                                <div class="form-group">
+                                                    <div class="form-line">
+                                                        <input type="number" id="phone_number" name="phone_number"
+                                                               class="form-control" value="{{ user.phone_number }}"
+                                                               placeholder="Write the phone number"
+                                                               required
+                                                        >
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <!-- Sex and Current Address form fields -->
+                                        <div class="row clearfix">
+                                            <div class="col-sm-12 col-md-6">
+                                                <div class="form-group">
+                                                    <label>Sex</label><br>
+                                                    <div class="form-check form-check-inline">
+                                                        <input class="form-check-input" type="radio" name="sex" id="male" value="Male"
+                                                               {% if user.sex == 'Male' %}checked{% endif %} required>
+                                                        <label class="form-check-label" for="male">Male</label>
+                                                    </div>
+                                                    <div class="form-check form-check-inline">
+                                                        <input class="form-check-input" type="radio" name="sex" id="female" value="Female"
+                                                               {% if user.sex == 'Female' %}checked{% endif %} required>
+                                                        <label class="form-check-label" for="female">Female</label>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-12 col-md-6">
+                                                <label for="current_address">Current Address</label>
+                                                <div class="form-group">
+                                                    <div class="form-line">
+                                                            <textarea id="current_address" rows="2" name="current_address"
+                                                                      class="form-control no-resize"
+                                                                      placeholder="Write the current address"
+                                                                      required>{{ user.current_address }}
+                                                            </textarea>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <!-- Birthday and Age form fields -->
+                                        <div class="row clearfix">
+                                            <div class="col-sm-12 col-md-6">
+                                                <label for="birthday">Birthday</label>
+                                                <div class="form-group">
+                                                    <div class="form-line">
+                                                        <input type="date" id="birthday" name="birthday"
+                                                               class="form-control" value="{{ user.birthday|date:'Y-m-d' }}"
+                                                               required
+                                                        >
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-12 col-md-6">
+                                                <label for="age">Age</label>
+                                                <div class="form-group">
+                                                    <div class="form-line">
+                                                        <input type="number" id="age" name="age" class="form-control"
+                                                               value="{{ user.age }}"
+                                                               placeholder="Write the age" required
+                                                        >
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <!-- Password fields -->
+                                        <div class="row clearfix">
+                                            <div class="col-sm-12 col-md-6">
+                                                <label for="password">*Change Password</label>
+                                                <div class="form-group">
+                                                    <div class="form-line">
+                                                        <input type="password" id="password" name="password"
+                                                               class="form-control"
+                                                               placeholder="New password (leave blank to keep current)"
+                                                        >
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-12 col-md-6">
+                                                <label for="confirm_password">*Confirm Password</label>
+                                                <div class="form-group">
+                                                    <div class="form-line">
+                                                        <input type="password" id="confirm_password"
+                                                               name="confirm_password"
+                                                               class="form-control" placeholder="Confirm password"
+                                                        >
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div style="display: flex; justify-content: end; gap: 5px;">
+                                            <a href="{% url 'accounts' %}" class="btn bg-light waves-effect">Back to
+                                                Accounts</a>
+                                            <button type="submit" class="btn bg-cyan waves-effect">Save Changes</button>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Medical Questionnaire -->
+                        <div class="col-sm-12 col-md-7">
+                            <div class="card">
+                                <div class="header bg-cyan">
+                                    <h2>MEDICAL INFORMATION</h2>
+                                </div>
+                                <div class="body">
+                                    <div class="table-responsive">
+                                        <table class="table table-hover">
+                                            <tbody>
+                                                {% if medical_questionnaire %}
+                                                    {% for question, answer in medical_questionnaire_data %}
+                                                        <tr>
+                                                            <td>{{ question }}</td>
+                                                            <td>
+                                                                {% if answer == True %}
+                                                                    <span class="badge bg-green">Yes</span>
+                                                                {% elif answer == False %}
+                                                                    <span class="badge bg-red">No</span>
+                                                                {% else %}
+                                                                    <span class="badge bg-blue">{{ answer }}</span>
+                                                                {% endif %}
+                                                            </td>
+                                                        </tr>
+                                                    {% endfor %}
+                                                {% else %}
+                                                    <tr>
+                                                        <td colspan="2" class="text-center"><strong>The user hasn't filled out the questionnaire yet.</strong></td>
+                                                    </tr>
+                                                {% endif %}
+                                            </tbody>
+                                        </table>
                                     </div>
                                 </div>
                             </div>
-                            <div class="body">
-                                <div class="table-responsive">
-                                    <table class="table table-bordered table-striped table-hover dataTable js-exportable">
-                                        <thead>
+                        </div>
+                    </div>
+                    <!-- Appointment History -->
+                    <div class="card">
+                        <div class="header" style="display: flex; justify-content: space-between; align-items: center;">
+                            <h2>APPOINTMENTS HISTORY</h2>
+                            <button type="button" class="btn bg-cyan btn-sm waves-effect" data-toggle="modal"
+                                    data-target="#AddModal"><i class="material-icons">add</i>
+                                <span>CREATE APPOINTMENT</span>
+                            </button>
+
+                            <!-- Create Appointment Modal -->
+                            <div class="modal fade" id="AddModal" tabindex="-1" role="dialog">
+                                <div class="modal-dialog" role="document">
+                                    <div class="modal-content">
+                                        <div class="modal-header bg-cyan">
+                                            <h4 class="modal-title p-b-10">CREATE APPOINTMENT for {{ user.first_name }} {{ user.last_name }}</h4>
+                                        </div>
+                                        <form method="POST" enctype="multipart/form-data">
+                                            {% csrf_token %}
+                                            <div class="modal-body" style="padding-bottom: 0px;">
+                                                <label for="user">User</label>
+                                                <div class="form-group">
+                                                    <div class="form-line">
+                                                        <input type="text" class="form-control" value="{{ user }}" id="user" disabled>
+                                                    </div>
+                                                </div>
+                                                <label for="serviceSelect">Service</label>
+                                                <div class="form-group">
+                                                    <select class="form-control show-tick" name="service" id="serviceSelect" required>
+                                                        <option value="">--Select Service--</option>
+                                                        {% for service in services %}
+                                                        <option value="{{ service.id }}">{{ service.title }}</option>
+                                                        {% endfor %}
+                                                    </select>
+                                                </div>
+                                                <label for="dateInput">Date</label>
+                                                <div class="form-group">
+                                                    <div class="form-line">
+                                                        <input type="date" class="form-control" name="date" id="dateInput" placeholder="--Select Date--" required>
+                                                    </div>
+                                                </div>
+                                                <label for="timeSlotSelect">Time</label>
+                                                <div class="form-group">
+                                                    <select class="form-control show-tick" name="time_slot" id="timeSlotSelect" required>
+                                                        <option value="">--Select Time--</option>
+                                                    </select>
+                                                </div>
+                                                <label for="status">Status</label>
+                                                <div class="form-group">
+                                                    <select class="form-control show-tick" name="status" id="status" required>
+                                                        <option value="">--Select Status--</option>
+                                                        <option value="Pending">Pending</option>
+                                                        <option value="Approved">Approved</option>
+                                                        <option value="Cancelled">Cancelled</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn bg-grey waves-effect"
+                                                        data-dismiss="modal">
+                                                    CANCEL
+                                                </button>
+                                                <button type="submit" class="btn bg-cyan waves-effect">SUBMIT</button>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="body">
+                            <div class="table-responsive">
+                                <table class="table table-bordered table-striped table-hover dataTable js-exportable">
+                                    <thead>
                                         <tr>
                                             <th>Service</th>
                                             <th>Date</th>
@@ -297,79 +302,73 @@
                                             <th>Attended</th>
                                             <th>Action</th>
                                         </tr>
-                                        </thead>
-                                        <tbody>
+                                    </thead>
+                                    <tbody>
                                         {% for appointment in appointments %}
-                                        <tr>
-                                            <td>{{ appointment.service.title }}</td>
-                                            <td>{{ appointment.date }}</td>
-                                            <td>{{ appointment.start_time }} - {{ appointment.end_time }}</td>
-                                            <td>
-                                                <form method="POST"
-                                                      action="{% url 'update_appointment_status' appointment.id %}"
-                                                      style="display: inline;">
-                                                    {% csrf_token %}
-                                                    <select name="status" onchange="this.form.submit()">
-                                                        <option value="Pending" {% if appointment.status == 'Pending' %}
-                                                        selected{% endif %}>Pending</option>
-                                                        <option value="Approved" {% if appointment.status == 'Approved' %}
-                                                        selected{% endif %}>Approved</option>
-                                                        <option value="Cancelled" {% if appointment.status == 'Cancelled' %}
-                                                        selected{% endif %}>Cancelled</option>
-                                                    </select>
-                                                </form>
-                                            </td>
-                                            <td class="text-center">
-                                                <form method="post" action="{% url 'update_appointment_attendance' appointment.id %}">
-                                                {% csrf_token %}
-                                                <div class="form-check">
-                                                    <input type="checkbox"
-                                                           name="attended"
-                                                           id="check-in-{{ appointment.id }}"
-                                                           class="filled-in"
-                                                           {% if appointment.attended %}checked{% endif %}
-                                                           onchange="this.form.submit()"
-                                                           {% if appointment.status != 'Approved' %}disabled{% endif %}>
-                                                    <label class="form-check-label" for="check-in-{{ appointment.id }}"></label>
-                                                </div>
-
-                                                </form>
-                                            </td>
-                                            <td>
-                                                <button type="button" class="btn btn-danger btn-xs" data-toggle="modal" data-target="#deleteModal{{ appointment.id }}">
-                                                    <i class="material-icons">delete</i>
-                                                </button>
-                                            </td>
-                                        </tr>
-
-                                        <!-- Delete Confirmation Modal -->
-                                        <div class="modal fade" id="deleteModal{{ appointment.id }}" tabindex="-1" role="dialog">
-                                            <div class="modal-dialog modal-sm" role="document">
-                                                <div class="modal-content">
-                                                    <div class="modal-header bg-red">
-                                                        <h4 class="modal-title p-b-10" id="deleteModalLabel">DELETE APPOINTMENT</h4>
-                                                    </div>
-                                                    <div class="modal-body">
-                                                        Are you sure you want to delete this appointment for <span class="font-bold">{{ appointment.user.first_name }} {{ appointment.user.last_name }}</span>?
-                                                    </div>
-                                                    <div class="modal-footer">
-                                                        <button type="button" class="btn bg-grey waves-effect" data-dismiss="modal">CANCEL</button>
-                                                        <a href="{% url 'delete_appointment' appointment.id %}" class="btn btn-danger waves-effect">DELETE</a>
+                                            <tr>
+                                                <td>{{ appointment.service.title }}</td>
+                                                <td>{{ appointment.date }}</td>
+                                                <td>{{ appointment.start_time }} - {{ appointment.end_time }}</td>
+                                                <td>
+                                                    <form method="POST"
+                                                          action="{% url 'update_appointment_status' appointment.id %}" style="display: inline;">
+                                                            {% csrf_token %}
+                                                            <select name="status" onchange="this.form.submit()">
+                                                                <option value="Pending" {% if appointment.status == 'Pending' %}
+                                                                selected{% endif %}>Pending</option>
+                                                                <option value="Approved" {% if appointment.status == 'Approved' %}
+                                                                selected{% endif %}>Approved</option>
+                                                                <option value="Cancelled" {% if appointment.status == 'Cancelled' %}
+                                                                selected{% endif %}>Cancelled</option>
+                                                            </select>
+                                                    </form>
+                                                </td>
+                                                <td class="text-center">
+                                                    <form method="post" action="{% url 'update_appointment_attendance' appointment.id %}">
+                                                        {% csrf_token %}
+                                                        <div class="form-check">
+                                                            <input type="checkbox"
+                                                                   name="attended"
+                                                                   id="check-in-{{ appointment.id }}"
+                                                                   class="filled-in"
+                                                                   {% if appointment.attended %}checked{% endif %}
+                                                                   onchange="this.form.submit()"
+                                                                   {% if appointment.status != 'Approved' %}disabled{% endif %}>
+                                                            <label class="form-check-label" for="check-in-{{ appointment.id }}"></label>
+                                                        </div>
+                                                    </form>
+                                                    </td>
+                                                    <td>
+                                                        <button type="button" class="btn btn-danger btn-xs" data-toggle="modal" data-target="#deleteModal{{ appointment.id }}">
+                                                            <i class="material-icons">delete</i>
+                                                        </button>
+                                                    </td>
+                                            </tr>
+                                            <!-- Delete Confirmation Modal -->
+                                            <div class="modal fade" id="deleteModal{{ appointment.id }}" tabindex="-1" role="dialog">
+                                                <div class="modal-dialog modal-sm" role="document">
+                                                    <div class="modal-content">
+                                                        <div class="modal-header bg-red">
+                                                            <h4 class="modal-title p-b-10" id="deleteModalLabel">DELETE APPOINTMENT</h4>
+                                                        </div>
+                                                        <div class="modal-body">
+                                                            Are you sure you want to delete this appointment for <span class="font-bold">{{ appointment.user.first_name }} {{ appointment.user.last_name }}</span>?
+                                                        </div>
+                                                        <div class="modal-footer">
+                                                            <button type="button" class="btn bg-grey waves-effect" data-dismiss="modal">CANCEL</button>
+                                                            <a href="{% url 'delete_appointment' appointment.id %}" class="btn btn-danger waves-effect">DELETE</a>
+                                                        </div>
                                                     </div>
                                                 </div>
                                             </div>
-                                        </div>
-
                                         {% endfor %}
-                                        </tbody>
-                                    </table>
-                                </div>
+                                    </tbody>
+                                </table>
                             </div>
                         </div>
-            </div>
+                    </div>
+                </div>
+            </div> <!-- #END# Exportable Table -->
         </div>
-        <!-- #END# Exportable Table -->
-    </div>
-</section>
-
+    </section>
 {% endblock %}
