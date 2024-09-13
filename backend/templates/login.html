@@ -4,7 +4,7 @@
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
-        <title>Login - Jaylon Dental Clinic</title>
+        <title>Administrator Login</title>
         <link rel="icon" href="{% static 'images/favicon.png' %}" type="image/x-icon">
         <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
         <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
@@ -20,6 +20,9 @@
                 justify-content: center;
                 min-height: 100vh;
                 margin: 0;
+            }
+            .customized {
+                background-color: #57707a;
             }
             .login-container {
                 background-color: #ffffff;
@@ -46,7 +49,7 @@
     </head>
     <body>
         <div class="login-container">
-            <div class="text-center py-4" style="color: #ffffff; background-color: #57707a;">
+            <div class="text-center py-4 customized" style="color: #ffffff;">
                 <img src="{% static 'images/favicon.png' %}" alt="Jaylon Dental Clinic Logo" class="mb-1" style="max-width: 100px;">
                 <h4 class="m-0 fw-bold">Jaylon Dental Clinic</h4>
                 <small>Admin Login</small>
@@ -65,7 +68,7 @@
                         <label for="floatingPassword">Password</label>
                     </div>
 
-                    <button class="btn btn-primary w-100 py-2" type="submit">LOG IN</button>
+                    <button class="btn w-100 customized py-2" type="submit" style="color: white">LOG IN</button>
 
                     <div class="d-flex justify-content-between align-items-center mt-3 mx-1">
                         <div class="form-check">

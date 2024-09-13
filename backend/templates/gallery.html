@@ -1,62 +1,61 @@
 {% extends "backend_base.html" %}
 {% load static %}
 {% block content %}
-
-<section class="content">
-    <div class="container-fluid">
-        <!-- Image Gallery -->
-        <div class="card">
-            <div class="header" style="display: flex; justify-content: space-between; align-items: center;">
-                <h2>GALLERY</h2>
-                <form method="POST" enctype="multipart/form-data">
-                    {% csrf_token %}
-                    <div style="display: flex; justify-content: space-between; align-items: center;">
-                        <div class="form-line">
-                            <input type="file" class="form-control" name="image" accept="image/*" required>
-                        </div>
-                        <button type="submit" class="btn bg-cyan btn-sm m-l-10 waves-effect"><i
-                                class="material-icons">add_photo_alternate</i> <span>ADD IMAGE</span></button>
-                    </div>
-                </form>
-            </div>
-            <div class="body">
-                <div class="row clearfix">
-                    {% for image in images %}
-                    <div class="col-xs-6 col-sm-6 col-md-4 col-lg-3">
-                        <div class="image-container">
-                            <button type="button" class="badge-delete-button" data-toggle="modal" data-target="#deleteModal{{ image.id }}">
-                                <i class="material-icons">close</i>
+    <section class="content">
+        <div class="container-fluid">
+            <!-- Image Gallery -->
+            <div class="card">
+                <div class="header" style="display: flex; justify-content: space-between; align-items: center;">
+                    <h2>GALLERY</h2>
+                    <form method="POST" enctype="multipart/form-data">
+                        {% csrf_token %}
+                        <div style="display: flex; justify-content: space-between; align-items: center;">
+                            <div class="form-line">
+                                <input type="file" class="form-control" name="image" accept="image/*" required>
+                            </div>
+                            <button type="submit" class="btn bg-cyan btn-sm m-l-10 waves-effect"><i
+                                    class="material-icons">add_photo_alternate</i> <span>ADD IMAGE</span>
                             </button>
-                            <a href="{{ image.image.url }}">
-                                <img class="img-responsive thumbnail" src="{{ image.image.url }}" alt="Clinic Image {{ forloop.counter }}">
-                            </a>
                         </div>
-                    </div>
+                    </form>
+                </div>
+                <div class="body">
+                    <div class="row clearfix">
+                        {% for image in images %}
+                        <div class="col-xs-6 col-sm-6 col-md-4 col-lg-3">
+                            <div class="image-container">
+                                <button type="button" class="badge-delete-button" data-toggle="modal" data-target="#deleteModal{{ image.id }}">
+                                    <i class="material-icons">close</i>
+                                </button>
+                                <a href="{{ image.image.url }}">
+                                    <img class="img-responsive thumbnail" src="{{ image.image.url }}" alt="Clinic Image {{ forloop.counter }}">
+                                </a>
+                            </div>
+                        </div>
 
-                    <!-- Delete Confirmation Modal -->
-                    <div class="modal fade" id="deleteModal{{ image.id }}" tabindex="-1" role="dialog">
-                        <div class="modal-dialog modal-sm" role="document">
-                            <div class="modal-content">
-                                <div class="modal-header bg-red">
-                                    <h4 class="modal-title p-b-10" id="deleteModalLabel">DELETE IMAGE</h4>
-                                </div>
-                                <div class="modal-body">
-                                    Are you sure you want to <span class="font-bold">delete</span> this image?
-                                </div>
-                                <div class="modal-footer">
-                                    <button type="button" class="btn bg-grey waves-effect" data-dismiss="modal">CANCEL</button>
-                                    <a href="{% url 'delete_image' image.id %}" class="btn btn-danger waves-effect">DELETE</a>
+                        <!-- Delete Confirmation Modal -->
+                        <div class="modal fade" id="deleteModal{{ image.id }}" tabindex="-1" role="dialog">
+                            <div class="modal-dialog modal-sm" role="document">
+                                <div class="modal-content">
+                                    <div class="modal-header bg-red">
+                                        <h4 class="modal-title p-b-10" id="deleteModalLabel">DELETE IMAGE</h4>
+                                    </div>
+                                    <div class="modal-body">
+                                        Are you sure you want to <span class="font-bold">delete</span> this image?
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn bg-grey waves-effect" data-dismiss="modal">CANCEL</button>
+                                        <a href="{% url 'delete_image' image.id %}" class="btn btn-danger waves-effect">DELETE</a>
+                                    </div>
                                 </div>
                             </div>
                         </div>
+                        {% empty %}
+                            <div class="font-15 text-center">No Images Available</div>
+                        {% endfor %}
                     </div>
-                    {% empty %}
-                    <div class="font-15 text-center">No Images Available</div>
-                    {% endfor %}
                 </div>
             </div>
         </div>
-    </div>
-</section>
-
+    </section>
 {% endblock %}
