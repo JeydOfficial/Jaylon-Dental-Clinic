@@ -54,13 +54,35 @@
             .btn-login:hover {
                 background-color: #3a8fc7;
             }
+
+            /*KEYFRAMES*/
+            @keyframes colorAnimation {
+                0% {
+                        color: #8cb1b9;
+                }
+                20% {
+                        color: #a3c1c9;
+                }
+                40% {
+                        color: #b0d0d4;
+                }
+                60% {
+                        color: #c0d8da;
+                }
+                80% {
+                        color: #d2e3e5;
+                }
+                100% {
+                        color: #e3f0f1;
+                }
+            }
         </style>
     </head>
     <body>
         <div class="login-container">
             <div class="text-center py-4 customized-bg" style="color: #ffffff;">
                 <img src="{% static 'images/favicon.png' %}" alt="Jaylon Dental Clinic Logo" class="mb-1" style="max-width: 100px;">
-                <h4 class="m-0 fw-bold">Jaylon Dental Clinic</h4>
+                <h4 class="m-0 fw-bold" style="animation: colorAnimation 5s infinite alternate">Jaylon Dental Clinic</h4>
                 <small>Admin Login</small>
             </div>
             <div class="p-4">

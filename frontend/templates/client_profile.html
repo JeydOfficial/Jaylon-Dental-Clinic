@@ -138,13 +138,57 @@
             [data-aos="fade-left"].aos-animate {
                 transform: translateX(0);
             }
+
+            /*KEYFRAMES*/
+            @keyframes colorAnimation {
+                0% {
+                        color: #d98257;
+                }
+                20% {
+                        color: #a86776;
+                }
+                40% {
+                        color: #68829e;
+                }
+                60% {
+                        color: #f0af58;
+                }
+                80% {
+                        color: #8f9db8;
+                }
+                100% {
+                        color: #4b8f8c;
+                }
+            }
+
+            /*KEYFRAMES*/
+            @keyframes colorAnimation {
+                0% {
+                        color: #a899ab;
+                }
+                20% {
+                        color: #8b7e8f;
+                }
+                40% {
+                        color: #b0a3a8;
+                }
+                60% {
+                        color: #93788a;
+                }
+                80% {
+                        color: #6f7287;
+                }
+                100% {
+                        color: #6d6875;
+                }
+            }
         </style>
     </head>
     <body>
         <nav id="navbar-example2" class="navbar navbar-expand-lg sticky-top bg-white px-3">
             <div class="container-fluid">
-                <a class="navbar-brand" href="{% url 'client_dashboard' %}">
-                    <i class="fas fa-tooth mr-2 text-primary"></i>
+                <a class="navbar-brand" href="{% url 'client_dashboard' %}" style="animation: colorAnimation 5s infinite alternate">
+                    <i class="fas fa-tooth mr-2" style="animation: colorAnimation 5s infinite alternate"></i>
                     Jaylon Dental Clinic
                 </a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
@@ -202,7 +246,8 @@
         <div class="container my-4">
             <div class="text-center mb-4">
                 <h3 class="mb-3">Your Profile</h3>
-                <p class="text-muted">Keeping your information up-to-date helps us provide you with the best care possible.</p>
+                <p class="text-muted">Before updating your personal information, please take a moment to
+                review the following important details to ensure everything is accurate and up-to-date.</p>
             </div>
 
             <div class="row g-5">
@@ -263,7 +308,8 @@
                 <div class="col-md-6">
                     <div class="bg-white p-4 shadow rounded-lg border-top border-success border-5">
                         <h4 class="mb-4 text-success">Medical-Dental Questionnaire</h4>
-                        <p class="text-muted mb-4">Your health history is crucial for us to provide safe and effective dental care. Please answer the following questions honestly.</p>
+                        <p class="text-muted mb-4">Your safety is our top priority, and knowing your medical history helps
+                        us provide best, most personalized care for you. Please take a moment to answer the following questions <strong>honestly</strong>.</p>
                         <form method="post" action="{% url 'client_profile' %}">
                             {% csrf_token %}
                             {% for question in medical_questions %}

@@ -2,9 +2,11 @@
 {% load static %}
 <html lang="en">
     <head>
+        <title>Register | Jaylon Dental Clinic</title>
+
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Register - Jaylon Dental Clinic</title>
+
         <!-- Favicon-->
         <link rel="icon" href="{% static 'images/favicon.png' %}" type="image/x-icon">
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
@@ -17,21 +19,24 @@
         <style>
             body {
                 font-family: 'Poppins', sans-serif;
-                background-color: #7da0ca;
+                background-color: #d4bba9;
                 display: flex;
                 align-items: center;
                 justify-content: center;
                 min-height: 100vh;
                 margin: 0;
             }
+            .customized-bg {
+                background-color: #b79883;
+            }
             .btn:hover {
-                background-color: #416a93;
+                background-color: #d6bfa8;
             }
             .customized {
-                background-color: #5483b3;
+                background-color: #b79883;
             }
-            .font-color {
-                color: white;
+            .text-decoration-none:hover {
+                text-decoration: underline !important;
             }
             .register-container {
                 background-color: #ffffff;
@@ -44,15 +49,37 @@
             .text-decoration-none:hover {
                 text-decoration: underline !important;
             }
+
+            /*KEYFRAMES*/
+            @keyframes colorAnimation {
+                0% {
+                        color: #f2e6e1;
+                }
+                20% {
+                        color: #e5dcd0;
+                }
+                40% {
+                        color: #f6f1eb;
+                }
+                60% {
+                        color: #e3d0c0;
+                }
+                80% {
+                        color: #f9f4f0;
+                }
+                100% {
+                        color: #e0d3c1;
+                }
+            }
         </style>
     </head>
     <body>
-        <div class="register-container">
+        <div class="register-container" style="margin-top: 20px; margin-bottom: 20px">
             <div class="text-center py-3 customized-bg">
                 <img src="{% static 'images/favicon.png' %}" alt="Jaylon Dental Clinic Logo" class="mb-1"
                      style="max-width: 100px;">
-                <h3 class="m-0 fw-bold font-color">Jaylon Dental Clinic</h3>
-                <small class="font-color">Client Registration</small>
+                <h3 class="m-0 fw-bold" style="animation: colorAnimation 7s infinite alternate">Jaylon Dental Clinic</h3>
+                <small style="color: white">Client Registration</small>
             </div>
             <div class="px-4 pt-4">
                 <form method="post">

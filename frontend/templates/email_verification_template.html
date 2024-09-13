@@ -1,28 +1,28 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Verify Your Email</title>
-</head>
-<body style="font-family: Arial, sans-serif; line-height: 1.6; color: #333; max-width: 600px; margin: 0 auto; padding: 20px;">
-<div style="background-color: #0D6EFD; color: white; text-align: center; padding: 10px;">
-    <h1>Welcome to Jaylon Dental Clinic!</h1>
-</div>
-<div style="background-color: #f9f9f9; border: 1px solid #ddd; padding: 20px; border-radius: 5px;">
-    <p>Dear {{user.first_name}},</p>
-    <p>Thank you for registering with Jaylon Dental Clinic. To complete your registration and verify your email address,
-        please click the button below:</p>
-    <p style="text-align: center;">
-        <a href="{{verification_link}}"
-           style="display: inline-block; background-color: #0D6EFD; color: white; padding: 10px 20px; text-decoration: none; border-radius: 5px; margin-top: 20px;">Verify
-            Your Email</a>
-    </p>
-    <p>If the button above doesn't work, you can also copy and paste the following link into your browser:</p>
-    <p>{{verification_link}}</p>
-    <p>If you didn't create an account with us, please ignore this email.</p>
-    <p>We look forward to seeing you in Jaylon Dental Clinic!</p>
-    <p>Best regards,<br>The Jaylon Dental Clinic Team</p>
-</div>
-</body>
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Verify Your Email</title>
+    </head>
+    <body style="font-family: Arial, sans-serif; line-height: 1.6; color: #333; max-width: 600px; margin: 0 auto; padding: 20px;">
+        <div style="background-color: #0D6EFD; color: white; text-align: center; padding: 10px;">
+            <h1>Welcome to Jaylon Dental Clinic!</h1>
+        </div>
+        <div style="background-color: #f9f9f9; border: 1px solid #ddd; padding: 20px; border-radius: 5px;">
+            <p>Dear {{user.first_name}},</p>
+            <p>Thank you for registering with Jaylon Dental Clinic. To complete your registration and verify your email address,
+                please click the button below:</p>
+            <p style="text-align: center;">
+                <a href="{{verification_link}}"
+                   style="display: inline-block; background-color: #0D6EFD; color: white; padding: 10px 20px; text-decoration: none; border-radius: 5px; margin-top: 20px;">Verify
+                    Your Email</a>
+            </p>
+            <p>If the button above doesn't work, you can also copy and paste the following link into your browser:</p>
+            <p>{{verification_link}}</p>
+            <p>If you didn't create an account with us, please ignore this email.</p>
+            <p>We look forward to seeing you in Jaylon Dental Clinic!</p>
+            <p>Best regards,<br>The Jaylon Dental Clinic Team</p>
+        </div>
+    </body>
 </html>
