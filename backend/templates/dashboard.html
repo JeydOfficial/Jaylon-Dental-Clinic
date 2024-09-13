@@ -4,7 +4,7 @@
     <section class="content">
         <div class="container-fluid">
             <div class="block-header">
-                <h2>DASHBOARD</h2>
+                <h2 style="color: black !important">DASHBOARD</h2>
             </div>
 
             <!-- Widgets -->
@@ -80,7 +80,7 @@
             <!-- Exportable Table -->
             <div class="card">
                     <div class="header" style="display: flex; justify-content: space-between; align-items: center;">
-                        <h2>APPOINTMENT LIST</h2>
+                        <h2><strong>APPOINTMENT LIST</strong></h2>
                         <button type="button" class="btn bg-cyan btn-sm waves-effect" data-toggle="modal"
                                 data-target="#AddModal"><i class="material-icons">add</i>
                             <span>NEW APPOINTMENT</span>
@@ -163,78 +163,77 @@
                                 </thead>
                                 <tbody>
                                 {% for appointment in appointments %}
-                                <tr>
-                                    <td>{{ appointment.user.first_name }} {{ appointment.user.last_name }}</td>
-                                    <td>{{ appointment.service.title }}</td>
-                                    <td>{{ appointment.date }}</td>
-                                    <td>{{ appointment.start_time }} - {{ appointment.end_time }}</td>
-                                    <td>{{ appointment.user.current_address }}</td>
-                                    <td>{{ appointment.user.age }}</td>
-                                    <td>{{ appointment.user.phone_number }}</td>
-                                    <td>
-                                        <form method="POST"
-                                              action="{% url 'update_appointment_status' appointment.id %}"
-                                              style="display: inline;">
+                                    <tr>
+                                        <td>{{ appointment.user.first_name }} {{ appointment.user.last_name }}</td>
+                                        <td>{{ appointment.service.title }}</td>
+                                        <td>{{ appointment.date }}</td>
+                                        <td>{{ appointment.start_time }} - {{ appointment.end_time }}</td>
+                                        <td>{{ appointment.user.current_address }}</td>
+                                        <td>{{ appointment.user.age }}</td>
+                                        <td>{{ appointment.user.phone_number }}</td>
+                                        <td>
+                                            <form method="POST"
+                                                  action="{% url 'update_appointment_status' appointment.id %}"
+                                                  style="display: inline;">
+                                                {% csrf_token %}
+                                                <select name="status" onchange="this.form.submit()">
+                                                    <option value="Pending" {% if appointment.status == 'Pending' %}
+                                                    selected{% endif %}>Pending</option>
+                                                    <option value="Approved" {% if appointment.status == 'Approved' %}
+                                                    selected{% endif %}>Approved</option>
+                                                    <option value="Cancelled" {% if appointment.status == 'Cancelled' %}
+                                                    selected{% endif %}>Cancelled</option>
+                                                </select>
+                                            </form>
+                                        </td>
+                                        <td class="text-center">
+                                            <form method="post" action="{% url 'update_appointment_attendance' appointment.id %}">
                                             {% csrf_token %}
-                                            <select name="status" onchange="this.form.submit()">
-                                                <option value="Pending" {% if appointment.status == 'Pending' %}
-                                                selected{% endif %}>Pending</option>
-                                                <option value="Approved" {% if appointment.status == 'Approved' %}
-                                                selected{% endif %}>Approved</option>
-                                                <option value="Cancelled" {% if appointment.status == 'Cancelled' %}
-                                                selected{% endif %}>Cancelled</option>
-                                            </select>
-                                        </form>
-                                    </td>
-                                    <td class="text-center">
-                                        <form method="post" action="{% url 'update_appointment_attendance' appointment.id %}">
-                                        {% csrf_token %}
-                                        <div class="form-check">
-                                            <input type="checkbox"
-                                                   name="attended"
-                                                   id="check-in-{{ appointment.id }}"
-                                                   class="filled-in"
-                                                   {% if appointment.attended %}checked{% endif %}
-                                                   onchange="this.form.submit()"
-                                                   {% if appointment.status != 'Approved' %}disabled{% endif %}>
-                                            <label class="form-check-label" for="check-in-{{ appointment.id }}"></label>
-                                        </div>
-
-                                        </form>
-                                    </td>
-                                    <td>
-                                        <div style="display: flex;">
-                                            <a href="{% url 'user_details' appointment.user.id %}"
-                                               class="btn bg-cyan btn-xs"
-                                               style="margin: 2px;">
-                                                <i class="material-icons">visibility</i>
-                                            </a>
-                                            <button type="button" class="btn btn-danger btn-xs" style="margin: 2px;"
-                                                    data-toggle="modal" data-target="#deleteModal{{ appointment.id }}">
-                                                <i class="material-icons">delete</i>
-                                            </button>
-                                        </div>
-                                    </td>
-                                </tr>
-
-                                <!-- Delete Confirmation Modal -->
-                                <div class="modal fade" id="deleteModal{{ appointment.id }}" tabindex="-1" role="dialog">
-                                    <div class="modal-dialog modal-sm" role="document">
-                                        <div class="modal-content">
-                                            <div class="modal-header bg-red">
-                                                <h4 class="modal-title p-b-10" id="deleteModalLabel">DELETE APPOINTMENT</h4>
+                                            <div class="form-check">
+                                                <input type="checkbox"
+                                                       name="attended"
+                                                       id="check-in-{{ appointment.id }}"
+                                                       class="filled-in"
+                                                       {% if appointment.attended %}checked{% endif %}
+                                                       onchange="this.form.submit()"
+                                                       {% if appointment.status != 'Approved' %}disabled{% endif %}>
+                                                <label class="form-check-label" for="check-in-{{ appointment.id }}"></label>
                                             </div>
-                                            <div class="modal-body">
-                                                Are you sure you want to delete this appointment for <span class="font-bold">{{ appointment.user.first_name }} {{ appointment.user.last_name }}</span>?
+
+                                            </form>
+                                        </td>
+                                        <td>
+                                            <div style="display: flex;">
+                                                <a href="{% url 'user_details' appointment.user.id %}"
+                                                   class="btn bg-cyan btn-xs"
+                                                   style="margin: 2px;">
+                                                    <i class="material-icons">visibility</i>
+                                                </a>
+                                                <button type="button" class="btn btn-danger btn-xs" style="margin: 2px;"
+                                                        data-toggle="modal" data-target="#deleteModal{{ appointment.id }}">
+                                                    <i class="material-icons">delete</i>
+                                                </button>
                                             </div>
-                                            <div class="modal-footer">
-                                                <button type="button" class="btn bg-grey waves-effect" data-dismiss="modal">CANCEL</button>
-                                                <a href="{% url 'delete_appointment' appointment.id %}" class="btn btn-danger waves-effect">DELETE</a>
+                                        </td>
+                                    </tr>
+
+                                    <!-- Delete Confirmation Modal -->
+                                    <div class="modal fade" id="deleteModal{{ appointment.id }}" tabindex="-1" role="dialog">
+                                        <div class="modal-dialog modal-sm" role="document">
+                                            <div class="modal-content">
+                                                <div class="modal-header bg-red">
+                                                    <h4 class="modal-title p-b-10" id="deleteModalLabel">DELETE APPOINTMENT</h4>
+                                                </div>
+                                                <div class="modal-body">
+                                                    Are you sure you want to delete this appointment for <span class="font-bold">{{ appointment.user.first_name }} {{ appointment.user.last_name }}</span>?
+                                                </div>
+                                                <div class="modal-footer">
+                                                    <button type="button" class="btn bg-grey waves-effect" data-dismiss="modal">CANCEL</button>
+                                                    <a href="{% url 'delete_appointment' appointment.id %}" class="btn btn-danger waves-effect">DELETE</a>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
-                                </div>
-
                                 {% endfor %}
                                 </tbody>
                             </table>
@@ -248,7 +247,7 @@
                 <div class="col-md-6">
                     <div class="card">
                         <div class="header">
-                            <h2>MONTHLY APPOINTMENT ANALYSIS</h2>
+                            <h2><strong>MONTHLY APPOINTMENT ANALYSIS</strong></h2>
                         </div>
                         <div class="body">
                             <!-- Line Chart for Monthly Appointments -->
@@ -263,7 +262,7 @@
                 <div class="col-md-6">
                     <div class="card">
                         <div class="header">
-                            <h2>DAILY APPOINTMENT ANALYSIS</h2>
+                            <h2><strong>DAILY APPOINTMENT ANALYSIS</strong></h2>
                         </div>
                         <div class="body">
                             <!-- Bar Chart for Last 7 Days Appointments -->
@@ -272,9 +271,9 @@
                             </div>
                         </div>
                     </div>
-                </div>
-                <!-- #END# Bar Chart -->
+                </div> <!-- #END# Bar Chart -->
             </div>
         </div>
     </section>
+    </div>
 {% endblock %}

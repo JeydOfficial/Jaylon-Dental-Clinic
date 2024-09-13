@@ -121,6 +121,48 @@
             [data-aos="fade-left"].aos-animate {
                 transform: translateX(0);
             }
+
+            /*KEYFRAMES*/
+            @keyframes colorAnimation {
+                0% {
+                        color: #d98257;
+                }
+                20% {
+                        color: #a86776;
+                }
+                40% {
+                        color: #68829e;
+                }
+                60% {
+                        color: #f0af58;
+                }
+                80% {
+                        color: #8f9db8;
+                }
+                100% {
+                        color: #4b8f8c;
+                }
+            }
+            @keyframes bgAnimation {
+                0% {
+                        background-color: #d98257;
+                }
+                20% {
+                        background-color: #a86776;
+                }
+                40% {
+                        background-color: #68829e;
+                }
+                60% {
+                        background-color: #f0af58;
+                }
+                80% {
+                        background-color: #8f9db8;
+                }
+                100% {
+                        background-color: #4b8f8c;
+                }
+            }
         </style>
     </head>
     <body>
@@ -136,7 +178,8 @@
 
         <nav id="navbar-example2" class="navbar navbar-expand-lg sticky-top bg-white px-3">
             <div class="container-fluid">
-                <a class="navbar-brand" href="{% url 'client_dashboard' %}"><i class="fas fa-tooth mr-2 text-primary"></i>
+                <a class="navbar-brand" href="{% url 'client_dashboard' %}" style="animation: colorAnimation 5s infinite alternate">
+                    <i class="fas fa-tooth mr-2" style="animation: colorAnimation 5s infinite alternate"></i>
                     Jaylon Dental Clinic</a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
                         aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
@@ -163,15 +206,20 @@
                     <ul class="navbar-nav nav-pills">
                         {% if request.user.is_authenticated and not request.user.is_superuser %}
                             <li class="nav-item ms-auto">
-                                <a class="btn btn-outline-primary btn-sm" href="{% url 'client_profile' %}"><i
-                                        class="fas fa-user"></i> Profile</a>
-                                <a class="btn btn-outline-danger btn-sm" href="{% url 'client_logout' %}"><i
-                                        class="fas fa-sign-out-alt"></i> Logout</a>
+                                <a class="btn btn-outline-primary btn-sm"
+                                   href="{% url 'client_profile' %}">
+                                    <i class="fas fa-user"></i> Profile
+                                </a>
+                                <a class="btn btn-outline-danger btn-sm"
+                                   href="{% url 'client_logout' %}">
+                                    <i class="fas fa-sign-out-alt"></i> Logout
+                                </a>
                             </li>
                         {% else %}
                             <li class="nav-item ms-auto">
-                                <a class="btn btn-primary" href="{% url 'client_login' %}"><i class="fas fa-calendar-check"></i>
-                                    BOOK NOW</a>
+                                <a class="btn btn-primary" href="{% url 'client_login' %}">
+                                    <i class="fas fa-calendar-check"></i> BOOK NOW!
+                                </a>
                             </li>
                         {% endif %}
                     </ul>
@@ -254,11 +302,11 @@
                     </div>
                 </div>
                 {% else %}
-                    <h1 class="text-center mb-4">Welcome to Jaylon Dental Clinic</h1>
-                    <p class="lead text-center">Your journey to a brighter smile starts here!</p>
+                    <h1 class="text-center mb-4">Welcome to Jaylon Dental Clinic!</h1>
+                    <p class="lead text-center">We're excited to help you achieve your perfect smile and boost your confidence.</p>
                     <div class="text-center">
                         <a href="{% url 'client_login' %}" class="btn btn-primary btn-lg"><i class="fas fa-calendar-check"></i> Book
-                            Your Appointment Now</a>
+                            Your Appointment Now!</a>
                     </div>
                 {% endif %}
             </div>
@@ -329,7 +377,7 @@
 
             <div id="scrollspyGallery" class="mt-4" data-aos="fade-up">
               <h3 class="mb-4" data-aos="fade-right">Clinic Gallery</h3>
-              <p>Take a virtual tour of our state-of-the-art facilities.</p>
+              <p>Explore our gallery to see the stunning results we create. Come visit and see how we turn smiles into works of art!</p>
 
               <div class="row">
                 {% for image in images %}
@@ -429,11 +477,12 @@
                         care in a comfortable environment while protecting your personal information. Before we get started,
                         please take a moment to review our important policies and agreements.</p>
                         <p><strong>Please note:</strong> <br>
-                        • Reviewing our policies will help you understand our procedures and you responsibilities as a patient.
+                        • Reviewing our policies will help you understand our procedures and your responsibilities as a patient.
                             <br>
                         • By continuing, you agree to our policies and agreements.
                             <br>
-                        • For more details, please read our full <a href="#" data-bs-toggle="modal" data-bs-target="#privacyModal">Privacy Policy and User Agreement</a>.</p>
+                            <br>
+                            For more details, please read our full <a href="#" data-bs-toggle="modal" data-bs-target="#privacyModal">Privacy Policy and User Agreement</a>.</p>
                     </div>
                 </div>
             </div>
@@ -582,17 +631,18 @@
             <div class="container">
                 <div class="row justify-content-center">
                     <div class="col-md-8 text-center">
-                        <h5 class="mb-4">Connect With Us</h5>
+                        <h5 class="mb-4">Connect with us on Facebook and Instagram for more updates.</h5>
                         <div class="d-flex justify-content-center">
                             <a href="https://www.facebook.com/profile.php?id=100083282165584" target="_blank"
                                class="social-icon mx-3">
-                                <i class="fab fa-facebook fa-2x"></i>
+                                <i class="fab fa-facebook fa-2x" title="Facebook"></i>
                             </a>
                             <a href="https://www.instagram.com/dr_jaylon?utm_source=ig_web_button_share_sheet&igsh=ZDNlZDc0MzIxNw=="
                                target="_blank" class="social-icon mx-3">
-                                <i class="fab fa-instagram fa-2x"></i>
+                                <i class="fab fa-instagram fa-2x" title="Instagram"></i>
                             </a>
                         </div>
+                        <br>
                         <p class="mt-2">&copy; 2024 Jaylon Dental Clinic. All rights reserved.</p>
                     </div>
                 </div>

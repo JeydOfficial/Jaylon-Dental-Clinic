@@ -24,11 +24,15 @@
                 min-height: 100vh;
                 margin: 0;
             }
-
+            .btn:hover {
+                background-color: #416a93;
+            }
+            .text-decoration-none:hover {
+                text-decoration: underline !important;
+            }
             .customized-bg {
                  background-color: #5483b3;
             }
-
             .login-container {
                 background-color: #ffffff;
                 border-radius: 10px;
@@ -59,7 +63,8 @@
                     <input type="password" class="form-control" id="password" name="password" required>
                 </div>
                 <div class="d-grid">
-                    <button type="submit" class="btn btn-primary"><i class="fas fa-sign-in-alt"></i> Login</button>
+                    <button type="submit" class="btn customized-bg" style="color: white">
+                        <i class="fas fa-sign-in-alt"></i> Login</button>
                 </div>
             </form>
 
@@ -73,7 +78,7 @@
                 <a href="{% url 'client_forgot_password' %}" class="text-decoration-none">Forgot Password?</a>
             </div>
             <div class="text-center mt-3">
-                <p>Don't have an account? <a href="{% url 'client_register' %}" class="text-decoration-none">Register
+                <p>Don't have an account? <a href="{% url 'client_register' %}" class="text-decoration-none"> Register
                     here</a></p>
             </div>
         </div>
