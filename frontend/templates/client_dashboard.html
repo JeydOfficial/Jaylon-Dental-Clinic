@@ -2,7 +2,7 @@
 {% load static %}
 <html lang="en">
     <head>
-        <title>Maysa Dental Clinic</title>
+        <title>Jaylon Dental Clinic</title>
 
         <!--meta tags-->
         <meta charset="UTF-8">
@@ -134,20 +134,20 @@
     </head>
     <body>
         {% if request.user.is_restricted %}
-        <div class="alert alert-warning alert-dismissible fade show position-fixed w-100 text-center mb-0"
-             style="z-index: 1060;" role="alert">
-            <i class="fas fa-exclamation-triangle"></i>
-            <strong>Account Restricted:</strong> Due to missed appointments, you can't book new appointments until
-            {{ request.user.restriction_end_time|date:"F d, Y" }} at {{ request.user.restriction_end_time|time:"g:i A" }}.
-            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-        </div>
+            <div class="alert alert-warning alert-dismissible fade show position-fixed w-100 text-center mb-0"
+                 style="z-index: 1060;" role="alert">
+                <i class="fas fa-exclamation-triangle"></i>
+                <strong>Account Restricted:</strong> Due to missed appointments, you can't book new appointments until
+                {{ request.user.restriction_end_time|date:"F d, Y" }} at {{ request.user.restriction_end_time|time:"g:i A" }}.
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
         {% endif %}
 
         <nav id="navbar-example2" class="navbar navbar-expand-lg sticky-top bg-white px-3">
             <div class="container-fluid">
                 <a class="navbar-brand" href="{% url 'client_dashboard' %}" style="animation: colorAnimation 5s infinite alternate">
                     <i class="fas fa-tooth mr-2" style="animation: colorAnimation 5s infinite alternate"></i>
-                    Jaylon Dental Clinic
+                    Maysa Dental Clinic
                 </a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
                         aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
@@ -270,7 +270,7 @@
                     </div>
                 </div>
                 {% else %}
-                    <h1 class="text-center mb-4">Welcome to Jaylon Dental Clinic!</h1>
+                    <h1 class="text-center mb-4">Welcome to Maysa Dental Clinic!</h1>
                     <p class="lead text-center">We're excited to help you achieve your perfect smile and boost your confidence.</p>
                     <div class="text-center">
                         <a href="{% url 'client_login' %}" class="btn btn-primary btn-lg"><i class="fas fa-calendar-check"></i> Book
