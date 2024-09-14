@@ -10,13 +10,13 @@
             <!-- Widgets -->
             <div class="row clearfix">
                 <div class="col-md-4">
-                    <div class="info-box bg-cyan hover-expand-effect">
+                    <div class="info-box hover-expand-effect" style="background-color: #d06e53;">
                         <div class="icon">
                             <i class="material-icons">event_note</i>
                         </div>
                         <div class="content">
-                            <div class="text">ALL APPOINTMENTS</div>
-                            <div class="number">{{ all_appointments }}</div>
+                            <div class="text" style="color: white;">ALL APPOINTMENTS</div>
+                            <div class="number" style="color: white;">{{ all_appointments }}</div>
                         </div>
                     </div>
                 </div>
@@ -188,18 +188,17 @@
                                         </td>
                                         <td class="text-center">
                                             <form method="post" action="{% url 'update_appointment_attendance' appointment.id %}">
-                                            {% csrf_token %}
-                                            <div class="form-check">
-                                                <input type="checkbox"
-                                                       name="attended"
-                                                       id="check-in-{{ appointment.id }}"
-                                                       class="filled-in"
-                                                       {% if appointment.attended %}checked{% endif %}
-                                                       onchange="this.form.submit()"
-                                                       {% if appointment.status != 'Approved' %}disabled{% endif %}>
-                                                <label class="form-check-label" for="check-in-{{ appointment.id }}"></label>
-                                            </div>
-
+                                                {% csrf_token %}
+                                                <div class="form-check">
+                                                    <input type="checkbox"
+                                                           name="attended"
+                                                           id="check-in-{{ appointment.id }}"
+                                                           class="filled-in"
+                                                           {% if appointment.attended %}checked{% endif %}
+                                                           onchange="this.form.submit()"
+                                                           {% if appointment.status != 'Approved' %}disabled{% endif %}>
+                                                    <label class="form-check-label" for="check-in-{{ appointment.id }}"></label>
+                                                </div>
                                             </form>
                                         </td>
                                         <td>
@@ -275,5 +274,4 @@
             </div>
         </div>
     </section>
-    </div>
 {% endblock %}
