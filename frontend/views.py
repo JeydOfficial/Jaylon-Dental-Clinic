@@ -65,12 +65,14 @@ def view_client_dashboard(request):
 
                 # Parse the time slot
                 start_time, end_time = time_slot.split(' - ')
-                start_time = datetime.strptime(start_time, '%I:%M %p').time()
-                end_time = datetime.strptime(end_time, '%I:%M %p').time()
+                start_time = timezone.datetime.strptime(start_time, '%I:%M %p').time()
+                end_time = timezone.datetime.strptime(end_time, '%I:%M %p').time()
 
                 if request.user.is_restricted:
-                    messages.error(request,
-                                   f'Account restricted until {request.user.restriction_end_time.strftime("%m/%d/%Y %I:%M %p")}')
+                    # Convert the restriction_end_time to the current time zone
+                    localized_end_time = timezone.localtime(request.user.restriction_end_time)
+                    formatted_end_time = localized_end_time.strftime("%B %d, %Y at %I:%M %p")
+                    messages.error(request, f'Account restricted until {formatted_end_time}')
                 else:
                     # Create the appointment
                     appointment = Appointment(
