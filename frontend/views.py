@@ -70,7 +70,7 @@ def view_client_dashboard(request):
 
                 if request.user.is_restricted:
                     messages.error(request,
-                                   f'Account restricted until {request.user.restriction_end_datetime.strftime("%m/%d/%Y %I:%M %p")}')
+                                   f'Account restricted until {request.user.restriction_end_time.strftime("%m/%d/%Y %I:%M %p")}')
                 else:
                     # Create the appointment
                     appointment = Appointment(
