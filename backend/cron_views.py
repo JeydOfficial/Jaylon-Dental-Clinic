@@ -1,4 +1,4 @@
-from django.http import HttpResponse
+from django.http import JsonResponse, HttpResponse
 from django.views.decorators.csrf import csrf_exempt
 from django.views.decorators.http import require_http_methods
 from django.utils import timezone
@@ -8,6 +8,9 @@ from django.core.mail import send_mail
 from django.template.loader import render_to_string
 from django.utils.html import strip_tags
 from django.conf import settings
+import logging
+
+logger = logging.getLogger(__name__)  # Use Django's logger for error handling
 
 
 @csrf_exempt
@@ -17,16 +20,18 @@ def cancel_unattended_appointments(request):
         today = timezone.localtime(timezone.now())
         yesterday = today - timedelta(days=1)
 
+        # Filtering appointments with a range to ensure full-day coverage.
         unattended_appointments = Appointment.objects.filter(
             status__in=['Pending', 'Approved'],
             attended=False,
-            date=yesterday
+            date__range=[yesterday, today]
         )
 
         cancelled_count = 0
         for appointment in unattended_appointments:
             appointment.status = 'Cancelled'
-            appointment.save()
+            appointment.save()  # Save status change
+
             cancelled_count += 1
 
             # Send an email notification
@@ -35,15 +40,22 @@ def cancel_unattended_appointments(request):
             })
             plain_message = strip_tags(html_message)
 
-            send_mail(
-                subject='Appointment Cancellation - Jaylon Dental Clinic',
-                message=plain_message,
-                from_email=settings.EMAIL_HOST_USER,
-                recipient_list=[appointment.user.email],
-                html_message=html_message,
-                fail_silently=False,
-            )
+            try:
+                send_mail(
+                    subject='Appointment Cancellation - Jaylon Dental Clinic',
+                    message=plain_message,
+                    from_email=settings.EMAIL_HOST_USER,
+                    recipient_list=[appointment.user.email],
+                    html_message=html_message,
+                    fail_silently=False,
+                )
+            except Exception as e:
+                # Log the error and continue
+                logger.error(f"Failed to send email for appointment {appointment.id}: {str(e)}")
+                # Optionally continue or handle further
 
-        return HttpResponse(f"Cancelled {cancelled_count} unattended appointments.")
+        # Return JSON response with cancellation count
+        return JsonResponse({'cancelled_count': cancelled_count})
+
     else:
         return HttpResponse("This endpoint only accepts GET, POST, and HEAD requests.", status=405)
