@@ -202,7 +202,12 @@
                 <div class="row gy-5">
                     <div class="col-md-6">
                         <h3><i class="fas fa-calendar-plus text-primary"></i> Book an Appointment</h3>
-                        <p><small>Read the <a href="#scrollspyPrivacy">policy and agreement</a> carefully before booking an appointment to avoid mistakes.</small></p>
+                        <p><small>Read the <a href="#" data-bs-toggle="modal" data-bs-target="#privacyModal">policy and
+                            agreement</a> carefully before booking an appointment to avoid mistakes.</small>
+                        </p>
+                        <p style="margin-top: -15px"><small>Any updates on your personal or medical information? <a
+                                href="{% url 'client_profile' %}">Update here</a>.</small>
+                        </p>
                         <form method="post" id="appointment-form">
                             {% csrf_token %}
                             <div class="mb-3">
@@ -461,13 +466,16 @@
                 <div class="modal-dialog modal-lg">
                     <div class="modal-content">
                         <div class="modal-header">
-                            <h5 class="modal-title" id="privacyModalLabel">Policy and Agreement - Jaylon Dental Clinic</h5>
+                            <h5 class="modal-title" id="privacyModalLabel">Policy and Agreement</h5>
                             {% if not has_agreed_privacy_policy %}
-                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                             {% endif %}
                         </div>
                         <div class="modal-body" style="max-height: 70vh; overflow-y: auto;">
-                            <p class="fw-bold">PLEASE READ THIS TO AVOID INCONVENIENCE AT JAYLON DENTAL CLINIC</p>
+                            <p class="fw-bold">IMPORTANT REMINDER:</p>
+                            <p class="fw-bold">Failure to follow this policy is not the fault of the clinic, and any
+                            inconvenience caused as a result will be the responsibility of  the patient. Please read
+                            the following carefully to avoid any issues.</p>
 
                             <h6 class="mt-4">1. Appointment Booking</h6>
                             <ul>
@@ -480,6 +488,7 @@
                             <h6 class="mt-4">2. Appointment Approval and Reminders</h6>
                             <ul>
                                 <li>All appointments must be approved at least 24 hours before the selected date and time.</li>
+                                <li>You will receive an email reminder, whether your appointment is approved or canceled.</li>
                             </ul>
 
                             <h6 class="mt-4">3. Medical-Dental Questionnaire</h6>
@@ -513,17 +522,17 @@
                             <h6 class="mt-4">6. Late Arrivals</h6>
                             <ul>
                                 <li>Patients who book through our clinic's website will be given priority based on their
-                                    selected date and time. To ensure a smooth flow inside the clinic, patients are advised to
-                                    arrive 10-15 minutes early.
+                                    selected date and time. To help maintain a smooth flow, we kindly ask patients to arrive
+                                    10-15 minutes before their scheduled appointment.
                                 </li>
-                                <li>If a patient arrives 15 minutes late, their appointment will be canceled. The patient must
+                               <!-- <li>If a patient arrives (time) late, their appointment will be canceled. The patient must
                                     book a new appointment.
-                                </li>
+                                </li>-->
                             </ul>
 
                             <h6 class="mt-4">7. No-Show Policy</h6>
                             <ul>
-                                <li>If a patient is a no-show 15 minutes without a notice, their appointment will be canceled.
+                                <li>If a patient is a no-show, their appointment will be canceled the following day.
                                 </li>
                                 <li>Repeated no-shows may result in a restricted account and limited booking options.</li>
                                 <ul>
@@ -541,21 +550,21 @@
                                 </li>
                             </ul>
 
-                            <h6 class="mt-4">9. Service Duration Estimates (Maximum Range)</h6>
+                            <h6 class="mt-4">9. Estimated Service Duration</h6>
                             <ul>
-                                <li>Tooth Extraction -- 10mins.</li>
-                                <li>Tooth Filling -- 15mins.</li>
-                                <li>Odontectomy -- 30mins.</li>
-                                <li>Dentures -- 20mins.</li>
-                                <li>Veneers -- 20mins.</li>
-                                <li>Ortho Braces (Upper and Lower) -- 1hr and 10mins (70mins).</li>
-                                <li>Ortho Braces (Upper or Lower) -- 40mins.</li>
-                                <li>Crowns Fixed Bridge -- 20mins.</li>
-                                <li>Denture Repair -- 15mins.</li>
-                                <li>Oral Prophylaxis (Moderate) -- 45mins.</li>
-                                <li>Oral Prophylaxis (Hard) -- 1hr (60mins).</li>
-                                <li>Root Canal Treatment (Anterior) -- 1hr (60mins).</li>
-                                <li>Root Canal Treatment (Posteriors) -- 1hr and 30mins (90mins).</li>
+                                <li>Tooth Extraction -- 10mins</li>
+                                <li>Tooth Filling -- 15mins</li>
+                                <li>Odontectomy -- 30mins</li>
+                                <li>Dentures -- 20mins</li>
+                                <li>Veneers -- 20mins</li>
+                                <li>Ortho Braces (Upper and Lower) -- 1hr and 10mins</li>
+                                <li>Ortho Braces (Upper or Lower) -- 40mins</li>
+                                <li>Crowns Fixed Bridge -- 20mins</li>
+                                <li>Denture Repair -- 15mins</li>
+                                <li>Oral Prophylaxis (Moderate) -- 45mins</li>
+                                <li>Oral Prophylaxis (Hard) -- 1hr</li>
+                                <li>Root Canal Treatment (Anterior) -- 1hr</li>
+                                <li>Root Canal Treatment (Posteriors) -- 1hr and 30mins</li>
                             </ul>
 
                             <h6 class="mt-4">10. Patient Records and Privacy</h6>
