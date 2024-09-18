@@ -79,11 +79,15 @@ class User(AbstractUser):
         self.consecutive_missed_appointments += 1
         if self.consecutive_missed_appointments == 3:
             self.is_restricted = True
-            self.restriction_end_time = now + timezone.timedelta(hours=12)
+            self.restriction_end_time = now + timezone.timedelta(hours=24)
         elif self.consecutive_missed_appointments == 5:
             self.is_restricted = True
-            self.restriction_end_time = now + timezone.timedelta(hours=24)
+            self.restriction_end_time = now + timezone.timedelta(hours=42)
         self.save()
+
+        # elif self.consecutive_missed_appointments == 5:
+        #       self.is_restricted = True
+        #       self.restriction_end_time = now + timezone.timedelta(hours=24)
 
     def reset_missed_appointments(self):
         self.consecutive_missed_appointments = 0
