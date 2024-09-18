@@ -42,6 +42,9 @@
             .customized-bg {
                 background-color: #7da0ca;
             }
+            .text-decoration-none:hover {
+                text-decoration: underline !important;
+            }
             .navbar {
                 box-shadow: 0 2px 4px rgba(0,0,0,.1);
             }
@@ -202,11 +205,11 @@
                 <div class="row gy-5">
                     <div class="col-md-6">
                         <h3><i class="fas fa-calendar-plus text-primary"></i> Book an Appointment</h3>
-                        <p><small>Read the <a href="#" data-bs-toggle="modal" data-bs-target="#privacyModal">policy and
-                            agreement</a> carefully before booking an appointment to avoid mistakes.</small>
-                        </p>
+                        <p><small>Read the <a href="#" data-bs-toggle="modal" data-bs-target="#privacyModal"
+                        class="text-decoration-none">policy and agreement</a> carefully before booking an appointment to avoid mistakes.
+                        </small></p>
                         <p style="margin-top: -15px"><small>Any updates on your personal or medical information? <a
-                                href="{% url 'client_profile' %}">Update here</a>.</small>
+                                href="{% url 'client_profile' %}" class="text-decoration-none">Update here</a>.</small>
                         </p>
                         <form method="post" id="appointment-form">
                             {% csrf_token %}
@@ -424,10 +427,10 @@
                     <div class="col-md-5 offset-md-1" data-aos="fade-up">
                         <h4><i class="fas fa-info-circle"></i> Clinic Information</h4>
                         <p><i class="fas fa-map-marker-alt"></i>  <strong>Address: </strong>
-                            <a href="https://maps.app.goo.gl/o3jN7r3ymXMoNGWN9" target="_blank">Dayao Street, Kidapawan City, North Cotabato</a></p>
-                        <p><i class="fas fa-phone"></i> <strong>Phone: </strong><a href="tel:+639399072455" target="_blank">+63 939 907 2455</a></p>
+                            <a href="https://maps.app.goo.gl/o3jN7r3ymXMoNGWN9" target="_blank" class="text-decoration-none">Dayao Street, Kidapawan City, North Cotabato</a></p>
+                        <p><i class="fas fa-phone"></i> <strong>Phone: </strong><a href="tel:+639399072455" target="_blank" class="text-decoration-none">+63 939 907 2455</a></p>
                         <p><i class="fas fa-envelope"></i> <strong>Email: </strong>
-                            <a href="mailto:jaylondentalclinic@gmail.com?subject=Subject%20Here&body=Message%20Here" target="_blank">jaylondentalclinic@gmail.com</a>
+                            <a href="mailto:jaylondentalclinic@gmail.com?subject=Subject%20Here&body=Message%20Here" target="_blank" class="text-decoration-none">jaylondentalclinic@gmail.com</a>
                         </p>
                         <h4 class="mt-4"><i class="far fa-clock"></i> Office Hours</h4>
                         <p>Monday to Saturday: 8:30 AM - 4:00 PM</p>
@@ -459,7 +462,7 @@
                         • By continuing, you agree to our policies and agreements.
                             <br>
                             <br>
-                            For more details, please read our full <a href="#" data-bs-toggle="modal" data-bs-target="#privacyModal">Privacy Policy and User Agreement</a>.</p>
+                            For more details, please read our full <a href="#" data-bs-toggle="modal" data-bs-target="#privacyModal" class="text-decoration-none">Privacy Policy and User Agreement</a>.</p>
                     </div>
                 </div>
             </div>
@@ -592,7 +595,7 @@
                             <div class="form-check mt-4">
                                 <input class="form-check-input" type="checkbox" id="agreeCheckbox" {% if has_agreed_privacy_policy %}checked disabled{% endif %}>
                                 <label class="form-check-label" for="agreeCheckbox">
-                                    I have read and agree to the Policy and Agreement of Jaylon Dental Clinic
+                                    I have read and agree to the Policy and Agreement of Jaylon Dental Clinic.
                                 </label>
                             </div>
                         </div>
