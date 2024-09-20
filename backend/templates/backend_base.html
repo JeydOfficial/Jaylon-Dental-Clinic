@@ -50,7 +50,7 @@
         <!-- Toastr CSS -->
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
 
-        <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+        <link href="{% static 'css/myselect2.css' %}" rel="stylesheet" />
 
         <style>
             body {
@@ -231,8 +231,8 @@
         <script src="{% static 'plugins/jquery-datatable/extensions/export/vfs_fonts.js' %}"></script>
         <script src="{% static 'plugins/jquery-datatable/extensions/export/buttons.html5.min.js' %}"></script>
         <script src="{% static 'plugins/jquery-datatable/extensions/export/buttons.print.min.js' %}"></script>
-        <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
 
+        <script src="{% static 'js/myselect2.js' %}"></script>
 
         <!-- Autosize Plugin Js -->
         <script src="{% static 'plugins/autosize/autosize.js' %}"></script>
@@ -260,7 +260,7 @@
         <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
 
         <script>
-            $(document).ready(function() {
+         $(document).ready(function() {
                 $('.js-example-basic-single').select2();
             });
         </script>
