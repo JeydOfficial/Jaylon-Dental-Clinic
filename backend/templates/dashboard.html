@@ -106,7 +106,7 @@
                                             </div>
                                             <label for="serviceSelect">Service</label>
                                             <div class="form-group">
-                                                <select class="form-control" name="service" id="serviceSelect" required>
+                                                <select class="form-control js-example-basic-single" name="service" id="serviceSelect" required>
                                                     <option value="">--Select Service--</option>
                                                     {% for service in services %}
                                                         <option value="{{ service.id }}">{{ service.title }}</option>
