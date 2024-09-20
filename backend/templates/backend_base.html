@@ -50,8 +50,6 @@
         <!-- Toastr CSS -->
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
 
-        <link href="{% static 'css/myselect2.css' %}" rel="stylesheet" />
-
         <style>
             body {
                 background-color: #f7e7ce;
@@ -232,8 +230,6 @@
         <script src="{% static 'plugins/jquery-datatable/extensions/export/buttons.html5.min.js' %}"></script>
         <script src="{% static 'plugins/jquery-datatable/extensions/export/buttons.print.min.js' %}"></script>
 
-        <script src="{% static 'js/myselect2.js' %}"></script>
-
         <!-- Autosize Plugin Js -->
         <script src="{% static 'plugins/autosize/autosize.js' %}"></script>
 
@@ -258,12 +254,6 @@
 
         <!-- Toastr JS -->
         <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
-
-        <script>
-         $(document).ready(function() {
-                $('.js-example-basic-single').select2();
-            });
-        </script>
 
         <script>
             // Responsive font size calculation
@@ -429,7 +419,6 @@
                 });
             });
         </script>
-
         <script>
             // Toastr configuration
             toastr.options = {
@@ -461,7 +450,6 @@
                 {% endfor %}
             {% endif %}
         </script>
-
         <script>
             $(document).ready(function() {
                 function updateTimeSlots(data) {
