@@ -208,7 +208,7 @@
                         <p><small>Read the <a href="#" data-bs-toggle="modal" data-bs-target="#privacyModal"
                         class="text-decoration-none">policy and agreement</a> carefully before booking an appointment to avoid mistakes.
                         </small></p>
-                        <p style="margin-top: -15px"><small>Any updates on your personal or medical information? <a
+                        <p style="margin-top: -15px"><small>Any updates on personal and medical information? <a
                                 href="{% url 'client_profile' %}" class="text-decoration-none">Update here</a>.</small>
                         </p>
                         <form method="post" id="appointment-form">
@@ -495,7 +495,7 @@
                             <h6 class="mt-4">2. Appointment Approval and Reminders</h6>
                             <ul>
                                 <li>All appointments must be approved at least 24 hours before the selected date and time.</li>
-                                <li>You will receive an email reminder, whether your appointment is approved or canceled.</li>
+                                <li>Patients will receive an email reminder, whether their appointment is approved or canceled.</li>
                             </ul>
 
                             <h6 class="mt-4">3. Medical-Dental Questionnaire</h6>
@@ -504,6 +504,8 @@
                                 <li>Please update it whenever there are changes in your medical condition by checking the
                                     relevant checkboxes (Yes/No) or selecting your health status (Good/Fair/Poor).
                                 </li>
+                                <li>Click <a href="{% url 'client_profile' %}" class="text-decoration-none">here</a>
+                                    to go to Medical-Dental Questionnaire.</li>
                             </ul>
 
                             <h6 class="mt-4">4. Cancellation and Rescheduling</h6>
@@ -539,12 +541,13 @@
 
                             <h6 class="mt-4">7. No-Show Policy</h6>
                             <ul>
-                                <li>If a patient is a no-show, their appointment will be canceled the following day.
-                                </li>
+                                <li>If a patient is a no-show, their appointment will be canceled the following day.</li>
+                                <li>If a patient is unable to attend their appointment and might be considered a no-show,
+                                    they must contact the clinic in advance to inform them.</li>
                                 <li>Repeated no-shows may result in a restricted account and limited booking options.</li>
                                 <ul>
-                                    <li>Three Consecutive times -- 24hrs account restriction</li>
-                                    <li>Five Consecutive times -- 42hrs account restriction</li>
+                                    <li>Three Consecutive times -- 12hrs account restriction</li>
+                                    <li>Five Consecutive times -- 24hrs account restriction</li>
                                 </ul>
                             </ul>
 
