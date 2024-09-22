@@ -14,6 +14,9 @@
         <!-- Toastr CSS -->
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
 
+        <!-- Font Awesome CSS -->
+        <link rel="stylesheet" href="https://site-assets.fontawesome.com/releases/v6.6.0/css/all.css">
+
         <style>
             body {
                 font-family: 'Poppins', sans-serif;
@@ -77,16 +80,16 @@
                 <form id="loginForm" method="post">
                     {% csrf_token %}
                     <div class="mb-3">
-                        <label for="email" class="form-label"><i class="fas fa-envelope"></i> Email</label>
+                        <label for="email" class="form-label"><i class="fa-light fa-envelope"></i> Email</label>
                         <input type="email" class="form-control" id="email" name="email" required>
                     </div>
                     <div class="mb-3">
-                        <label for="password" class="form-label"><i class="fas fa-lock"></i> Password</label>
+                        <label for="password" class="form-label"><i class="fa-light fa-lock"></i> Password</label>
                         <input type="password" class="form-control" id="password" name="password" required>
                     </div>
                     <div class="d-grid">
                         <button type="submit" class="btn customized-bg" style="color: white">
-                            <i class="fas fa-sign-in-alt"></i> Login</button>
+                            <i class="fa-light fa-right-to-bracket"></i> Login</button>
                     </div>
                 </form>
 
