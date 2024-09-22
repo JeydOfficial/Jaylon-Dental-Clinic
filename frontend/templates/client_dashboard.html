@@ -17,11 +17,14 @@
               integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
 
         <!-- Font Awesome for icons -->
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
         <link rel="stylesheet" href="https://site-assets.fontawesome.com/releases/v6.6.0/css/all.css">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 
         <!-- Google Fonts -->
+            <!-- Poppins -->
         <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+            <!-- Lobster -->
+        <link href="https://fonts.googleapis.com/css2?family=Lobster&display=swap" rel="stylesheet">
 
         <!-- AOS CSS -->
         <link href="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.css" rel="stylesheet">
@@ -35,8 +38,6 @@
         <!-- DataTable CSS -->
         <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.11.5/css/dataTables.bootstrap5.min.css">
 
-        <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
-
         <style>
             body {
                 font-family: 'Poppins', sans-serif;
@@ -44,6 +45,9 @@
             }
             .customized-bg {
                 background-color: #7da0ca;
+            }
+            .lobster-font {
+                font-family: 'Lobster', cursive;
             }
             .text-decoration-none:hover {
                 text-decoration: underline !important;
@@ -152,13 +156,13 @@
 
         <nav id="navbar-example2" class="navbar navbar-expand-lg sticky-top bg-white px-3">
             <div class="container-fluid">
-                <a class="navbar-brand" href="{% url 'client_dashboard' %}" style="animation: colorAnimation 5s infinite alternate">
+                <a class="navbar-brand lobster-font" href="{% url 'client_dashboard' %}" style="animation: colorAnimation 5s infinite alternate; font-size: 26px;">
                     <i class="fa-light fa-tooth mr-2" style="animation: colorAnimation 5s infinite alternate"></i>
                     Jaylon Dental Clinic
                 </a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
-                        aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
+                        aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation" style="border: none">
+                    <span class="fa-light fa-bars" style="font-size: 25px;"></span>
                 </button>
                 <div class="collapse navbar-collapse" id="navbarNav">
                     <ul class="navbar-nav nav-pills me-auto my-1">
@@ -175,7 +179,7 @@
                             <a class="nav-link px-2" href="#scrollspyContacts"><i class="fa-light fa-phone-volume"></i> Contacts</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link px-2" href="#scrollspyPrivacy"><i class="fa-regular fa-file-contract"></i> Policy and Agreement</a>
+                            <a class="nav-link px-2" href="#scrollspyPrivacy"><i class="fa-light fa-file-contract"></i> Policy and Agreement</a>
                         </li>
                     </ul>
                     <ul class="navbar-nav nav-pills">
@@ -208,7 +212,7 @@
                 {% if request.user.is_authenticated and not request.user.is_superuser %}
                 <div class="row gy-5">
                     <div class="col-md-6">
-                        <h3><i class="fa-light fa-calendar-plus text-primary"></i> Book an Appointment</h3>
+                        <h3 class="lobster-font"><i class="fa-light fa-calendar-plus text-primary"></i> Book an Appointment</h3>
                         <p><small>Read the <a href="#" data-bs-toggle="modal" data-bs-target="#privacyModal"
                         class="text-decoration-none">policy and agreement</a> carefully before booking an appointment to avoid mistakes.
                         </small></p>
@@ -246,7 +250,7 @@
                         </form>
                     </div>
                     <div class="col-md-6">
-                        <h3><i class="fa-light fa-clock-rotate-left text-primary"></i> Appointment History</h3>
+                        <h3 class="lobster-font"><i class="fa-light fa-clock-rotate-left text-primary"></i> Appointment History</h3>
                         <div class="table-responsive py-4">
                             <table id="appointmentHistoryTable" class="table table-striped py-2">
                                 <thead>
@@ -292,7 +296,7 @@
             </div>
 
             <div id="scrollspyServices" class="mt-4" data-aos="fade-up">
-                <h3 class="mb-4" data-aos="fade-right"><i class="fa-light fa-toothbrush text-primary"></i> Our Services</h3>
+                <h3 class="lobster-font mb-4" data-aos="fade-right"><i class="fa-light fa-toothbrush text-primary"></i> Our Services</h3>
                 <p>Ready for a smile transformation? Let <strong>Jaylon Dental Clinic</strong> take the first
                     step towards a more confident you!</p>
 
@@ -357,7 +361,7 @@
             </div>
 
             <div id="scrollspyGallery" class="mt-4" data-aos="fade-up">
-              <h3 class="mb-4" data-aos="fade-right"><i class="fa-light fa-images text-primary"></i> Clinic Gallery</h3>
+              <h3 class="lobster-font mb-4" data-aos="fade-right"><i class="fa-light fa-images text-primary"></i> Clinic Gallery</h3>
               <p>Explore our gallery to see the stunning results we create. Come visit and see how we turn smiles into works of art!</p>
 
               <div class="row">
@@ -403,7 +407,7 @@
             </div>
 
             <div id="scrollspyContacts" class="mt-4" data-aos="fade-up">
-                <h3 class="mb-4" data-aos="fade-right"><i class="fa-light fa-phone-volume text-primary"></i> Contact Us</h3>
+                <h3 class="lobster-font mb-4" data-aos="fade-right"><i class="fa-light fa-phone-volume text-primary"></i> Contact Us</h3>
                 <p class="lead" data-aos="fade-left">For appointments or inquiries, please fill out the form below, <br> and
                 we will get back to you as soon as possible.</p>
                 <div class="row gy-5">
@@ -429,21 +433,21 @@
                         </form>
                     </div>
                     <div class="col-md-5 offset-md-1" data-aos="fade-up">
-                        <h4><i class="fa-light fa-circle-info text-primary"></i> Clinic Information</h4>
+                        <h4 class="lobster-font"><i class="fa-light fa-circle-info text-primary"></i> Clinic Information</h4>
                         <p><i class="fa-light fa-location-dot"></i>  <strong>Address: </strong>
                             <a href="https://maps.app.goo.gl/o3jN7r3ymXMoNGWN9" target="_blank" class="text-decoration-none">Dayao Street, 9400, North Cotabato</a></p>
                         <p><i class="fa-light fa-phone"></i> <strong>Phone: </strong><a href="tel:+639399072455" target="_blank" class="text-decoration-none">+63 939 907 2455</a></p>
                         <p><i class="fa-light fa-envelope"></i> <strong>Email: </strong>
                             <a href="mailto:jaylondentalclinic@gmail.com?subject=Subject%20Here&body=Message%20Here" target="_blank" class="text-decoration-none">jaylondentalclinic@gmail.com</a>
                         </p>
-                        <h4 class="mt-4"><i class="fa-light fa-clock text-primary"></i> Office Hours</h4>
+                        <h4 class="lobster-font mt-4"><i class="fa-light fa-clock text-primary"></i> Office Hours</h4>
                         <p>Monday to Saturday: 8:30 AM - 4:00 PM</p>
                         <p>Sunday: 9:00 AM - 12:00 PM</p>
                     </div>
                 </div>
                 <div class="row mt-4">
                     <div class="col-12" data-aos="zoom-in">
-                        <h4><i class="fa-light fa-map-location-dot text-primary"></i> Find Us</h4>
+                        <h4 class="lobster-font"><i class="fa-light fa-map-location-dot text-primary"></i> Find Us</h4>
                         <div class="embed-responsive embed-responsive-16by9">
                             <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3959.967304180738!2d125.08718601145742!3d7.013128192959139!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x32f8f9e289b147af%3A0xa6fd91898c8910a0!2sJaylon%20Dental%20group!5e0!3m2!1sen!2sph!4v1725349059605!5m2!1sen!2sph"
                                     width="100%" height="450" style="border:0; border-radius: 10px" allowfullscreen="" loading="lazy">
@@ -454,9 +458,9 @@
             </div>
 
             <div id="scrollspyPrivacy" class="mt-4" data-aos="fade-up">
-                <h3 class="mb-4" data-aos="fade-right"><i class="fa-light fa-file-contract text-primary"></i> Policy and Agreement</h3>
+                <h3 class="lobster-font mb-4" data-aos="fade-right"><i class="fa-light fa-file-contract text-primary"></i> Policy and Agreement</h3>
                 <div class="row">
-                    <div class="col-md-12" data-aos="fade-up" -aos-delay="100">
+                    <div class="col-md-12" data-aos="fade-up" data-aos-delay="100">
                         <p>Thank you for choosing us for your dental care needs. We are committed to providing exceptional
                         care in a comfortable environment while protecting your personal information. Before we get started,
                         please take a moment to review our important policies and agreements.</p>
