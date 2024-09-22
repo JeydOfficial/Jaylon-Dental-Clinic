@@ -117,6 +117,9 @@
             .dark-mode .modal-footer {
                 background-color: #15202b;
             }
+            .dark-mode .btn-dark-mode-icon {
+                color: white;
+            }
 
 
             .customized-bg {
@@ -261,7 +264,7 @@
                     <ul class="navbar-nav nav-pills">
                         {% if request.user.is_authenticated and not request.user.is_superuser %}
                             <li class="nav-item ms-auto">
-                                <a class="btn text-primary"
+                                <a class="btn btn-dark-mode-icon"
                                    onclick="darkMode()" style="font-size: 25px;" title="Dark/Light Mode">
                                     <i class="fa-solid fa-circle-half-stroke"></i>
                                 </a>
