@@ -78,7 +78,7 @@
                 background-color: black;
                 color: white;
             }
-            #dateInput::-webkit-calendar-picker-indicator {
+            .dark-mode #dateInput::-webkit-calendar-picker-indicator {
                 filter: invert(1); /* inverts icon to make visible in dark mode */
             }
             .dark-mode th {
@@ -309,7 +309,7 @@
                                 <select class="form-select" name="service" id="serviceSelect" required>
                                     <option value="">--Select Service--</option>
                                     {% for service in services %}
-                                        <option value="{{ service.id }}">{{ service.title }}</option>
+                                        <option value="{{ service.id }}">{{ service.title }}: {{ service.duration }} minutes</option>
                                     {% endfor %}
                                 </select>
                             </div>
@@ -392,7 +392,7 @@
                                      style="height: 200px; object-fit: cover;" data-bs-toggle="modal"
                                      data-bs-target="#servicesModal" data-bs-slide-to="{{ forloop.counter0 }}">
                                 <div class="card-body d-flex flex-column">
-                                    <h5 class="lobster-font card-title">{{ service.title }}</h5>
+                                    <h5 class="card-title">{{ service.title }}</h5>
                                     <p class="card-text flex-grow-1">{{ service.description|truncatewords:20 }}</p>
                                     <div class="mt-auto">
                                         <small class="text-muted">Duration: {{ service.duration }} minutes</small>
