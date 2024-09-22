@@ -44,6 +44,81 @@
                 font-family: 'Poppins', sans-serif;
                 background-color: #7da0ca;
             }
+
+            body.dark-mode {
+                background-color: black;
+            }
+            .dark-mode .customized-bg {
+                background-color: black;
+                color: white;
+            }
+            .dark-mode .bg-white {
+                background-color: #15202b !important;
+                color: white !important;
+            }
+            .dark-mode .nav-link {
+                color: white !important;
+            }
+            .dark-mode .navbar-toggler {
+                color: white;
+            }
+            .dark-mode #scrollspyHome,
+            .dark-mode #scrollspyServices,
+            .dark-mode #scrollspyGallery,
+            .dark-mode #scrollspyContacts,
+            .dark-mode #scrollspyPrivacy {
+                background-color: #15202b;
+                color: white;
+            }
+            .dark-mode .form-select {
+                background-color: black;
+                color: white;
+            }
+            .dark-mode #dateInput {
+                background-color: black;
+                color: white;
+            }
+            #dateInput::-webkit-calendar-picker-indicator {
+                filter: invert(1); /* inverts icon to make visible in dark mode */
+            }
+            .dark-mode th {
+                background-color: black !important;
+                color: white !important;
+            }
+            .dark-mode .card {
+                background-color: black;
+                color: white;
+            }
+            .dark-mode .text-muted {
+                color: white !important;
+            }
+            .dark-mode .btn-close {
+                background-color: white;
+            }
+            .dark-mode .modal-header {
+                background-color: #15202b !important;
+                color: white;
+            }
+            .dark-mode .modal-body {
+                background-color: black;
+            }
+            .dark-mode #contactName {
+                background-color: black;
+                color: white;
+            }
+            .dark-mode #contactEmail {
+                background-color: black;
+                color: white;
+            }
+            .dark-mode #contactMessage {
+                background-color: black;
+                color: white;
+            }
+            .dark-mode .modal-footer {
+                background-color: #15202b;
+            }
+
+
             .customized-bg {
                 background-color: #7da0ca;
             }
@@ -187,6 +262,10 @@
                         {% if request.user.is_authenticated and not request.user.is_superuser %}
                             <li class="nav-item ms-auto">
                                 <a class="btn btn-outline-primary btn-sm"
+                                   onclick="darkMode()">
+                                    <i class="fa-solid fa-circle-half-stroke"></i> Dark/Light
+                                </a>
+                                <a class="btn btn-outline-primary btn-sm"
                                    href="{% url 'client_profile' %}">
                                     <i class="fa-light fa-user"></i> Profile
                                 </a>
@@ -213,7 +292,7 @@
                 {% if request.user.is_authenticated and not request.user.is_superuser %}
                 <div class="row gy-5">
                     <div class="col-md-6">
-                        <h3 class="lobster-font"><i class="fa-light fa-calendar-plus text-primary"></i> Book an Appointment</h3>
+                        <h3 class="lobster-font"><i class="fa-light fa-calendar-plus text-primary mb-3"></i> Book an Appointment</h3>
                         <p><small>Read the <a href="#" data-bs-toggle="modal" data-bs-target="#privacyModal"
                         class="text-decoration-none">policy and agreement</a> carefully before booking an appointment to avoid mistakes.
                         </small></p>
@@ -251,36 +330,36 @@
                         </form>
                     </div>
                     <div class="col-md-6">
-                        <h3 class="lobster-font"><i class="fa-light fa-clock-rotate-left text-primary"></i> Appointment History</h3>
+                        <h3 class="lobster-font"><i class="fa-light fa-clock-rotate-left text-primary mb-3"></i> Appointment History</h3>
                         <div class="table-responsive py-4">
                             <table id="appointmentHistoryTable" class="table table-striped py-2">
                                 <thead>
-                                <tr>
-                                    <th>Service</th>
-                                    <th>Date</th>
-                                    <th>Time</th>
-                                    <th>Status</th>
-                                </tr>
+                                    <tr>
+                                        <th>Service</th>
+                                        <th>Date</th>
+                                        <th>Time</th>
+                                        <th>Status</th>
+                                    </tr>
                                 </thead>
                                 <tbody>
-                                {% for appointment in appointments %}
-                                    <tr>
-                                        <td>{{ appointment.service }}</td>
-                                        <td>{{ appointment.date }}</td>
-                                        <td>{{ appointment.start_time }} - {{ appointment.end_time }}</td>
-                                        <td>
-                                            {% if appointment.status == 'Approved' and appointment.attended %}
-                                                <span class="badge bg-success"><i class="fa-light fa-check-double"></i> Done</span>
-                                            {% elif appointment.status == 'Approved' %}
-                                                <span class="badge bg-success"><i class="fa-light fa-circle-check"></i> {{ appointment.status }}</span>
-                                            {% elif appointment.status == 'Pending' %}
-                                                <span class="badge bg-warning"><i class="fa-light fa-clock"></i> {{ appointment.status }}</span>
-                                            {% else %}
-                                                <span class="badge bg-danger"><i class="fa-light fa-circle-xmark"></i> {{ appointment.status }}</span>
-                                            {% endif %}
-                                        </td>
-                                    </tr>
-                                {% endfor %}
+                                    {% for appointment in appointments %}
+                                        <tr>
+                                            <td>{{ appointment.service }}</td>
+                                            <td>{{ appointment.date }}</td>
+                                            <td>{{ appointment.start_time }} - {{ appointment.end_time }}</td>
+                                            <td>
+                                                {% if appointment.status == 'Approved' and appointment.attended %}
+                                                    <span class="badge bg-success"><i class="fa-light fa-check-double"></i> Done</span>
+                                                {% elif appointment.status == 'Approved' %}
+                                                    <span class="badge bg-success"><i class="fa-light fa-circle-check"></i> {{ appointment.status }}</span>
+                                                {% elif appointment.status == 'Pending' %}
+                                                    <span class="badge bg-warning"><i class="fa-light fa-clock"></i> {{ appointment.status }}</span>
+                                                {% else %}
+                                                    <span class="badge bg-danger"><i class="fa-light fa-circle-xmark"></i> {{ appointment.status }}</span>
+                                                {% endif %}
+                                            </td>
+                                        </tr>
+                                    {% endfor %}
                                 </tbody>
                             </table>
                         </div>
@@ -831,5 +910,11 @@
               });
             });
         </script>
+        <script>
+            function darkMode() {
+               var element = document.body;
+               element.classList.toggle("dark-mode");
+            }
+</script>
     </body>
 </html>
