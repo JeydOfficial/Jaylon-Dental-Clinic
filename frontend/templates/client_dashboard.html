@@ -261,9 +261,9 @@
                     <ul class="navbar-nav nav-pills">
                         {% if request.user.is_authenticated and not request.user.is_superuser %}
                             <li class="nav-item ms-auto">
-                                <a class="btn btn-outline-primary btn-sm"
-                                   onclick="darkMode()">
-                                    <i class="fa-solid fa-circle-half-stroke"></i> Dark/Light
+                                <a class="btn text-primary"
+                                   onclick="darkMode()" style="font-size: 25px;" title="Dark/Light Mode">
+                                    <i class="fa-solid fa-circle-half-stroke"></i>
                                 </a>
                                 <a class="btn btn-outline-primary btn-sm"
                                    href="{% url 'client_profile' %}">
