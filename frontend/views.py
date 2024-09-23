@@ -205,7 +205,7 @@ def view_client_profile(request):
 
             user.save()
             messages.success(request, 'Your profile information have been updated successfully.')
-            return redirect('client_dashboard')
+            return redirect('client_profile')
 
         else:
             # Update medical questionnaire
