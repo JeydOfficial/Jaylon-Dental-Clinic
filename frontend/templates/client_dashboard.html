@@ -220,8 +220,7 @@
                     <div class="row gy-5">
                         <div class="col-md-6">
                             <h3 class="lobster-font"><i class="fa-light fa-calendar-plus text-primary mb-3"></i> Book an Appointment</h3>
-                            <p><small>Read the <a href="#" data-bs-toggle="modal" data-bs-target="#privacyModal"
-                            class="text-decoration-none">policy and agreement</a> carefully before booking an appointment to avoid mistakes.
+                            <p><small>Read the <a href="#" data-bs-toggle="modal" data-bs-target="#privacyModal" class="text-decoration-none">policy and agreement</a> carefully before booking an appointment to avoid mistakes.
                             </small></p>
                             <p style="margin-top: -15px"><small>Any updates on personal and medical information? <a
                                     href="{% url 'client_profile' %}" class="text-decoration-none">Update here</a>.</small>
@@ -658,7 +657,7 @@
                             </div>
                         </div>
                         <div class="modal-footer">
-                            {% if has_agreed_privacy_policy %}
+                            {% if user.has_agreed_privacy_policy %}
                                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
                             {% else %}
                                 <button type="button" class="btn btn-primary" id="agreeButton" disabled>I Agree</button>
