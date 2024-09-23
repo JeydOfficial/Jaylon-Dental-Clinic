@@ -52,6 +52,10 @@
             .lobster-font {
                 font-family: 'Lobster', cursive;
             }
+            .logo {
+                width: 120px;
+                margin-bottom: 20px;
+            }
             .text-decoration-none:hover {
                 text-decoration: underline !important;
             }
@@ -232,7 +236,7 @@
                                     <select class="form-select" name="service" id="serviceSelect" required>
                                         <option value="">--Select Service--</option>
                                         {% for service in services %}
-                                            <option value="{{ service.id }}">{{ service.title }}: {{ service.duration }} minutes</option>
+                                            <option value="{{ service.id }}">{{ service.title }} -> {{ service.duration }} minutes</option>
                                         {% endfor %}
                                     </select>
                                 </div>
@@ -292,6 +296,9 @@
                         </div>
                     </div>
                 {% else %}
+                    <div class="text-center">
+                        <img src="{% static 'images/favicon.png' %}" alt="Jaylon Dental Clinic" class="logo">
+                    </div>
                     <h1 class="lobster-font text-center mb-4">Welcome to Jaylon Dental Clinic!</h1>
                     <p class="lead text-center">We're excited to help you achieve your perfect smile and boost your confidence.</p>
                     <div class="text-center">
@@ -481,47 +488,49 @@
                 </div>
             </div>
 
-            <!-- Medical Questionnaire Modal -->
-            <div class="modal fade" id="medicalQuestionnaireModal" tabindex="-1" aria-labelledby="medicalQuestionnaireModalLabel" aria-hidden="true" data-bs-backdrop="static" data-bs-keyboard="false">
-                <div class="modal-dialog modal-lg">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h5 class="modal-title" id="medicalQuestionnaireModalLabel">Medical-Dental Questionnaire</h5>
-                        </div>
-                        <div class="modal-body">
-                            <p>Your health history is crucial for us to provide safe and effective dental care. Please answer the following questions honestly.</p>
-                            <form id="medicalQuestionnaireForm">
-                                {% csrf_token %}
-                                {% for question in medical_questions %}
-                                    <div class="mb-4">
-                                        <p>{{ question.text }}</p>
-                                        {% if question.type == 'yes_no' %}
-                                            <div class="btn-group w-100" role="group">
-                                                <input type="radio" class="btn-check" name="q{{ forloop.counter }}" id="q{{ forloop.counter }}Yes" value="Yes" required>
-                                                <label class="btn btn-outline-primary" for="q{{ forloop.counter }}Yes">Yes</label>
-                                                <input type="radio" class="btn-check" name="q{{ forloop.counter }}" id="q{{ forloop.counter }}No" value="No" required>
-                                                <label class="btn btn-outline-primary" for="q{{ forloop.counter }}No">No</label>
-                                            </div>
-                                        {% elif question.type == 'health_status' %}
-                                            <div class="btn-group w-100" role="group">
-                                                <input type="radio" class="btn-check" name="q{{ forloop.counter }}" id="q{{ forloop.counter }}Good" value="Good" required>
-                                                <label class="btn btn-outline-success" for="q{{ forloop.counter }}Good">Good</label>
-                                                <input type="radio" class="btn-check" name="q{{ forloop.counter }}" id="q{{ forloop.counter }}Fair" value="Fair" required>
-                                                <label class="btn btn-outline-warning" for="q{{ forloop.counter }}Fair">Fair</label>
-                                                <input type="radio" class="btn-check" name="q{{ forloop.counter }}" id="q{{ forloop.counter }}Poor" value="Poor" required>
-                                                <label class="btn btn-outline-danger" for="q{{ forloop.counter }}Poor">Poor</label>
-                                            </div>
-                                        {% endif %}
-                                    </div>
-                                {% endfor %}
-                            </form>
-                        </div>
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-primary" id="submitMedicalQuestionnaire">Submit</button>
-                        </div>
-                    </div>
-                </div>
-            </div>
+<!--            &lt;!&ndash; Medical Questionnaire Modal &ndash;&gt;-->
+<!--            <div class="modal fade" id="medicalQuestionnaireModal" tabindex="-1" aria-labelledby="medicalQuestionnaireModalLabel" aria-hidden="true" data-bs-backdrop="static" data-bs-keyboard="false">-->
+<!--                <div class="modal-dialog modal-lg">-->
+<!--                    <div class="modal-content">-->
+<!--                        <div class="modal-header">-->
+<!--                            <h5 class="modal-title" id="medicalQuestionnaireModalLabel">Medical-Dental Questionnaire</h5>-->
+<!--                        </div>-->
+<!--                        <div class="modal-body">-->
+<!--                            <p class="text-muted mb-4">Your safety is our top priority, and knowing your medical history helps-->
+<!--                            us provide best, most personalized care for you. Please take a moment to answer the following questions <strong>honestly</strong>.</p>-->
+<!--                            <form id="medicalQuestionnaireForm">-->
+<!--                                {% csrf_token %}-->
+<!--                                {% for question in medical_questions %}-->
+<!--                                    <div class="mb-4">-->
+<!--                                        <p>{{ question.text }}</p>-->
+<!--                                        {% if question.type == 'yes_no' %}-->
+<!--                                            <div class="btn-group w-100" role="group">-->
+<!--                                                <input type="radio" class="btn-check" name="q{{ forloop.counter }}" id="q{{ forloop.counter }}Yes" value="Yes" required>-->
+<!--                                                <label class="btn btn-outline-primary" for="q{{ forloop.counter }}Yes">Yes</label>-->
+<!--                                                <input type="radio" class="btn-check" name="q{{ forloop.counter }}" id="q{{ forloop.counter }}No" value="No" required>-->
+<!--                                                <label class="btn btn-outline-primary" for="q{{ forloop.counter }}No">No</label>-->
+<!--                                            </div>-->
+<!--                                        {% elif question.type == 'health_status' %}-->
+<!--                                            <div class="btn-group w-100" role="group">-->
+<!--                                                <input type="radio" class="btn-check" name="q{{ forloop.counter }}" id="q{{ forloop.counter }}Good" value="Good" required>-->
+<!--                                                <label class="btn btn-outline-success" for="q{{ forloop.counter }}Good">Good</label>-->
+<!--                                                <input type="radio" class="btn-check" name="q{{ forloop.counter }}" id="q{{ forloop.counter }}Fair" value="Fair" required>-->
+<!--                                                <label class="btn btn-outline-warning" for="q{{ forloop.counter }}Fair">Fair</label>-->
+<!--                                                <input type="radio" class="btn-check" name="q{{ forloop.counter }}" id="q{{ forloop.counter }}Poor" value="Poor" required>-->
+<!--                                                <label class="btn btn-outline-danger" for="q{{ forloop.counter }}Poor">Poor</label>-->
+<!--                                            </div>-->
+<!--                                        {% endif %}-->
+<!--                                    </div>-->
+<!--                                {% endfor %}-->
+<!--                            </form>-->
+<!--                        </div>-->
+<!--                        <div class="modal-footer">-->
+<!--                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>-->
+<!--                            <button type="button" class="btn btn-primary" id="submitMedicalQuestionnaire">Submit</button>-->
+<!--                        </div>-->
+<!--                    </div>-->
+<!--                </div>-->
+<!--            </div>-->
 
             <!-- Privacy Policy Modal -->
             <div class="modal fade" id="privacyModal" tabindex="-1" aria-labelledby="privacyModalLabel" aria-hidden="true"
@@ -650,18 +659,15 @@
                             </ul>
 
                             <div class="form-check mt-4">
-                                <input class="form-check-input" type="checkbox" id="agreeCheckbox" {% if has_agreed_privacy_policy %}checked disabled{% endif %}>
+                                <input class="form-check-input" type="checkbox" id="agreeCheckbox">
                                 <label class="form-check-label" for="agreeCheckbox">
                                     I have read and agree to the Policy and Agreement of Jaylon Dental Clinic.
                                 </label>
                             </div>
                         </div>
                         <div class="modal-footer">
-                            {% if user.has_agreed_privacy_policy %}
-                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                            {% else %}
                                 <button type="button" class="btn btn-primary" id="agreeButton" disabled>I Agree</button>
-                            {% endif %}
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
                         </div>
                     </div>
                 </div>
@@ -877,53 +883,5 @@
             });
         </script>
 
-        <script>
-            document.addEventListener('DOMContentLoaded', function() {
-                const privacyModal = new bootstrap.Modal(document.getElementById('privacyModal'));
-                const medicalQuestionnaireModal = new bootstrap.Modal(document.getElementById('medicalQuestionnaireModal'));
-                const agreeButton = document.getElementById('agreeButton');
-                const submitMedicalQuestionnaire = document.getElementById('submitMedicalQuestionnaire');
-
-                if (agreeButton) {
-                    agreeButton.addEventListener('click', function() {
-                    privacyModal.hide();
-                    medicalQuestionnaireModal.show();
-                    });
-                }
-
-                if (submitMedicalQuestionnaire) {
-                    submitMedicalQuestionnaire.addEventListener('click', function() {
-                        const form = document.getElementById('medicalQuestionnaireForm');
-                            const formData = new FormData(form);
-                                fetch('{% url "update_medical_questionnaire" %}', {
-                                    method: 'POST',
-                                    body: formData,
-                                    headers: {
-                                    'X-CSRFToken': formData.get('csrfmiddlewaretoken')
-                                }
-                        })
-                    .then(response => response.json())
-                        .then(data => {
-                            if (data.success) {
-                                medicalQuestionnaireModal.hide();
-                                // Redirect to the same page to show the Django message
-                                window.location.href = '{% url "client_dashboard" %}';
-                            }
-                            else {
-                            // Redirect to the same page to show the error message
-                            window.location.href = '{% url "client_dashboard" %}';
-                        }
-                    })
-                    .catch(error => {
-                        console.error('Error:', error);
-                            // Redirect to the same page to show the error message
-                            window.location.href = '{% url "client_dashboard" %}';
-                        });
-                    });
-                }
-            });
-        </script>
-
-        <script src="{% static 'js/dark-mode.js' %}"></script>
     </body>
 </html>

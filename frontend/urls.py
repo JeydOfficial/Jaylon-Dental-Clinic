@@ -6,7 +6,7 @@ from .views import *
 urlpatterns = [
     path('', view_client_dashboard, name='client_dashboard'),
     path('profile/', view_client_profile, name='client_profile'),
-    path('update_medical_questionnaire/', update_medical_questionnaire, name='update_medical_questionnaire'),
+    # path('update_medical_questionnaire/', update_medical_questionnaire, name='update_medical_questionnaire'),
     path('login/', client_login, name='client_login'),
     path('register/', client_register, name='client_register'),
     path('verify-email/<str:token>/', verify_email, name='client_verify_email'),

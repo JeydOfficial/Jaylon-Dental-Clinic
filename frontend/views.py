@@ -118,21 +118,21 @@ def view_client_dashboard(request):
                 messages.error(request, 'An error occurred while sending your message. Please try again later.')
 
 
-    medical_questions = [
-        {'text': 'Are you under physician\'s care?', 'type': 'yes_no'},
-        {'text': 'Do you have high blood pressure?', 'type': 'yes_no'},
-        {'text': 'Do you have heart disease?', 'type': 'yes_no'},
-        {'text': 'Are you allergic to any drugs, medicine, foods, anesthetics?', 'type': 'yes_no'},
-        {'text': 'Do you have diabetes?', 'type': 'yes_no'},
-        {'text': 'Do you have any blood disease?', 'type': 'yes_no'},
-        {'text': 'Are you a bleeder?', 'type': 'yes_no'},
-        {'text': 'Have you experienced excessive bleeding after tooth extraction?', 'type': 'yes_no'},
-        {'text': 'Have you or have you recently had evidence of infection such as boils, infected wounds?',
-         'type': 'yes_no'},
-        {'text': 'Have you ever had any reactions from local anesthetics?', 'type': 'yes_no'},
-        {'text': 'Have you had any dental surgery before?', 'type': 'yes_no'},
-        {'text': 'What is your impression of your present health?', 'type': 'health_status'},
-    ]
+    # medical_questions = [
+    #     {'text': 'Are you under physician\'s care?', 'type': 'yes_no'},
+    #     {'text': 'Do you have high blood pressure?', 'type': 'yes_no'},
+    #     {'text': 'Do you have heart disease?', 'type': 'yes_no'},
+    #     {'text': 'Are you allergic to any drugs, medicine, foods, anesthetics?', 'type': 'yes_no'},
+    #     {'text': 'Do you have diabetes?', 'type': 'yes_no'},
+    #     {'text': 'Do you have any blood disease?', 'type': 'yes_no'},
+    #     {'text': 'Are you a bleeder?', 'type': 'yes_no'},
+    #     {'text': 'Have you experienced excessive bleeding after tooth extraction?', 'type': 'yes_no'},
+    #     {'text': 'Have you or have you recently had evidence of infection such as boils, infected wounds?',
+    #      'type': 'yes_no'},
+    #     {'text': 'Have you ever had any reactions from local anesthetics?', 'type': 'yes_no'},
+    #     {'text': 'Have you had any dental surgery before?', 'type': 'yes_no'},
+    #     {'text': 'What is your impression of your present health?', 'type': 'health_status'},
+    # ]
 
 
     services = Service.objects.all()
@@ -157,7 +157,7 @@ def view_client_dashboard(request):
         'appointments': appointments,
         'recaptcha_site_key': settings.RECAPTCHA_PUBLIC_KEY,
         'show_privacy_modal': show_privacy_modal,
-        'medical_questions': medical_questions,
+        # 'medical_questions': medical_questions,
     }
     return render(request, 'client_dashboard.html', context)
 
@@ -271,31 +271,31 @@ def view_client_profile(request):
     return render(request, 'client_profile.html', context)
 
 
-@login_required(login_url='client_login')
-def update_medical_questionnaire(request):
-    user = request.user
-    medical_questionnaire, created = MedicalQuestionnaire.objects.get_or_create(user=user)
-
-    try:
-        medical_questionnaire.physician_care = request.POST.get('q1') == 'Yes'
-        medical_questionnaire.high_blood_pressure = request.POST.get('q2') == 'Yes'
-        medical_questionnaire.heart_disease = request.POST.get('q3') == 'Yes'
-        medical_questionnaire.allergic = request.POST.get('q4') == 'Yes'
-        medical_questionnaire.diabetes = request.POST.get('q5') == 'Yes'
-        medical_questionnaire.blood_disease = request.POST.get('q6') == 'Yes'
-        medical_questionnaire.bleeder = request.POST.get('q7') == 'Yes'
-        medical_questionnaire.excessive_bleeding = request.POST.get('q8') == 'Yes'
-        medical_questionnaire.recent_infection = request.POST.get('q9') == 'Yes'
-        medical_questionnaire.anesthetic_reactions = request.POST.get('q10') == 'Yes'
-        medical_questionnaire.previous_dental_surgery = request.POST.get('q11') == 'Yes'
-        medical_questionnaire.health_impression = request.POST.get('q12')
-
-        medical_questionnaire.save()
-        messages.success(request, 'Thank you for completing the medical questionnaire!')
-        return JsonResponse({'success': True})
-    except Exception as e:
-        messages.error(request, 'There was an error submitting the questionnaire. Please try again.')
-        return JsonResponse({'success': False})
+# @login_required(login_url='client_login')
+# def update_medical_questionnaire(request):
+#     user = request.user
+#     medical_questionnaire, created = MedicalQuestionnaire.objects.get_or_create(user=user)
+#
+#     try:
+#         medical_questionnaire.physician_care = request.POST.get('q1') == 'Yes'
+#         medical_questionnaire.high_blood_pressure = request.POST.get('q2') == 'Yes'
+#         medical_questionnaire.heart_disease = request.POST.get('q3') == 'Yes'
+#         medical_questionnaire.allergic = request.POST.get('q4') == 'Yes'
+#         medical_questionnaire.diabetes = request.POST.get('q5') == 'Yes'
+#         medical_questionnaire.blood_disease = request.POST.get('q6') == 'Yes'
+#         medical_questionnaire.bleeder = request.POST.get('q7') == 'Yes'
+#         medical_questionnaire.excessive_bleeding = request.POST.get('q8') == 'Yes'
+#         medical_questionnaire.recent_infection = request.POST.get('q9') == 'Yes'
+#         medical_questionnaire.anesthetic_reactions = request.POST.get('q10') == 'Yes'
+#         medical_questionnaire.previous_dental_surgery = request.POST.get('q11') == 'Yes'
+#         medical_questionnaire.health_impression = request.POST.get('q12')
+#
+#         medical_questionnaire.save()
+#         messages.success(request, 'Thank you for completing the medical questionnaire!')
+#         return JsonResponse({'success': True})
+#     except Exception as e:
+#         messages.error(request, 'There was an error submitting the questionnaire. Please try again.')
+#         return JsonResponse({'success': False})
 
 
 def client_login(request):
