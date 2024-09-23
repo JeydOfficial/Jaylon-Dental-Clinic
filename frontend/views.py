@@ -342,7 +342,7 @@ def client_register(request):
         # Check if passwords match
         if password != confirm_password:
             messages.error(request, 'Passwords do not match.')
-            return redirect('accounts')
+            return redirect('client_register')
 
         # Check if the email is already taken
         if User.objects.filter(email=email).exists():
