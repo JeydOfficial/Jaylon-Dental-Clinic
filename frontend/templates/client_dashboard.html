@@ -39,8 +39,6 @@
         <!-- DataTable CSS -->
         <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.11.5/css/dataTables.bootstrap5.min.css">
 
-        <link rel="stylesheet" type="text/css" href={% static 'css/dark-mode.css'  %}>
-
         <style>
             body {
                 font-family: 'Poppins', sans-serif;
@@ -254,8 +252,7 @@
                                     <div class="g-recaptcha" data-sitekey="{{ recaptcha_site_key }}"></div>
                                 </div>
                                 <div class="d-grid">
-                                    <button type="submit" class="btn btn-primary"><i class="fas fa-check"></i> Book Appointment
-                                    </button>
+                                    <button type="submit" class="btn btn-primary"><i class="fas fa-check"></i> Book Appointment</button>
                                 </div>
                             </form>
                         </div>
@@ -540,7 +537,7 @@
                         <div class="modal-header">
                             <h5 class="modal-title" id="privacyModalLabel">Policy and Agreement</h5>
                             {% if not has_agreed_privacy_policy %}
-                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                <button type="button" class="btn-close" id="closeButton" data-bs-dismiss="modal" aria-label="Close" disabled></button>
                             {% endif %}
                         </div>
                         <div class="modal-body" style="max-height: 70vh; overflow-y: auto;">
@@ -659,15 +656,18 @@
                             </ul>
 
                             <div class="form-check mt-4">
-                                <input class="form-check-input" type="checkbox" id="agreeCheckbox">
+                                <input class="form-check-input" type="checkbox" id="agreeCheckbox" {% if has_agreed_privacy_policy%} checked disabled {% endif %} >
                                 <label class="form-check-label" for="agreeCheckbox">
                                     I have read and agree to the Policy and Agreement of Jaylon Dental Clinic.
                                 </label>
                             </div>
                         </div>
                         <div class="modal-footer">
-                                <button type="button" class="btn btn-primary" id="agreeButton" disabled>I Agree</button>
+                            {% if has_agreed_privacy_policy %}
                                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                            {% else %}
+                                <button type="button" class="btn btn-primary" id="agreeButton" disabled>I Agree</button>
+                            {% endif %}
                         </div>
                     </div>
                 </div>
@@ -837,6 +837,8 @@
                 });
                 var agreeCheckbox = document.getElementById('agreeCheckbox');
                 var agreeButton = document.getElementById('agreeButton');
+                var closeButton = document.getElementById('closeButton');
+
 
                 if (showPrivacyModal) {
                     privacyModal.show();
@@ -852,6 +854,18 @@
                         privacyModal.hide();
                     }
                 });
+
+                agreeCheckbox.addEventListener('change', function() {
+                    closeButton.disabled = !this.checked;
+                });
+
+                closeButton.addEventListener('click', function() {
+                    if (agreeCheckbox.checked) {
+                        // You might want to send an AJAX request here to update the user's agreement status
+                        privacyModal.hide();
+                    }
+                });
+
             });
         </script>
 
