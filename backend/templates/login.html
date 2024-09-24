@@ -32,7 +32,11 @@
         <style>
             body {
                 font-family: 'Poppins', sans-serif;
-                background-color: #7e919f;
+                background-image: url("{% static 'images/bg5.jpg' %}");
+                background-size: cover;
+                background-attachment: fixed;
+                background-repeat: no-repeat;
+                background-position: center;
                 display: flex;
                 align-items: center;
                 justify-content: center;
@@ -46,7 +50,7 @@
                 background-color: #57707a;
             }
             .customized-bg {
-                background-color: #57707a;
+                background-color: rgba(87, 112, 122, 0.7);
             }
             .customized:hover {
                 background-color: #6e8a94;
@@ -55,7 +59,9 @@
                 text-decoration: underline !important;
             }
             .login-container {
-                background-color: white;
+                background-color: none;
+                backdrop-filter: blur(5px);
+                border: solid 1px black;
                 border-radius: 10px;
                 box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
                 overflow: hidden;
@@ -103,7 +109,7 @@
         <div class="login-container">
             <div class="text-center py-4 customized-bg" style="color: #ffffff;">
                 <img src="{% static 'images/favicon.png' %}" alt="Jaylon Dental Clinic Logo" class="mb-1" style="max-width: 100px;">
-                <h4 class="lobster-font m-0" style="animation: colorAnimation 5s infinite alternate">Jaylon Dental Clinic</h4>
+                <h4 class="lobster-font m-0">Jaylon Dental Clinic</h4>
                 <small>Admin Login</small>
             </div>
             <div class="p-4">
