@@ -42,7 +42,7 @@
         <style>
             body {
                 font-family: 'Poppins', sans-serif;
-                background-color: #7da0ca;
+                background-color: white;
             }
             .customized-bg {
                 background-image: url("{% static 'images/bg4.jpg' %}"); /*new*/
@@ -80,7 +80,9 @@
             }
             #scrollspyHome, #scrollspyServices, #scrollspyGallery, #scrollspyContacts, #scrollspyPrivacy {
                 padding: 3rem;
-                background-color: white;
+                background-color: none;
+                backdrop-filter: blur(12px);
+                border: solid 1px black;
                 color: black;
                 border-radius: 15px;
                 box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
@@ -100,7 +102,7 @@
                 padding: 0.5rem 1.5rem;
             }
             footer {
-                background-color: #333;
+                background-color: #7da0ca;
                 color: white;
                 padding: 2rem 0;
             }
@@ -690,7 +692,7 @@
             </div>
         </div>
 
-        <footer class="bg-secondary text-light py-3" data-aos="fade-down">
+        <footer class="bg-primary text-light py-3" data-aos="fade-down">
             <div class="container">
                 <div class="row justify-content-center">
                     <div class="col-md-8 text-center">
