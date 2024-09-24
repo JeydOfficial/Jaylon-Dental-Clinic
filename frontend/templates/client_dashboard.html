@@ -222,10 +222,12 @@
                     <div class="row gy-5">
                         <div class="col-md-6">
                             <h3 class="lobster-font"><i class="fa-light fa-calendar-plus text-primary mb-3"></i> Book an Appointment</h3>
-                            <p><small>Read the <a href="#" data-bs-toggle="modal" data-bs-target="#privacyModal" class="text-decoration-none">policy and agreement</a> carefully before booking an appointment to avoid mistakes.
+                            <p><small>Read the <a href="#" data-bs-toggle="modal" data-bs-target="#privacyModal"
+                                                  class="text-decoration-none">policy and agreement</a> carefully before booking an appointment to avoid mistakes.
                             </small></p>
-                            <p style="margin-top: -15px"><small>Any updates on personal and medical information? <a
-                                    href="{% url 'client_profile' %}" class="text-decoration-none">Update here</a>.</small>
+                            <p style="margin-top: -15px"><small>Please ensure that you complete the  <a
+                                    href="{% url 'client_profile' %}" class="text-decoration-none">medical-dental questionnaire</a>
+                                 before your appointment. This is important for your safety and to provide the best care possible.</small>
                             </p>
                             <form method="post" id="appointment-form">
                                 {% csrf_token %}
@@ -443,14 +445,14 @@
                         </form>
                     </div>
                     <div class="col-md-5 offset-md-1" data-aos="fade-up">
-                        <h4 class="lobster-font"><i class="fa-light fa-circle-info text-primary"></i> Clinic Information</h4>
+                        <h4><i class="fa-light fa-circle-info text-primary"></i> Clinic Information</h4>
                         <p><i class="fa-light fa-location-dot"></i>  <strong>Address: </strong>
                             <a href="https://maps.app.goo.gl/o3jN7r3ymXMoNGWN9" target="_blank" class="text-decoration-none">Dayao Street, 9400, North Cotabato</a></p>
                         <p><i class="fa-light fa-phone"></i> <strong>Phone: </strong><a href="tel:+639399072455" target="_blank" class="text-decoration-none">+63 939 907 2455</a></p>
                         <p><i class="fa-light fa-envelope"></i> <strong>Email: </strong>
                             <a href="mailto:jaylondentalclinic@gmail.com?subject=Subject%20Here&body=Message%20Here" target="_blank" class="text-decoration-none">jaylondentalclinic@gmail.com</a>
                         </p>
-                        <h4 class="lobster-font mt-4"><i class="fa-light fa-clock text-primary"></i> Office Hours</h4>
+                        <h4 class="mt-4"><i class="fa-light fa-clock text-primary"></i> Office Hours</h4>
                         <p>Monday to Saturday: 8:30 AM - 4:00 PM</p>
                         <p>Sunday: 9:00 AM - 12:00 PM</p>
                     </div>
@@ -557,25 +559,25 @@
                             <h6 class="mt-4">2. Appointment Approval and Reminders</h6>
                             <ul>
                                 <li>All appointments must be approved at least 24 hours before the selected date and time.</li>
-                                <li>Patients will receive an email reminder, whether their appointment is approved or canceled.</li>
+                                <li>Patients will receive an email reminder regarding their appointment status (approved or canceled).</li>
                             </ul>
 
                             <h6 class="mt-4">3. Medical-Dental Questionnaire</h6>
                             <ul>
                                 <li>The questionnaire is accessible on your profile after you log in.</li>
-                                <li>Please update it whenever there are changes in your medical condition by checking the
-                                    relevant checkboxes (Yes/No) or selecting your health status (Good/Fair/Poor).
+                                <li>Please update it whenever there are changes in your medical condition by selecting the
+                                    relevant checkboxes (Yes/No) or indicating your health status (Good/Fair/Poor).
                                 </li>
                             </ul>
 
                             <h6 class="mt-4">4. Cancellation and Rescheduling</h6>
                             <ul>
-                                <li>If a mistake is made in selecting a service, date, or time, the client must choose the next
-                                    available day instead of correcting the mistake on the same day.
+                                <li>If an error occurs in selecting a service, date, or time, client <strong>must choose the next
+                                    available day</strong> rather than correcting the mistake on the same day.
                                 </li>
                                 <li>Only the first approved appointment will be honored for any single service and time slot.
-                                    Any duplicate appointments for the same service at different times will be
-                                    <strong>ignored</strong>.
+                                    Duplicate appointments for the same service at different times will be
+                                    <strong>disregarded</strong>.
                                 </li>
                                 <li>Once an appointment is created, it cannot be canceled or rescheduled due to the busy
                                     schedules of our dentists.
@@ -590,10 +592,9 @@
 
                             <h6 class="mt-4">6. Late Arrivals</h6>
                             <ul>
-                                <li>Patients who book through our clinic's website will be given priority based on their
-                                    selected date and time. To help maintain a smooth flow, we kindly ask patients to arrive
-                                    10-15 minutes before their scheduled appointment.
-                                </li>
+                                <li>Patients are requested to arrive at least 15 minutes before their scheduled appointment.</li>
+                                <li>Patients who book through our clinic's website will receive priority based on their
+                                selected date and time.</li>
                                <!-- <li>If a patient arrives (time) late, their appointment will be canceled. The patient must
                                     book a new appointment.
                                 </li>-->
@@ -613,9 +614,9 @@
 
                             <h6 class="mt-4">8. Emergency Appointments</h6>
                             <ul>
-                                <li>Emergency cases will be given priority and fitted into the schedule as soon as possible.
+                                <li>Emergency cases will be prioritized and accommodated as soon as possible.
                                 </li>
-                                <li>If there are no available slots, emergency patients may be referred to the nearest available
+                                <li>If no available slots exists, emergency patients may be referred to the nearest available
                                     clinic.
                                 </li>
                             </ul>
@@ -650,9 +651,20 @@
                             <h6 class="mt-4">11. Feedback and Complaints</h6>
                             <ul>
                                 <li>We welcome feedback to continuously improve our services.</li>
-                                <li>You can contact us through the "Contacts" section on our clinic website via Gmail, phone
-                                    call, or connect with us on Facebook and Instagram for updates.
+                                <li>Contact us through the "Contacts" section on our clinic website, via Gmail, phone call,
+                                    or connect with us on Facebook and Instagram for updates.
                                 </li>
+                            </ul>
+
+                            <h6 class="mt-4">12. Preparation Reminders</h6>
+                            <ul>
+                                <li><strong>Take a screenshot</strong> of your approved appointment confirmation for easy reference during check-in.</li>
+                            </ul>
+
+                            <h6 class="mt-4">13. Follow-up Checkups</h6>
+                            <ul>
+                                <li>If you have any follow-up appointments, please schedule as soon as possible to maintain
+                                your treatment plan.</li>
                             </ul>
 
                             <div class="form-check mt-4">
