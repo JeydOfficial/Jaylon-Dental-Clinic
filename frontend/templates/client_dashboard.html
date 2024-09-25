@@ -42,17 +42,25 @@
         <style>
             body {
                 font-family: 'Poppins', sans-serif;
-                background-color: white;
+                background-color: #8eb69b;
             }
             .customized-bg {
-                background-image: url("{% static 'images/bg4.jpg' %}"); /*new*/
-                background-size: cover;
-                background-attachment: fixed;
-                background-position: center;
-                background-repeat: no-repeat;
+                background-color: #8eb69b;
             }
             .lobster-font {
                 font-family: 'Lobster', cursive;
+            }
+            .bg-dark-green {
+                background-color: #285f52;
+            }
+            .btn-bg-dark-green {
+                background-color: #285f52;
+            }
+            .btn-bg-dark-green:hover {
+                background-color: #4b8f8c;
+            }
+            .cl-dark-green {
+                color: #235347;
             }
             .logo {
                 width: 120px;
@@ -73,16 +81,14 @@
                 transition: color 0.3s ease;
             }
             .nav-link:hover {
-                color: #007bff;
+                color: #235347;
             }
             h1, h2, h3, h4, h5, h6 {
                 font-weight: 600;
             }
             #scrollspyHome, #scrollspyServices, #scrollspyGallery, #scrollspyContacts, #scrollspyPrivacy {
                 padding: 3rem;
-                background-color: none;
-                backdrop-filter: blur(12px);
-                border: solid 1px black;
+                background-color: #daf1de;
                 color: black;
                 border-radius: 15px;
                 box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
@@ -152,6 +158,26 @@
                         color: #4b8f8c;
                 }
             }
+            @keyframes iconGreenAnimation {
+                0% {
+                        color: #6c7a5f;
+                }
+                20% {
+                        color: #4f5d40;
+                }
+                40% {
+                        color: #5a6e4d;
+                }
+                60% {
+                        color: #3f4a32;
+                }
+                80% {
+                        color: #4a5a3f;
+                }
+                100% {
+                        color: #2e3b24;
+                }
+            }
         </style>
     </head>
     <body>
@@ -211,7 +237,7 @@
                             </li>
                         {% else %}
                             <li class="nav-item ms-auto">
-                                <a class="btn btn-primary" href="{% url 'client_login' %}">
+                                <a class="btn btn-bg-dark-green" href="{% url 'client_login' %}" style="color: white;">
                                     <i class="fa-light fa-calendar-check"></i> BOOK NOW!
                                 </a>
                             </li>
@@ -227,18 +253,21 @@
                 {% if request.user.is_authenticated and not request.user.is_superuser %}
                     <div class="row gy-5">
                         <div class="col-md-6">
-                            <h3 class="lobster-font"><i class="fa-light fa-calendar-plus text-primary mb-3"></i> Book an Appointment</h3>
-                            <p><small>Read the <a href="#" data-bs-toggle="modal" data-bs-target="#privacyModal"
-                                                  class="text-decoration-none">policy and agreement</a> carefully before booking an appointment to avoid mistakes.
-                            </small></p>
-                            <p style="margin-top: -15px"><small>Please ensure that you complete the  <a
+                            <h3 class="lobster-font cl-dark-green"><i class="fa-light fa-calendar-plus mb-3" style="animation: iconGreenAnimation 5s infinite alternate"></i> Book an Appointment</h3>
+                            <p class="cl-dark-green"><small>Read the <a href="#" data-bs-toggle="modal" data-bs-target="#privacyModal" class="text-decoration-none">
+                                policy and agreement</a> carefully before booking to avoid mistakes.
+                                And complete the  <a
                                     href="{% url 'client_profile' %}" class="text-decoration-none">medical-dental questionnaire</a>
-                                 before your appointment. This is important for your safety and to provide the best care possible.</small>
-                            </p>
+                                 before your appointment for your safety and best care.
+                            </small></p>
+<!--                            <p style="margin-top: -15px"><small>Please ensure that you complete the  <a-->
+<!--                                    href="{% url 'client_profile' %}" class="text-decoration-none">medical-dental questionnaire</a>-->
+<!--                                 before your appointment. This is important for your safety and to provide the best care possible.</small>-->
+<!--                            </p>-->
                             <form method="post" id="appointment-form">
                                 {% csrf_token %}
                                 <div class="mb-3">
-                                    <label for="serviceSelect" class="form-label">Service</label>
+                                    <label for="serviceSelect" class="form-label cl-dark-green"><strong>Service</strong></label>
                                     <select class="form-select" name="service" id="serviceSelect" required>
                                         <option value="">--Select Service--</option>
                                         {% for service in services %}
@@ -247,11 +276,11 @@
                                     </select>
                                 </div>
                                 <div class="mb-3">
-                                    <label for="dateInput" class="form-label">Preferred Date</label>
+                                    <label for="dateInput" class="form-label cl-dark-green"><strong>Preferred Date</strong></label>
                                     <input type="date" class="form-control" name="date" id="dateInput" required>
                                 </div>
                                 <div class="mb-3">
-                                    <label for="timeSlotSelect" class="form-label">Preferred Time</label>
+                                    <label for="timeSlotSelect" class="form-label cl-dark-green"><strong>Preferred Time</strong></label>
                                     <select class="form-select" name="time_slot" id="timeSlotSelect" required>
                                         <option value="">--Select Time--</option>
                                     </select>
@@ -260,12 +289,12 @@
                                     <div class="g-recaptcha" data-sitekey="{{ recaptcha_site_key }}"></div>
                                 </div>
                                 <div class="d-grid">
-                                    <button type="submit" class="btn btn-primary"><i class="fas fa-check"></i> Book Appointment</button>
+                                    <button type="submit" class="btn btn-bg-dark-green" style="color: white;"><i class="fas fa-check"></i> Book Appointment</button>
                                 </div>
                             </form>
                         </div>
                         <div class="col-md-6">
-                            <h3 class="lobster-font"><i class="fa-light fa-clock-rotate-left text-primary mb-3"></i> Appointment History</h3>
+                            <h3 class="lobster-font cl-dark-green"><i class="fa-light fa-clock-rotate-left mb-3" style="animation: iconGreenAnimation 5s infinite alternate"></i> Appointment History</h3>
                             <div class="table-responsive py-4">
                                 <table id="appointmentHistoryTable" class="table table-striped py-2">
                                     <thead>
@@ -304,20 +333,21 @@
                     <div class="text-center">
                         <img src="{% static 'images/favicon.png' %}" alt="Jaylon Dental Clinic" class="logo">
                     </div>
-                    <h1 class="lobster-font text-center mb-4">Welcome to Jaylon Dental Clinic!</h1>
+                    <h1 class="lobster-font text-center mb-4 cl-dark-green">Welcome to Jaylon Dental Clinic!</h1>
                     <p class="lead text-center">We're excited to help you achieve your perfect smile and boost your confidence.</p>
-                    <p class="text-center">We believe every smile has a story worth telling. Trust us to help you achieve the radiant smile you've
-                    always dreamed of!</p>
+<!--                    <p class="text-center">We believe every smile has a story worth telling. Trust us to help you achieve the radiant smile you've-->
+<!--                    always dreamed of!</p>-->
                     <div class="text-center">
-                        <a href="{% url 'client_login' %}" class="btn btn-primary btn-lg"><i class="fa-light fa-calendar-check"></i> Book
-                            Your Appointment Now!</a>
+                        <a href="{% url 'client_login' %}" class="btn btn-lg btn-bg-dark-green" style="color: white">
+                            <i class="fa-light fa-calendar-check"></i>
+                            Book Your Appointment Now!</a>
                     </div>
                 {% endif %}
             </div>
 
             <div id="scrollspyServices" class="mt-4" data-aos="fade-up">
-                <h3 class="lobster-font mb-4" data-aos="fade-right"><i class="fa-light fa-toothbrush text-primary"></i> Our Services</h3>
-                <p data-aos="fade-left">Ready for a smile transformation? Let <strong>Jaylon Dental Clinic</strong> take the first
+                <h3 class="lobster-font mb-4 cl-dark-green" data-aos="fade-right"><i class="fa-light fa-toothbrush" style="animation: iconGreenAnimation 5s infinite alternate"></i> Our Services</h3>
+                <p class="cl-dark-green" data-aos="fade-left">Ready for a smile transformation? Let <strong>Jaylon Dental Clinic</strong> take the first
                     step towards a more confident you!</p>
 
                 <div class="row">
@@ -329,8 +359,8 @@
                                      style="height: 200px; object-fit: cover;" data-bs-toggle="modal"
                                      data-bs-target="#servicesModal" data-bs-slide-to="{{ forloop.counter0 }}">
                                 <div class="card-body d-flex flex-column">
-                                    <h5 class="lobster-font card-title">{{ service.title }}</h5>
-                                    <p class="card-text flex-grow-1">{{ service.description|truncatewords:20 }}</p>
+                                    <h5 class="lobster-font card-title cl-dark-green">{{ service.title }}</h5>
+                                    <p class="card-text flex-grow-1 cl-dark-green">{{ service.description|truncatewords:20 }}</p>
                                     <div class="mt-auto">
                                         <small class="text-muted">Duration: {{ service.duration }} minutes</small>
                                     </div>
@@ -346,7 +376,7 @@
                 <div class="modal-dialog modal-dialog-centered modal-md">
                     <div class="modal-content">
                         <div class="modal-header">
-                            <h5 class="modal-title" id="servicesModalLabel"> Our Services</h5>
+                            <h5 class="modal-title cl-dark-green" id="servicesModalLabel"> Our Services</h5>
                             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                         </div>
                         <div class="modal-body p-0">
@@ -381,8 +411,8 @@
             </div>
 
             <div id="scrollspyGallery" class="mt-4" data-aos="fade-up">
-              <h3 class="lobster-font mb-4" data-aos="fade-right"><i class="fa-light fa-images text-primary"></i> Clinic Gallery</h3>
-              <p>Explore our gallery to see the stunning results we create. Come visit and see how we turn smiles into works of art!</p>
+              <h3 class="lobster-font mb-4 cl-dark-green" data-aos="fade-right"><i class="fa-light fa-images" style="animation: iconGreenAnimation 5s infinite alternate"></i> Clinic Gallery</h3>
+              <p class="cl-dark-green">Explore our gallery to see the stunning results we create. Come visit and see how we turn smiles into works of art!</p>
 
               <div class="row">
                 {% for image in images %}
@@ -400,7 +430,7 @@
               <div class="modal-dialog modal-dialog-centered modal-md">
                 <div class="modal-content">
                   <div class="modal-header">
-                    <h5 class="modal-title" id="galleryModalLabel">Clinic Gallery</h5>
+                    <h5 class="modal-title cl-dark-green" id="galleryModalLabel">Clinic Gallery</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                   </div>
                   <div class="modal-body">
@@ -427,7 +457,7 @@
             </div>
 
             <div id="scrollspyContacts" class="mt-4" data-aos="fade-up">
-                <h3 class="lobster-font mb-4" data-aos="fade-right"><i class="fa-light fa-phone-volume text-primary"></i> Contact Us</h3>
+                <h3 class="lobster-font mb-4 cl-dark-green" data-aos="fade-right"><i class="fa-light fa-phone-volume" style="animation: iconGreenAnimation 5s infinite alternate"></i> Contact Us</h3>
                 <p class="lead" data-aos="fade-left">For appointments or inquiries, please fill out the form below, <br> and
                 we will get back to you as soon as possible.</p>
                 <div class="row gy-5">
@@ -447,27 +477,27 @@
                                 <textarea class="form-control" id="contactMessage" rows="4" name="message" required></textarea>
                             </div>
                             <div class="d-grid">
-                                <button type="submit" class="btn btn-primary"><i class="fa-light fa-paper-plane"></i> Send Message
+                                <button type="submit" class="btn btn-bg-dark-green" style="color: white;"><i class="fa-light fa-paper-plane"></i> Send Message
                                 </button>
                             </div>
                         </form>
                     </div>
                     <div class="col-md-5 offset-md-1" data-aos="fade-up">
-                        <h4><i class="fa-light fa-circle-info text-primary"></i> Clinic Information</h4>
+                        <h4 class="cl-dark-green"><i class="fa-light fa-circle-info" style="animation: iconGreenAnimation 5s infinite alternate"></i> Clinic Information</h4>
                         <p><i class="fa-light fa-location-dot"></i>  <strong>Address: </strong>
                             <a href="https://maps.app.goo.gl/o3jN7r3ymXMoNGWN9" target="_blank" class="text-decoration-none">Dayao Street, 9400, North Cotabato</a></p>
                         <p><i class="fa-light fa-phone"></i> <strong>Phone: </strong><a href="tel:+639399072455" target="_blank" class="text-decoration-none">+63 939 907 2455</a></p>
                         <p><i class="fa-light fa-envelope"></i> <strong>Email: </strong>
                             <a href="mailto:jaylondentalclinic@gmail.com?subject=Subject%20Here&body=Message%20Here" target="_blank" class="text-decoration-none">jaylondentalclinic@gmail.com</a>
                         </p>
-                        <h4 class="mt-4"><i class="fa-light fa-clock text-primary"></i> Office Hours</h4>
+                        <h4 class="mt-4 cl-dark-green"><i class="fa-light fa-clock" style="animation: iconGreenAnimation 5s infinite alternate"></i> Office Hours</h4>
                         <p>Monday to Saturday: 8:30 AM - 4:00 PM</p>
                         <p>Sunday: 9:00 AM - 12:00 PM</p>
                     </div>
                 </div>
                 <div class="row mt-4">
                     <div class="col-12" data-aos="zoom-in">
-                        <h4 class="lobster-font"><i class="fa-light fa-map-location-dot text-primary"></i> Find Us</h4>
+                        <h4 class="lobster-font cl-dark-green"><i class="fa-light fa-map-location-dot" style="animation: iconGreenAnimation 5s infinite alternate"></i> Find Us</h4>
                         <div class="embed-responsive embed-responsive-16by9">
                             <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3959.967304180738!2d125.08718601145742!3d7.013128192959139!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x32f8f9e289b147af%3A0xa6fd91898c8910a0!2sJaylon%20Dental%20group!5e0!3m2!1sen!2sph!4v1725349059605!5m2!1sen!2sph"
                                     width="100%" height="450" style="border:0; border-radius: 10px" allowfullscreen="" loading="lazy">
@@ -478,13 +508,13 @@
             </div>
 
             <div id="scrollspyPrivacy" class="mt-4" data-aos="fade-up">
-                <h3 class="lobster-font mb-4" data-aos="fade-right"><i class="fa-light fa-file-contract text-primary"></i> Policy and Agreement</h3>
+                <h3 class="lobster-font mb-4 cl-dark-green" data-aos="fade-right"><i class="fa-light fa-file-contract" style="animation: iconGreenAnimation 5s infinite alternate"></i> Policy and Agreement</h3>
                 <div class="row">
                     <div class="col-md-12" data-aos="fade-up" data-aos-delay="100">
-                        <p>Thank you for choosing us for your dental care needs. We are committed to providing exceptional
+                        <p class="cl-dark-green">Thank you for choosing us for your dental care needs. We are committed to providing exceptional
                         care in a comfortable environment while protecting your personal information. Before we get started,
                         please take a moment to review our important policies and agreements.</p>
-                        <p><strong>Please note:</strong> <br>
+                        <p class="cl-dark-green"><strong>Please note:</strong> <br>
                         • Reviewing our policies will help you understand our procedures and your responsibilities as a patient.
                             <br>
                         • By continuing, you agree to our policies and agreements.
@@ -540,161 +570,148 @@
 <!--            </div>-->
 
             <!-- Privacy Policy Modal -->
-            <div class="modal fade" id="privacyModal" tabindex="-1" aria-labelledby="privacyModalLabel" aria-hidden="true"
-                 data-bs-backdrop="static" data-bs-keyboard="false">
-                <div class="modal-dialog modal-lg">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h5 class="modal-title" id="privacyModalLabel">Policy and Agreement</h5>
-                            {% if not has_agreed_privacy_policy %}
-                                <button type="button" class="btn-close" id="closeButton" data-bs-dismiss="modal" aria-label="Close" disabled></button>
-                            {% endif %}
-                        </div>
-                        <div class="modal-body" style="max-height: 70vh; overflow-y: auto;">
-                            <p class="fw-bold">IMPORTANT REMINDER:</p>
-                            <p class="fw-bold">Please note that Jaylon Dental Clinic is not responsible for any issues that arise
-                            from not following our policies. Any inconvenience caused will be the patient's responsibility. To avoid
-                            problems, please read the following reminders carefully.</p>
+<div class="modal fade" id="privacyModal" tabindex="-1" aria-labelledby="privacyModalLabel" aria-hidden="true" data-bs-backdrop="static" data-bs-keyboard="false">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title cl-dark-green" id="privacyModalLabel">Policy and Agreement</h5>
+                <button type="button" class="btn-close" id="closeButton" aria-label="Close" disabled></button>
+            </div>
+            <div class="modal-body">
+                <!-- Content goes here -->
+                <p class="fw-bold cl-dark-green">IMPORTANT REMINDER:</p>
+                <p class="fw-bold">Please note that Jaylon Dental Clinic is not responsible for any issues that arise from not following our policies. Any inconvenience caused will be the patient's responsibility. To avoid problems, please read the following reminders carefully.</p>
 
-                            <h6 class="mt-4">1. Appointment Booking</h6>
-                            <ul>
-                                <li>Appointments can be booked via phone, clinic website, or in-person.</li>
-                                <li>Patients are encouraged to book appointments in advance to secure their preferred date and
-                                    time.
-                                </li>
-                            </ul>
+                <h6 class="mt-4 cl-dark-green">1. Appointment Booking</h6>
+                <ul>
+                    <li>Appointments can be booked via phone, clinic website, or in-person.</li>
+                    <li>Patients are encouraged to book appointments in advance to secure their preferred date and time.</li>
+                </ul>
 
-                            <h6 class="mt-4">2. Appointment Approval and Reminders</h6>
-                            <ul>
-                                <li>All appointments must be approved at least 24 hours before the selected date and time.</li>
-                                <li>Patients will receive an email reminder regarding their appointment status (approved or canceled).</li>
-                            </ul>
+                <h6 class="mt-4 cl-dark-green">2. Appointment Approval and Reminders</h6>
+                <ul>
+                    <li>All appointments must be approved at least 24 hours before the selected date and time.</li>
+                    <li>Patients will receive an email reminder regarding their appointment status (approved or canceled).</li>
+                </ul>
 
-                            <h6 class="mt-4">3. Medical-Dental Questionnaire</h6>
-                            <ul>
-                                <li>The questionnaire is accessible on your profile after you log in.</li>
-                                <li>Please update it whenever there are changes in your medical condition by selecting the
-                                    relevant checkboxes (Yes/No) or indicating your health status (Good/Fair/Poor).
-                                </li>
-                            </ul>
+                <h6 class="mt-4 cl-dark-green">3. Medical-Dental Questionnaire</h6>
+                <ul>
+                    <li>The questionnaire is accessible on your profile after you log in.</li>
+                    <li>Please update it whenever there are changes in your medical condition by selecting the
+                        relevant checkboxes (Yes/No) or indicating your health status (Good/Fair/Poor).
+                    </li>
+                </ul>
 
-                            <h6 class="mt-4">4. Cancellation and Rescheduling</h6>
-                            <ul>
-                                <li>If an error occurs in selecting a service, date, or time, client <strong>must choose the next
-                                    available day</strong> rather than correcting the mistake on the same day.
-                                </li>
-                                <li>Only the first approved appointment will be honored for any single service and time slot.
-                                    Duplicate appointments for the same service at different times will be
-                                    <strong>disregarded</strong>.
-                                </li>
-                                <li>Once an appointment is created, it cannot be canceled, deleted, nor rescheduled due to the busy
-                                    schedules of our dentists.
-                                </li>
-                            </ul>
+                <h6 class="mt-4 cl-dark-green">4. Cancellation and Rescheduling</h6>
+                <ul>
+                    <li>If an error occurs in selecting a service, date, or time, client <strong>must choose the next
+                        available day</strong> rather than correcting the mistake on the same day.
+                    </li>
+                    <li>Only the first approved appointment will be honored for any single service and time slot.
+                        Duplicate appointments for the same service at different times will be
+                        <strong>disregarded</strong>.
+                    </li>
+                    <li>Once an appointment is created, it cannot be canceled, deleted, nor rescheduled due to the busy
+                        schedules of our dentists.
+                    </li>
+                </ul>
 
-                            <h6 class="mt-4">5. Walk-in Policy</h6>
-                            <ul>
-                                <li>Walk-ins are accepted but will be served based on availability.</li>
-                                <li>Scheduled appointments will take priority over walk-ins.</li>
-                            </ul>
+                <h6 class="mt-4 cl-dark-green">5. Walk-in Policy</h6>
+                <ul>
+                    <li>Walk-ins are accepted but will be served based on availability.</li>
+                    <li>Scheduled appointments will take priority over walk-ins.</li>
+                </ul>
 
-                            <h6 class="mt-4">6. Late Arrivals</h6>
-                            <ul>
-                                <li>Patients are requested to arrive at least 15 minutes before their scheduled appointment.</li>
-                                <li>Patients who book through our clinic's website will receive priority based on their
-                                selected date and time.</li>
-                               <!-- <li>If a patient arrives (time) late, their appointment will be canceled. The patient must
-                                    book a new appointment.
-                                </li>-->
-                            </ul>
+                <h6 class="mt-4 cl-dark-green">6. Late Arrivals</h6>
+                <ul>
+                    <li>Patients are requested to arrive at least 15 minutes before their scheduled appointment.</li>
+                    <li>Patients who book through our clinic's website will receive priority based on their
+                        selected date and time.
+                    </li>
+                </ul>
 
-                            <h6 class="mt-4">7. No-Show Policy</h6>
-                            <ul>
-                                <li>If a patient is a no-show, their appointment will be canceled the following day.</li>
-                                <li>If a patient is unable to attend their appointment and might be considered a no-show,
-                                    they must contact the clinic in advance to inform them.</li>
-                                <li>Repeated no-shows may result in a restricted account and limited booking options.</li>
-                                <ul>
-                                    <li>Three Consecutive times -- 12hrs account restriction</li>
-                                    <li>Five Consecutive times -- 24hrs account restriction</li>
-                                </ul>
-                            </ul>
+                <h6 class="mt-4 cl-dark-green">7. No-Show Policy</h6>
+                <ul>
+                    <li>If a patient is a no-show, their appointment will be canceled the following day.</li>
+                    <li>If a patient is unable to attend their appointment and might be considered a no-show,
+                        they must contact the clinic in advance to inform them.</li>
+                    <li>Repeated no-shows may result in a restricted account and limited booking options.</li>
+                    <ul>
+                        <li>Three Consecutive times -- 12hrs account restriction</li>
+                        <li>Five Consecutive times -- 24hrs account restriction</li>
+                    </ul>
+                </ul>
 
-                            <h6 class="mt-4">8. Emergency Appointments</h6>
-                            <ul>
-                                <li>Emergency cases will be prioritized and accommodated as soon as possible.
-                                </li>
-                                <li>If no available slots exists, emergency patients may be referred to the nearest available
-                                    clinic.
-                                </li>
-                            </ul>
+                <h6 class="mt-4 cl-dark-green">8. Emergency Appointments</h6>
+                <ul>
+                    <li>Emergency cases will be prioritized and accommodated as soon as possible.
+                    </li>
+                    <li>If no available slots exists, emergency patients may be referred to the nearest available
+                        clinic.
+                    </li>
+                </ul>
 
-                            <h6 class="mt-4">9. Estimated Service Duration</h6>
-                            <ul>
-                                <li>Tooth Extraction -- 10mins</li>
-                                <li>Tooth Filling -- 15mins</li>
-                                <li>Odontectomy -- 30mins</li>
-                                <li>Dentures -- 20mins</li>
-                                <li>Veneers -- 20mins</li>
-                                <li>Ortho Braces (Upper and Lower) -- 1hr and 10mins</li>
-                                <li>Ortho Braces (Upper or Lower) -- 40mins</li>
-                                <li>Crowns Fixed Bridge -- 20mins</li>
-                                <li>Denture Repair -- 15mins</li>
-                                <li>Oral Prophylaxis (Moderate) -- 45mins</li>
-                                <li>Oral Prophylaxis (Hard) -- 1hr</li>
-                                <li>Root Canal Treatment (Anterior) -- 1hr</li>
-                                <li>Root Canal Treatment (Posteriors) -- 1hr and 30mins</li>
-                            </ul>
+                <h6 class="mt-4 cl-dark-green">9. Estimated Service Duration</h6>
+                <ul>
+                    <li>Tooth Extraction -- 10mins</li>
+                    <li>Tooth Filling -- 15mins</li>
+                    <li>Odontectomy -- 30mins</li>
+                    <li>Dentures -- 20mins</li>
+                    <li>Veneers -- 20mins</li>
+                    <li>Ortho Braces (Upper and Lower) -- 1hr and 10mins</li>
+                    <li>Ortho Braces (Upper or Lower) -- 40mins</li>
+                    <li>Crowns Fixed Bridge -- 20mins</li>
+                    <li>Denture Repair -- 15mins</li>
+                    <li>Oral Prophylaxis (Moderate) -- 45mins</li>
+                    <li>Oral Prophylaxis (Hard) -- 1hr</li>
+                    <li>Root Canal Treatment (Anterior) -- 1hr</li>
+                    <li>Root Canal Treatment (Posteriors) -- 1hr and 30mins</li>
+                </ul>
 
-                            <h6 class="mt-4">10. Patient Records and Privacy</h6>
-                            <ul>
-                                <li>Patient information is kept confidential and used solely for appointment scheduling and
-                                    treatment purposes.
-                                </li>
-                                <li>Patients are <strong>required</strong> to update their contact details to ensure timely
-                                    communication.
-                                </li>
-                            </ul>
+                <h6 class="mt-4 cl-dark-green">10. Patient Records and Privacy</h6>
+                <ul>
+                    <li>Patient information is kept confidential and used solely for appointment scheduling and
+                        treatment purposes.
+                    </li>
+                    <li>Patients are <strong>required</strong> to update their contact details to ensure timely
+                        communication.
+                    </li>
+                </ul>
 
-                            <h6 class="mt-4">11. Feedback and Complaints</h6>
-                            <ul>
-                                <li>We welcome feedback to continuously improve our services.</li>
-                                <li>Contact us through the "Contacts" section on our clinic website, via Gmail, phone call,
-                                    or connect with us on Facebook and Instagram for updates.
-                                </li>
-                            </ul>
+                <h6 class="mt-4 cl-dark-green">11. Feedback and Complaints</h6>
+                <ul>
+                    <li>We welcome feedback to continuously improve our services.</li>
+                    <li>Contact us through the "Contacts" section on our clinic website, via Gmail, phone call,
+                        or connect with us on Facebook and Instagram for updates.
+                    </li>
+                </ul>
 
-                            <h6 class="mt-4">12. Preparation Reminders</h6>
-                            <ul>
-                                <li><strong>Take a screenshot</strong> of your approved appointment confirmation for easy reference during check-in.</li>
-                            </ul>
+                <h6 class="mt-4 cl-dark-green">12. Preparation Reminders</h6>
+                <ul>
+                    <li><strong>Take a screenshot</strong> of your approved appointment confirmation for easy reference during check-in.</li>
+                </ul>
+                <h6 class="mt-4 cl-dark-green">13. Follow-up Checkups</h6>
+                <ul>
+                    <li>If you have any follow-up appointments, please schedule as soon as possible to maintain
+                        your treatment plan.
+                    </li>
+                </ul>
 
-                            <h6 class="mt-4">13. Follow-up Checkups</h6>
-                            <ul>
-                                <li>If you have any follow-up appointments, please schedule as soon as possible to maintain
-                                your treatment plan.</li>
-                            </ul>
-
-                            <div class="form-check mt-4">
-                                <input class="form-check-input" type="checkbox" id="agreeCheckbox" {% if has_agreed_privacy_policy%} checked disabled {% endif %} >
-                                <label class="form-check-label" for="agreeCheckbox">
-                                    I have read and agree to the Policy and Agreement of Jaylon Dental Clinic.
-                                </label>
-                            </div>
-                        </div>
-                        <div class="modal-footer">
-                            {% if has_agreed_privacy_policy %}
-                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                            {% else %}
-                                <button type="button" class="btn btn-primary" id="agreeButton" disabled>I Agree</button>
-                            {% endif %}
-                        </div>
-                    </div>
+                <div class="form-check mt-4">
+                    <input class="form-check-input" type="checkbox" id="agreeCheckbox" {% if has_agreed_privacy_policy%} checked disabled {% endif %} >
+                    <label class="form-check-label" for="agreeCheckbox">
+                        I have read and agree to the Policy and Agreement of Jaylon Dental Clinic.
+                    </label>
                 </div>
             </div>
+            <div class="modal-footer">
+                <button type="button" id="agreeButton" class="btn btn-primary" disabled>I Agree</button>
+            </div>
         </div>
+    </div>
+</div>
 
-        <footer class="bg-primary text-light py-3" data-aos="fade-down">
+        <footer class="bg-dark-green text-light py-3" data-aos="fade-down">
             <div class="container">
                 <div class="row justify-content-center">
                     <div class="col-md-8 text-center">
@@ -850,44 +867,72 @@
 
         <script>
             document.addEventListener('DOMContentLoaded', function() {
-                var showPrivacyModal = {% if show_privacy_modal %}true{% else %}false{% endif %};
                 var privacyModal = new bootstrap.Modal(document.getElementById('privacyModal'), {
                     backdrop: 'static',
                     keyboard: false
                 });
+
                 var agreeCheckbox = document.getElementById('agreeCheckbox');
                 var agreeButton = document.getElementById('agreeButton');
                 var closeButton = document.getElementById('closeButton');
 
+                // Check if the user has previously agreed
+                var userAgreed = localStorage.getItem('userAgreedToPolicy') === 'true';
 
-                if (showPrivacyModal) {
+                if (!userAgreed) {
                     privacyModal.show();
+                } else {
+                    agreeCheckbox.checked = true;
+                    agreeButton.disabled = false;
+                    closeButton.disabled = false;
                 }
 
+                // Enable/disable the Agree button and Close button when checkbox state changes
                 agreeCheckbox.addEventListener('change', function() {
                     agreeButton.disabled = !this.checked;
-                });
-
-                agreeButton.addEventListener('click', function() {
-                    if (agreeCheckbox.checked) {
-                        // You might want to send an AJAX request here to update the user's agreement status
-                        privacyModal.hide();
-                    }
-                });
-
-                agreeCheckbox.addEventListener('change', function() {
                     closeButton.disabled = !this.checked;
                 });
 
-                closeButton.addEventListener('click', function() {
+                // When the user clicks "I Agree"
+                agreeButton.addEventListener('click', function() {
                     if (agreeCheckbox.checked) {
-                        // You might want to send an AJAX request here to update the user's agreement status
+                        // Save agreement status to localStorage
+                        localStorage.setItem('userAgreedToPolicy', 'true');
+
+                        // Optionally, send AJAX request to update the user's agreement status on the server
+                        updateUserAgreementStatus();
+
+                        // Hide the modal
                         privacyModal.hide();
                     }
                 });
 
+                // Allow the close button to work only after agreement
+                closeButton.addEventListener('click', function() {
+                    if (agreeCheckbox.checked) {
+                        privacyModal.hide();
+                    }
+                });
+
+                // Function to send AJAX request to update user's agreement status
+                function updateUserAgreementStatus() {
+                    var xhr = new XMLHttpRequest();
+                    xhr.open('POST', '/update-agreement-status', true);
+                    xhr.setRequestHeader('Content-Type', 'application/json;charset=UTF-8');
+                    xhr.send(JSON.stringify({
+                        userAgreed: true
+                    }));
+
+                    xhr.onload = function() {
+                        if (xhr.status === 200) {
+                            console.log('Agreement status updated on the server.');
+                        } else {
+                            console.error('Failed to update agreement status.');
+                        }
+                    };
+                }
             });
-        </script>
+            </script>
 
         <script>
             document.addEventListener('DOMContentLoaded', function() {
