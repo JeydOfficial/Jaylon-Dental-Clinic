@@ -223,7 +223,7 @@
 
         <div data-bs-spy="scroll" data-bs-target="#navbar-example2" data-bs-root-margin="0px 0px -40%"  data-bs-smooth-scroll="true" data-bs-offset="300" class="scrollspy-example customized-bg p-3 rounded-2" tabindex="0">
 
-            <div id="scrollspyHome" class="mt-4" data-aos="fade-down">
+            <div id="scrollspyHome" data-aos="fade-down"> <!--class="mt-4-->
                 {% if request.user.is_authenticated and not request.user.is_superuser %}
                     <div class="row gy-5">
                         <div class="col-md-6">
@@ -306,6 +306,8 @@
                     </div>
                     <h1 class="lobster-font text-center mb-4">Welcome to Jaylon Dental Clinic!</h1>
                     <p class="lead text-center">We're excited to help you achieve your perfect smile and boost your confidence.</p>
+                    <p class="text-center">We believe every smile has a story worth telling. Trust us to help you achieve the radiant smile you've
+                    always dreamed of!</p>
                     <div class="text-center">
                         <a href="{% url 'client_login' %}" class="btn btn-primary btn-lg"><i class="fa-light fa-calendar-check"></i> Book
                             Your Appointment Now!</a>
@@ -550,9 +552,9 @@
                         </div>
                         <div class="modal-body" style="max-height: 70vh; overflow-y: auto;">
                             <p class="fw-bold">IMPORTANT REMINDER:</p>
-                            <p class="fw-bold">Failure to follow this policy is not the fault of the clinic, and any
-                            inconvenience caused as a result will be the responsibility of  the patient. Please read
-                            the following carefully to avoid any issues.</p>
+                            <p class="fw-bold">Please note that Jaylon Dental Clinic is not responsible for any issues that arise
+                            from not following our policies. Any inconvenience caused will be the patient's responsibility. To avoid
+                            problems, please read the following reminders carefully.</p>
 
                             <h6 class="mt-4">1. Appointment Booking</h6>
                             <ul>
@@ -585,7 +587,7 @@
                                     Duplicate appointments for the same service at different times will be
                                     <strong>disregarded</strong>.
                                 </li>
-                                <li>Once an appointment is created, it cannot be canceled or rescheduled due to the busy
+                                <li>Once an appointment is created, it cannot be canceled, deleted, nor rescheduled due to the busy
                                     schedules of our dentists.
                                 </li>
                             </ul>
