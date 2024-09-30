@@ -31,7 +31,7 @@
         <style>
             body {
                 font-family: 'Poppins', sans-serif;
-                background-color: #7da0ca;
+                background-color: #97a97c;
                 display: flex;
                 align-items: center;
                 justify-content: center;
@@ -48,10 +48,10 @@
                 text-decoration: underline !important;
             }
             .customized-bg {
-                 background-color: #5483b3;
+                 background-color: #b5c99a;
             }
-            .customized-bg:hover {
-                color: white;
+            .btn-bg-dark-green:hover {
+                background-color: #8a9a5b;
             }
             .login-container {
                 background-color: #ffffff;
@@ -63,24 +63,31 @@
             }
 
             /*KEYFRAMES*/
-            @keyframes colorAnimation {
+            @keyframes iconGreenAnimation {
                 0% {
-                        color: #aec7e8;
+                        color: #6c7a5f;
                 }
                 20% {
-                        color: #c4e0f3;
+                        color: #4f5d40;
                 }
                 40% {
-                        color: #b5d5e6;
+                        color: #5a6e4d;
                 }
                 60% {
-                        color: #d0e7f9;
+                        color: #3f4a32;
                 }
                 80% {
-                        color: #c0d9f0;
+                        color: #4a5a3f;
                 }
                 100% {
-                        color: #d3e8ff;
+                        color: #2e3b24;
+                }
+            }
+
+            /*MEDIA QUERIES*/
+            @media (max-width: 768px) {
+                .show-password-icon {
+                    display: block;
                 }
             }
         </style>
@@ -90,8 +97,8 @@
             <div class="text-center py-3 customized-bg">
                 <img src="{% static 'images/favicon.png' %}" alt="Jaylon Dental Clinic Logo" class="mb-1"
                      style="max-width: 100px;">
-                <h3 class="lobster-font m-0" style="animation: colorAnimation 5s infinite alternate">Jaylon Dental Clinic</h3>
-                <small style="color: white">Client Login</small>
+                <h3 class="lobster-font m-0" style="animation: iconGreenAnimation 5s infinite alternate">Jaylon Dental Clinic</h3>
+                <small>Client Login</small>
             </div>
             <div class="px-4 pt-4">
                 <form id="loginForm" method="post">
@@ -105,8 +112,8 @@
                         <input type="password" class="form-control" id="password" name="password" required>
                     </div>
                     <div class="d-grid">
-                        <button type="submit" class="btn customized-bg">
-                            <i class="fa-light fa-right-to-bracket"></i> <strong>Login</strong></button>
+                        <button type="submit" class="btn customized-bg btn-bg-dark-green">
+                            <i class="fa-light fa-right-to-bracket"></i> Login</button>
                     </div>
                 </form>
 
