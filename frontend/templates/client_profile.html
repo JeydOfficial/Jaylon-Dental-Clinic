@@ -42,10 +42,14 @@
         <style>
             body {
                 font-family: 'Poppins', sans-serif;
-                background-color: #c5bac4;
+                background-color: #8eb69b;
+                overflow-x: hidden;
             }
             .lobster-font {
                 font-family: 'Lobster', cursive;
+            }
+            .cl-dark-green {
+                color: #235347;
             }
             .navbar {
                 box-shadow: 0 2px 4px rgba(0,0,0,.1);
@@ -59,7 +63,7 @@
                 transition: color 0.3s ease;
             }
             .nav-link:hover {
-                color: #007bff;
+                color: #235347;
             }
             h1, h2, h3, h4, h5, h6 {
                 font-weight: 600;
@@ -142,22 +146,22 @@
             /*KEYFRAMES*/
             @keyframes colorAnimation {
                 0% {
-                        color: #a899ab;
+                        color: #d98257;
                 }
                 20% {
-                        color: #8b7e8f;
+                        color: #a86776;
                 }
                 40% {
-                        color: #b0a3a8;
+                        color: #68829e;
                 }
                 60% {
-                        color: #93788a;
+                        color: #f0af58;
                 }
                 80% {
-                        color: #6f7287;
+                        color: #8f9db8;
                 }
                 100% {
-                        color: #6d6875;
+                        color: #4b8f8c;
                 }
             }
         </style>
@@ -204,8 +208,8 @@
                     <ul class="navbar-nav nav-pills">
                         {% if request.user.is_authenticated and not request.user.is_superuser %}
                             <li class="nav-item ms-auto">
-                                <a class="btn btn-outline-primary btn-sm" href="{% url 'client_profile' %}"><i
-                                        class="fa-light fa-user"></i> Profile</a>
+<!--                                <a class="btn btn-outline-primary btn-sm" href="{% url 'client_profile' %}"><i-->
+<!--                                        class="fa-light fa-user"></i> Profile</a>-->
                                 <a class="btn btn-outline-danger btn-sm" href="{% url 'client_logout' %}"><i
                                         class="fa-light fa-right-from-bracket"></i> Logout</a>
                             </li>
@@ -223,15 +227,17 @@
 
         <div class="container my-4">
             <div class="text-center mb-4">
-                <h3 class="lobster-font mb-3">Profile Dashboard</h3>
-                <p class="text-muted">Before updating your personal information, please take a moment to
-                review the following important details to ensure everything is accurate and up-to-date.</p>
+                <h3 class="lobster-font cl-dark-green mb-3" data-aos="fade-up"><u>Profile Dashboard</u></h3>
+<!--                <p class="text-muted">Before updating your personal information, please take a moment to-->
+<!--                review the following important details to ensure everything is accurate and up-to-date.</p>-->
             </div>
 
             <div class="row g-5">
-                <div class="col-md-6">
+                <div class="col-md-6" data-aos="fade-up">
                     <div class="bg-white p-4 shadow rounded-lg border-top border-primary border-5">
                         <h4 class="lobster-font mb-4 text-primary">Personal Information</h4>
+                        <p class="text-muted mb-4">Before updating your personal information, please take a moment to
+                            review the following important details to ensure everything is accurate and up-to-date.</p>
                         <form method="post">
                             {% csrf_token %}
                             <input type="hidden" name="profile_id" value="{{ user.id }}">
@@ -278,13 +284,13 @@
                                 <label for="confirm_password" class="form-label">Confirm New Password</label>
                                 <input type="password" class="form-control" id="confirm_password" name="confirm_password" placeholder="Confirm new password">
                             </div>
-                            <button type="submit" class="btn btn-primary w-100 mt-4">Update Profile</button>
+                            <button type="submit" class="btn btn-success w-100 mt-4">Update Profile</button>
                         </form>
                     </div>
                 </div>
 
                 <div class="col-md-6">
-                    <div class="bg-white p-4 shadow rounded-lg border-top border-success border-5">
+                    <div class="bg-white p-4 shadow rounded-lg border-top border-success border-5" data-aos="fade-up">
                         <h4 class="lobster-font mb-4 text-success">Medical-Dental Questionnaire</h4>
                         <p class="text-muted mb-4">Your safety is our top priority, and knowing your medical history helps
                         us provide best, most personalized care for you. Please take a moment to answer the following questions <strong>honestly</strong>.</p>
@@ -296,9 +302,9 @@
                                     {% if question.type == 'yes_no' %}
                                         <div class="btn-group w-100" role="group">
                                             <input type="radio" class="btn-check" name="q{{ forloop.counter }}" id="q{{ forloop.counter }}_yes" value="Yes" {% if question.answer == 'Yes' %}checked{% endif %} required>
-                                            <label class="btn btn-outline-primary" for="q{{ forloop.counter }}_yes">Yes</label>
+                                            <label class="btn btn-outline-success" for="q{{ forloop.counter }}_yes">Yes</label>
                                             <input type="radio" class="btn-check" name="q{{ forloop.counter }}" id="q{{ forloop.counter }}_no" value="No" {% if question.answer == 'No' %}checked{% endif %} required>
-                                            <label class="btn btn-outline-primary" for="q{{ forloop.counter }}_no">No</label>
+                                            <label class="btn btn-outline-success" for="q{{ forloop.counter }}_no">No</label>
                                         </div>
                                     {% elif question.type == 'health_status' %}
                                         <div class="btn-group w-100" role="group">

@@ -376,7 +376,7 @@
                 <div class="modal-dialog modal-dialog-centered modal-md">
                     <div class="modal-content">
                         <div class="modal-header">
-                            <h5 class="modal-title cl-dark-green" id="servicesModalLabel"> Our Services</h5>
+                            <h5 class="modal-title cl-dark-green lobster-font" id="servicesModalLabel"> Our Services</h5>
                             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                         </div>
                         <div class="modal-body p-0">
@@ -386,11 +386,11 @@
                                         <div class="carousel-item {% if forloop.first %}active{% endif %}">
                                             <img src="{{ service.image.url }}" class="d-block w-100" alt="{{ service.title }}"
                                                  style="height: 300px; object-fit: cover;">
-                                            <div class="carousel-caption d-block bg-dark bg-opacity-75 text-start p-3">
-                                                <h5 class="mb-2">{{ service.title }}</h5>
-                                                <p class="mb-2 small">{{ service.description }}</p>
-                                                <p class="mb-0"><small>Duration: {{ service.duration }} minutes</small></p>
-                                            </div>
+<!--                                            <div class="carousel-caption d-block bg-dark bg-opacity-75 text-start p-3">-->
+<!--                                                <h5 class="mb-2">{{ service.title }}</h5>-->
+<!--                                                <p class="mb-2 small">{{ service.description }}</p>-->
+<!--                                                <p class="mb-0"><small>Duration: {{ service.duration }} minutes</small></p>-->
+<!--                                            </div>-->
                                         </div>
                                     {% endfor %}
                                 </div>
