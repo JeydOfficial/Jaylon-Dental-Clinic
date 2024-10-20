@@ -182,15 +182,15 @@
             /*MEDIA QUERIES*/
             @media (max-width: 427px) {
                 .recaptcha-container {
-<!--                    width: 100%;-->
-<!--                    max-width: 200%;-->
+                    width: 100%;
+                    max-width: 200%;
                     overflow: hidden;
                 }
             }
             @media (max-width: 360px) {
                 .recaptcha-container {
-<!--                    width: 99%;-->
-<!--                    max-width: 200%;-->
+                    width: 99%;
+                    max-width: 200%;
                     overflow: hidden;
                 }
             }
@@ -556,11 +556,17 @@
                     </div>
                     <div class="modal-body" style="max-height: 70vh; overflow-y: auto;">
                         <p class="fw-bold cl-dark-green">IMPORTANT REMINDER:</p>
-                        <p class="fw-bold">Hello Mr./Ms. {{user.first_name}}! Please be advised that Jaylon Dental Clinic is not responsible for
+                        {% if not request.user.is_authenticated %}
+                            <p class="fw-bold">Hello dear visitors! Please be advised that Jaylon Dental Clinic is not responsible for
                             any issues arising from failure to follow our policies. Any resulting inconvenience will be
                             the patient's responsibility. To avoid potential problems, please carefully review the following:
-                        </p>
-
+                            </p>
+                        {% else %}
+                            <p class="fw-bold">Hello Mr./Ms. {{user.first_name}}! Please be advised that Jaylon Dental Clinic is not responsible for
+                            any issues arising from failure to follow our policies. Any resulting inconvenience will be
+                            the patient's responsibility. To avoid potential problems, please carefully review the following:
+                            </p>
+                        {% endif %}
                         <h6 class="mt-4 cl-dark-green">1. Appointment Booking</h6>
                         <ul>
                             <li>Appointments can be booked via phone, clinic website, or in-person.</li>
