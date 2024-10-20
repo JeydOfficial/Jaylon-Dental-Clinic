@@ -137,9 +137,8 @@
                             </a>
                         </li>
                         <li>
-                            <a href="{% url 'logout' %}" toggle="tooltip" placement="bottom" title="Sign-out">
-                                <i class="material-icons" style="color: black">logout</i>
-                            </a>
+                            <a href="#" toggle="tooltip" placement="bottom" title="Sign-out" data-toggle="modal" data-target="#adminLogoutConfirmModal">
+                                <i class="material-icons" style="color: black;">input</i></a>
                         </li>
                     </ul>
                 </div>
@@ -200,6 +199,24 @@
                 </div> <!-- #Footer -->
             </aside> <!-- #END# Left Sidebar -->
         </section>
+
+        <!-- Admin Logout Confirmation Modal -->
+        <div class="modal fade" id="adminLogoutConfirmModal" tabindex="-1" role="dialog">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header bg-red">
+                        <h5 class="modal-title p-b-10" id="adminLogoutConfirmModalLabel">Confirm Logout</h5>
+                    </div>
+                        <div class="modal-body" style="padding-bottom: 0px;">
+                        Are you sure you want to logout?
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-link waves-effect" data-dismiss="modal">CANCEL</button>
+                            <a href="{% url 'logout' %}" class="btn btn-danger waves-effect">SUBMIT</a>
+                        </div>
+                </div>
+            </div>
+        </div>
 
         {% block content %}{% endblock %}
 

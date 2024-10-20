@@ -5,6 +5,7 @@ from .views import *
 
 urlpatterns = [
     path('', view_client_dashboard, name='client_dashboard'),
+    path('save-privacy-agreement/', save_privacy_agreement, name='save_privacy_agreement'),
     path('profile/', view_client_profile, name='client_profile'),
     # path('update_medical_questionnaire/', update_medical_questionnaire, name='update_medical_questionnaire'),
     path('login/', client_login, name='client_login'),

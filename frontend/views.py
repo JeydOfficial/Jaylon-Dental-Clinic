@@ -6,13 +6,28 @@ from django.http import JsonResponse
 from django.shortcuts import render, redirect
 from django.template.loader import render_to_string
 from django.utils.html import strip_tags
+from django.views.decorators.http import require_POST
 
 from backend.models import *
 from django.core.mail import send_mail
 from django.conf import settings
 from django.urls import reverse
 from datetime import datetime, timedelta, date
+
 import requests
+import re
+
+
+@login_required
+@require_POST
+def save_privacy_agreement(request):
+    try:
+        data = json.loads(request.body)
+        request.user.has_agreed_privacy_policy = data.get('agreed', False)
+        request.user.save()
+        return JsonResponse({'success': True})
+    except:
+        return JsonResponse({'success': False})
 
 
 def view_client_dashboard(request):
@@ -117,7 +132,6 @@ def view_client_dashboard(request):
             except Exception as e:
                 messages.error(request, 'An error occurred while sending your message. Please try again later.')
 
-
     # medical_questions = [
     #     {'text': 'Are you under physician\'s care?', 'type': 'yes_no'},
     #     {'text': 'Do you have high blood pressure?', 'type': 'yes_no'},
@@ -134,7 +148,6 @@ def view_client_dashboard(request):
     #     {'text': 'What is your impression of your present health?', 'type': 'health_status'},
     # ]
 
-
     services = Service.objects.all()
     images = GalleryImage.objects.all()
 
@@ -144,12 +157,10 @@ def view_client_dashboard(request):
     else:
         appointments = None
 
-    # Check if the user has seen the Privacy and Policy
+    # Check if the user has agreed to the privacy policy
     show_privacy_modal = False
     if request.user.is_authenticated and not request.user.has_agreed_privacy_policy:
         show_privacy_modal = True
-        request.user.has_agreed_privacy_policy = True
-        request.user.save()
 
     context = {
         'services': services,
@@ -157,7 +168,6 @@ def view_client_dashboard(request):
         'appointments': appointments,
         'recaptcha_site_key': settings.RECAPTCHA_PUBLIC_KEY,
         'show_privacy_modal': show_privacy_modal,
-        # 'medical_questions': medical_questions,
     }
     return render(request, 'client_dashboard.html', context)
 
@@ -322,6 +332,21 @@ def client_login(request):
     return render(request, 'client_login.html')
 
 
+def validate_password(password):
+    errors = []
+    if len(password) < 8:
+        errors.append("Password must be at least 8 characters long.")
+    if not re.search(r'[A-Z]', password):
+        errors.append("Password must contain at least one uppercase letter.")
+    if not re.search(r'[a-z]', password):
+        errors.append("Password must contain at least one lowercase letter.")
+    if not re.search(r'\d', password):
+        errors.append("Password must contain at least one number.")
+    if not re.search(r'[!@#$%^&*(),.?":{}|<>]', password):
+        errors.append("Password must contain at least one special character.")
+    return errors
+
+
 def client_register(request):
     # Check if the user is already authenticated
     if request.user.is_authenticated and not request.user.is_superuser:
@@ -338,6 +363,13 @@ def client_register(request):
         age = request.POST.get('age')
         password = request.POST.get('password')
         confirm_password = request.POST.get('confirm_password')
+
+        # Validate password
+        password_errors = validate_password(password)
+        if password_errors:
+            for error in password_errors:
+                messages.error(request, error)
+            return redirect('client_register')
 
         # Check if passwords match
         if password != confirm_password:

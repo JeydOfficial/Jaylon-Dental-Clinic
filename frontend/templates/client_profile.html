@@ -169,7 +169,7 @@
     <body>
         <nav id="navbar-example2" class="navbar navbar-expand-lg sticky-top bg-white px-3">
             <div class="container-fluid">
-                <a class="lobster-font navbar-brand" href="{% url 'client_dashboard' %}" style="animation: colorAnimation 5s infinite alternate">
+                <a class="lobster-font navbar-brand" href="{% url 'client_dashboard' %}" style="animation: colorAnimation 5s infinite alternate; font-size: 26px;">
                     <i class="fa-light fa-tooth mr-2" style="animation: colorAnimation 5s infinite alternate"></i>
                     Jaylon Dental Clinic
                 </a>
@@ -201,7 +201,7 @@
                         </li>
                         <li class="nav-item">
                             <a class="nav-link px-2" href="{% url 'client_dashboard' %}#scrollspyPrivacy">
-                                <i class="fa-light fa-file-contract"></i> Privacy and Agreement
+                                <i class="fa-light fa-file-contract"></i> Policy and Agreement
                             </a>
                         </li>
                     </ul>
@@ -210,8 +210,8 @@
                             <li class="nav-item ms-auto">
 <!--                                <a class="btn btn-outline-primary btn-sm" href="{% url 'client_profile' %}"><i-->
 <!--                                        class="fa-light fa-user"></i> Profile</a>-->
-                                <a class="btn btn-outline-danger btn-sm" href="{% url 'client_logout' %}"><i
-                                        class="fa-light fa-right-from-bracket"></i> Logout</a>
+                                <a href="#" class="btn btn-outline-danger btn-sm" data-bs-toggle="modal" data-bs-target="#logoutConfirmModal">
+                                    <i class="fa-light fa-right-from-bracket"></i> Log Out</a>
                             </li>
                         {% else %}
                             <li class="nav-item ms-auto">
@@ -228,14 +228,12 @@
         <div class="container my-4">
             <div class="text-center mb-4">
                 <h3 class="lobster-font cl-dark-green mb-3" data-aos="fade-up"><u>Profile Dashboard</u></h3>
-<!--                <p class="text-muted">Before updating your personal information, please take a moment to-->
-<!--                review the following important details to ensure everything is accurate and up-to-date.</p>-->
             </div>
 
             <div class="row g-5">
                 <div class="col-md-6" data-aos="fade-up">
-                    <div class="bg-white p-4 shadow rounded-lg border-top border-primary border-5">
-                        <h4 class="lobster-font mb-4 text-primary">Personal Information</h4>
+                    <div class="bg-white p-4 shadow rounded-lg border-top border-success border-5">
+                        <h4 class="lobster-font mb-4 text-success">Personal Information</h4>
                         <p class="text-muted mb-4">Before updating your personal information, please take a moment to
                             review the following important details to ensure everything is accurate and up-to-date.</p>
                         <form method="post">
@@ -275,6 +273,16 @@
                             <div class="mb-3">
                                 <label for="age" class="form-label">Age</label>
                                 <input type="number" class="form-control" id="age" name="age" value="{{ user.age }}" required>
+                            </div>
+                            <div class="mb-3" style="margin-top: 2rem;">
+                                <strong>Password must:</strong>
+                                <ul>
+                                    <li>At least 8 characters long</li>
+                                    <li>Contain at least one CAPITAL letter (A-Z)</li>
+                                    <li>Contain at least one small letter (a-z)</li>
+                                    <li>Contain at least one number (0-9)</li>
+                                    <li>Contain at least one special character</li>
+                                </ul>
                             </div>
                             <div class="mb-3">
                                 <label for="password" class="form-label">New Password (optional)</label>
@@ -323,6 +331,25 @@
                     </div>
                 </div>
             </div>
+        </div>
+
+        <!-- Logout Confirmation Modal -->
+        <div class="modal fade" id="logoutConfirmModal" tabindex="-1" aria-labelledby="logoutConfirmModalLabel" aria-hidden="true">
+          <div class="modal-dialog">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title" id="logoutConfirmModalLabel"><i class="fa-light fa-right-from-bracket"></i> You clicked Log Out!</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+              </div>
+              <div class="modal-body">
+                Are you sure you want to log out?
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                <a href="{% url 'client_logout' %}" class="btn btn-danger">Log Out</a>
+              </div>
+            </div>
+          </div>
         </div>
 
         <!-- Bootstrap JS -->

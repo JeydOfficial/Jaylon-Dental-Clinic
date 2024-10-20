@@ -48,7 +48,11 @@
                 background-color: #8a9a5b;
             }
             .customized {
-                background-color: #b5c99a;
+                background-color: #b5c99a !important;
+            }
+            .customized:hover {
+                color: white;
+                background-color: #8a9a5b !important;
             }
             .text-decoration-none:hover {
                 text-decoration: underline !important;
@@ -144,6 +148,16 @@
                     <div class="mb-3">
                         <label for="password" class="form-label"><i class="fa-light fa-lock"></i> Password</label>
                         <input type="password" class="form-control" id="password" name="password" required>
+                        <div class="form-text mt-2">
+                            Password must:
+                            <ul>
+                                <li>At least 8 characters long</li>
+                                <li>Contain at least one CAPITAL letter (A-Z)</li>
+                                <li>Contain at least one small letter (a-z)</li>
+                                <li>Contain at least one number (0-9)</li>
+                                <li>Contain at least one special character</li>
+                            </ul>
+                        </div>
                     </div>
                     <div class="mb-3">
                         <label for="confirm_password" class="form-label"><i class="fa-light fa-lock"></i> Confirm Password</label>

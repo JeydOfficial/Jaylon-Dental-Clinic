@@ -54,10 +54,10 @@
                 background-color: #285f52;
             }
             .btn-bg-dark-green {
-                background-color: #285f52;
+                background-color: #285f52 !important;
             }
             .btn-bg-dark-green:hover {
-                background-color: #4b8f8c;
+                background-color: #4b8f8c !important;
             }
             .cl-dark-green {
                 color: #235347;
@@ -230,10 +230,8 @@
                                    href="{% url 'client_profile' %}">
                                     <i class="fa-light fa-user"></i> Profile
                                 </a>
-                                <a class="btn btn-outline-danger btn-sm"
-                                   href="{% url 'client_logout' %}">
-                                    <i class="fa-light fa-right-from-bracket"></i> Logout
-                                </a>
+                                <a href="#" class="btn btn-outline-danger btn-sm" data-bs-toggle="modal" data-bs-target="#logoutConfirmModal">
+                                    <i class="fa-light fa-right-from-bracket"></i> Log Out</a>
                             </li>
                         {% else %}
                             <li class="nav-item ms-auto">
@@ -258,12 +256,8 @@
                                 policy and agreement</a> carefully before booking to avoid mistakes.
                                 And complete the  <a
                                     href="{% url 'client_profile' %}" class="text-decoration-none">medical-dental questionnaire</a>
-                                 before your appointment for your safety and best care.
+                                before your appointment for your safety and best care.
                             </small></p>
-<!--                            <p style="margin-top: -15px"><small>Please ensure that you complete the  <a-->
-<!--                                    href="{% url 'client_profile' %}" class="text-decoration-none">medical-dental questionnaire</a>-->
-<!--                                 before your appointment. This is important for your safety and to provide the best care possible.</small>-->
-<!--                            </p>-->
                             <form method="post" id="appointment-form">
                                 {% csrf_token %}
                                 <div class="mb-3">
@@ -411,18 +405,17 @@
             </div>
 
             <div id="scrollspyGallery" class="mt-4" data-aos="fade-up">
-              <h3 class="lobster-font mb-4 cl-dark-green" data-aos="fade-right"><i class="fa-light fa-images" style="animation: iconGreenAnimation 5s infinite alternate"></i> Clinic Gallery</h3>
-              <p class="cl-dark-green">Explore our gallery to see the stunning results we create. Come visit and see how we turn smiles into works of art!</p>
-
-              <div class="row">
-                {% for image in images %}
-                <div class="col-md-4 col-lg-3 mb-4" data-aos="flip-left" data-aos-delay="{{ forloop.counter0|divisibleby:4|yesno:'0,100,200,300' }}">
-                  <div class="card">
-                    <img src="{{ image.image.url }}" class="img-thumbnail gallery-image" alt="Clinic Image {{ forloop.counter }}" style="height: 300px; object-fit: cover;" data-bs-toggle="modal" data-bs-target="#galleryModal" data-bs-slide-to="{{ forloop.counter0 }}">
-                  </div>
+                <h3 class="lobster-font mb-4 cl-dark-green" data-aos="fade-right"><i class="fa-light fa-images" style="animation: iconGreenAnimation 5s infinite alternate"></i> Clinic Gallery</h3>
+                <p class="cl-dark-green">Explore our gallery to see the stunning results we create. Come visit and see how we turn smiles into works of art!</p>
+                <div class="row">
+                    {% for image in images %}
+                        <div class="col-md-4 col-lg-3 mb-4" data-aos="flip-left" data-aos-delay="{{ forloop.counter0|divisibleby:4|yesno:'0,100,200,300' }}">
+                            <div class="card">
+                                <img src="{{ image.image.url }}" class="img-thumbnail gallery-image" alt="Clinic Image {{ forloop.counter }}" style="height: 300px; object-fit: cover;" data-bs-toggle="modal" data-bs-target="#galleryModal" data-bs-slide-to="{{ forloop.counter0 }}">
+                            </div>
+                        </div>
+                    {% endfor %}
                 </div>
-                {% endfor %}
-              </div>
             </div>
 
             <!-- Gallery Modal -->
@@ -437,9 +430,9 @@
                     <div id="galleryCarousel" class="carousel slide" data-bs-ride="carousel">
                       <div class="carousel-inner">
                         {% for image in images %}
-                        <div class="carousel-item {% if forloop.first %}active{% endif %}">
-                          <img src="{{ image.image.url }}" class="d-block w-100" alt="Clinic Image {{ forloop.counter }}">
-                        </div>
+                            <div class="carousel-item {% if forloop.first %}active{% endif %}">
+                              <img src="{{ image.image.url }}" class="d-block w-100" alt="Clinic Image {{ forloop.counter }}">
+                            </div>
                         {% endfor %}
                       </div>
                       <button class="carousel-control-prev" type="button" data-bs-target="#galleryCarousel" data-bs-slide="prev">
@@ -520,73 +513,33 @@
                         • By continuing, you agree to our policies and agreements.
                             <br>
                             <br>
-                            For more details, please read our full <a href="#" data-bs-toggle="modal" data-bs-target="#privacyModal" class="text-decoration-none">Privacy Policy and User Agreement</a>.</p>
+                            For more details, please read our full <a href="#" data-bs-toggle="modal" data-bs-target="#privacyModal" class="text-decoration-none">Privacy Policy and User Agreement.</a></p>
                     </div>
                 </div>
             </div>
         </div>
 
-<!--            &lt;!&ndash; Medical Questionnaire Modal &ndash;&gt;-->
-<!--            <div class="modal fade" id="medicalQuestionnaireModal" tabindex="-1" aria-labelledby="medicalQuestionnaireModalLabel" aria-hidden="true" data-bs-backdrop="static" data-bs-keyboard="false">-->
-<!--                <div class="modal-dialog modal-lg">-->
-<!--                    <div class="modal-content">-->
-<!--                        <div class="modal-header">-->
-<!--                            <h5 class="modal-title" id="medicalQuestionnaireModalLabel">Medical-Dental Questionnaire</h5>-->
-<!--                        </div>-->
-<!--                        <div class="modal-body">-->
-<!--                            <p class="text-muted mb-4">Your safety is our top priority, and knowing your medical history helps-->
-<!--                            us provide best, most personalized care for you. Please take a moment to answer the following questions <strong>honestly</strong>.</p>-->
-<!--                            <form id="medicalQuestionnaireForm">-->
-<!--                                {% csrf_token %}-->
-<!--                                {% for question in medical_questions %}-->
-<!--                                    <div class="mb-4">-->
-<!--                                        <p>{{ question.text }}</p>-->
-<!--                                        {% if question.type == 'yes_no' %}-->
-<!--                                            <div class="btn-group w-100" role="group">-->
-<!--                                                <input type="radio" class="btn-check" name="q{{ forloop.counter }}" id="q{{ forloop.counter }}Yes" value="Yes" required>-->
-<!--                                                <label class="btn btn-outline-primary" for="q{{ forloop.counter }}Yes">Yes</label>-->
-<!--                                                <input type="radio" class="btn-check" name="q{{ forloop.counter }}" id="q{{ forloop.counter }}No" value="No" required>-->
-<!--                                                <label class="btn btn-outline-primary" for="q{{ forloop.counter }}No">No</label>-->
-<!--                                            </div>-->
-<!--                                        {% elif question.type == 'health_status' %}-->
-<!--                                            <div class="btn-group w-100" role="group">-->
-<!--                                                <input type="radio" class="btn-check" name="q{{ forloop.counter }}" id="q{{ forloop.counter }}Good" value="Good" required>-->
-<!--                                                <label class="btn btn-outline-success" for="q{{ forloop.counter }}Good">Good</label>-->
-<!--                                                <input type="radio" class="btn-check" name="q{{ forloop.counter }}" id="q{{ forloop.counter }}Fair" value="Fair" required>-->
-<!--                                                <label class="btn btn-outline-warning" for="q{{ forloop.counter }}Fair">Fair</label>-->
-<!--                                                <input type="radio" class="btn-check" name="q{{ forloop.counter }}" id="q{{ forloop.counter }}Poor" value="Poor" required>-->
-<!--                                                <label class="btn btn-outline-danger" for="q{{ forloop.counter }}Poor">Poor</label>-->
-<!--                                            </div>-->
-<!--                                        {% endif %}-->
-<!--                                    </div>-->
-<!--                                {% endfor %}-->
-<!--                            </form>-->
-<!--                        </div>-->
-<!--                        <div class="modal-footer">-->
-<!--                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>-->
-<!--                            <button type="button" class="btn btn-primary" id="submitMedicalQuestionnaire">Submit</button>-->
-<!--                        </div>-->
-<!--                    </div>-->
-<!--                </div>-->
-<!--            </div>-->
-
         <!-- Privacy Policy Modal -->
-        <div class="modal fade" id="privacyModal" tabindex="-1" aria-labelledby="privacyModalLabel" aria-hidden="true" data-bs-backdrop="static" data-bs-keyboard="false">
+        <div id="privacyModal" class="modal fade" tabindex="-1" aria-labelledby="privacyModalLabel" aria-hidden="true" data-bs-backdrop="static" data-bs-keyboard="false">
             <div class="modal-dialog modal-lg">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h5 class="modal-title cl-dark-green" id="privacyModalLabel">Policy and Agreement</h5>
-                        <button type="button" class="btn-close" id="closeButton" aria-label="Close" disabled></button>
+                        <h5 class="modal-title cl-dark-green" id="privacyModalLabel"><i class="fa-light fa-file-contract" style="animation: iconGreenAnimation 5s infinite alternate"></i> Policy and Agreement</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" id="closeButton"></button>
                     </div>
-                    <div class="modal-body">
-                        <!-- Content goes here -->
+                    <div class="modal-body" style="max-height: 70vh; overflow-y: auto;">
                         <p class="fw-bold cl-dark-green">IMPORTANT REMINDER:</p>
-                        <p class="fw-bold">Please note that Jaylon Dental Clinic is not responsible for any issues that arise from not following our policies. Any inconvenience caused will be the patient's responsibility. To avoid problems, please read the following reminders carefully.</p>
+                        <p class="fw-bold">Please note that Jaylon Dental Clinic is not responsible for
+                            any issues that arise from not following our policies. Any inconvenience caused will be the
+                            patient's responsibility. To avoid problems, please read the following reminders
+                            carefully.</p>
 
                         <h6 class="mt-4 cl-dark-green">1. Appointment Booking</h6>
                         <ul>
                             <li>Appointments can be booked via phone, clinic website, or in-person.</li>
-                            <li>Patients are encouraged to book appointments in advance to secure their preferred date and time.</li>
+                            <li>Patients are encouraged to book appointments in advance to secure their preferred date and
+                                time.
+                            </li>
                         </ul>
 
                         <h6 class="mt-4 cl-dark-green">2. Appointment Approval and Reminders</h6>
@@ -597,23 +550,23 @@
 
                         <h6 class="mt-4 cl-dark-green">3. Medical-Dental Questionnaire</h6>
                         <ul>
-                            <li>The questionnaire is accessible on your profile after you log in.</li>
-                            <li>Please update it whenever there are changes in your medical condition by selecting the
-                                relevant checkboxes (Yes/No) or indicating your health status (Good/Fair/Poor).
+                            <li>The questionnaire is accessible on your <a href="{% url 'client_profile' %}">profile</a> after you log in.</li>
+                            <li>Please update it whenever there are changes in your medical condition by checking the
+                                relevant checkboxes (Yes/No) or selecting your health status (Good/Fair/Poor).
                             </li>
                         </ul>
 
                         <h6 class="mt-4 cl-dark-green">4. Cancellation and Rescheduling</h6>
                         <ul>
-                            <li>If an error occurs in selecting a service, date, or time, client <strong>must choose the next
-                                available day</strong> rather than correcting the mistake on the same day.
+                            <li>If an error occurs in selecting a service, date, or time, client <strong>must choose
+                                the next available day</strong> rather than correcting the mistake on the same day.
                             </li>
                             <li>Only the first approved appointment will be honored for any single service and time slot.
-                                Duplicate appointments for the same service at different times will be
-                                <strong>disregarded</strong>.
+                                Any duplicate appointments for the same service at different times will be
+                                <strong>disregarded.</strong>
                             </li>
-                            <li>Once an appointment is created, it cannot be canceled, deleted, nor rescheduled due to the busy
-                                schedules of our dentists.
+                            <li>Once an appointment is created, it cannot be canceled, deleted, nor rescheduled due to
+                                the busy schedules of our dentists.
                             </li>
                         </ul>
 
@@ -645,14 +598,11 @@
 
                         <h6 class="mt-4 cl-dark-green">8. Emergency Appointments</h6>
                         <ul>
-                            <li>Emergency cases will be prioritized and accommodated as soon as possible.
-                            </li>
-                            <li>If no available slots exists, emergency patients may be referred to the nearest available
-                                clinic.
-                            </li>
+                            <li>Emergency cases will be prioritized and accommodated as soon as possible.</li>
+                            <li>If no available slots exists, emergency patients may be referred to the nearest available clinic.</li>
                         </ul>
 
-                        <h6 class="mt-4 cl-dark-green">9. Estimated Service Duration</h6>
+                        <h6 class="mt-4 cl-dark-green">9. Service Duration Estimates (Maximum Range)</h6>
                         <ul>
                             <li>Tooth Extraction -- 10mins</li>
                             <li>Tooth Filling -- 15mins</li>
@@ -682,14 +632,15 @@
                         <h6 class="mt-4 cl-dark-green">11. Feedback and Complaints</h6>
                         <ul>
                             <li>We welcome feedback to continuously improve our services.</li>
-                            <li>Contact us through the "Contacts" section on our clinic website, via Gmail, phone call,
-                                or connect with us on Facebook and Instagram for updates.
+                            <li>You can contact us through the "Contacts" section on our clinic website via Gmail, phone
+                                call, or connect with us on Facebook and Instagram for updates.
                             </li>
                         </ul>
 
                         <h6 class="mt-4 cl-dark-green">12. Preparation Reminders</h6>
                         <ul>
-                            <li><strong>Take a screenshot</strong> of your approved appointment confirmation for easy reference during check-in.</li>
+                            <li><strong>Take a screenshot</strong> of your approved appointment confirmation for easy
+                                reference during check-in.</li>
                         </ul>
 
                         <h6 class="mt-4 cl-dark-green">13. Follow-up Checkups</h6>
@@ -698,20 +649,43 @@
                                 your treatment plan.</li>
                         </ul>
 
-                        <div class="form-check mt-4">
-                            <input class="form-check-input" type="checkbox" id="agreeCheckbox" {% if has_agreed_privacy_policy%} checked disabled {% endif %} >
-                            <label class="form-check-label" for="agreeCheckbox">
-                                <strong>I have read and agree to the Policy and Agreement of Jaylon Dental Clinic.</strong>
-                            </label>
-                        </div>
-                        <br>
-
-                        <div class="modal-footer">
-                            <button type="button" id="agreeButton" class="btn btn-primary" disabled>I Agree</button>
-                        </div>
+                        {% if request.user.is_authenticated and not user.has_agreed_privacy_policy %}
+                            <div class="form-check mt-3">
+                                <input class="form-check-input" type="checkbox" id="agreeCheckbox">
+                                <label class="form-check-label cl-dark-green" for="agreeCheckbox">
+                                    <strong>I have read and agree to the Policy and Agreement of Jaylon Dental Clinic.</strong>
+                                </label>
+                            </div>
+                        {% endif %}
+                    </div>
+                    <div class="modal-footer">
+                        {% if request.user.is_authenticated and not user.has_agreed_privacy_policy %}
+                            <button type="button" class="btn btn-primary" id="agreeButton" disabled>I Agree</button>
+                        {% else %}
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                        {% endif %}
                     </div>
                 </div>
             </div>
+        </div>
+
+        <!-- Logout Confirmation Modal -->
+        <div class="modal fade" id="logoutConfirmModal" tabindex="-1" aria-labelledby="logoutConfirmModalLabel" aria-hidden="true">
+          <div class="modal-dialog">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title" id="logoutConfirmModalLabel"><i class="fa-light fa-right-from-bracket"></i> You clicked Log Out!</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+              </div>
+              <div class="modal-body">
+                Are you sure you want to log out?
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                <a href="{% url 'client_logout' %}" class="btn btn-danger">Log Out</a>
+              </div>
+            </div>
+          </div>
         </div>
 
         <footer class="bg-dark-green text-light py-3" data-aos="fade-down">
@@ -773,8 +747,8 @@
         <!-- Toastr JS -->
         <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
 
+        <!--Toastr Configuration-->
         <script>
-            // Toastr configuration
             toastr.options = {
               "closeButton": true,
               "debug": false,
@@ -805,6 +779,7 @@
             {% endif %}
         </script>
 
+        <!--updateTimeSlots-->
         <script>
             $(document).ready(function() {
                 function updateTimeSlots(data) {
@@ -868,118 +843,7 @@
 
         <script src="https://www.google.com/recaptcha/api.js" async defer></script>
 
-<!--        <script>-->
-<!--            document.addEventListener('DOMContentLoaded', function() {-->
-<!--            var showPrivacyModal = {% if show_privacy_modal %}true{% else %}false{% endif %}-->
-<!--                var privacyModal = new bootstrap.Modal(document.getElementById('privacyModal'), {-->
-<!--                    backdrop: 'static',-->
-<!--                    keyboard: false-->
-<!--                });-->
-
-<!--                var agreeCheckbox = document.getElementById('agreeCheckbox');-->
-<!--                var agreeButton = document.getElementById('agreeButton');-->
-<!--                var closeButton = document.getElementById('closeButton');-->
-
-<!--                // Check if the user has previously agreed-->
-<!--                var userAgreed = localStorage.getItem('userAgreedToPolicy') === 'true';-->
-
-<!--                if (!userAgreed) {-->
-<!--                    privacyModal.show();-->
-<!--                } else {-->
-<!--                    agreeCheckbox.checked = true;-->
-<!--                    agreeButton.disabled = false;-->
-<!--                    closeButton.disabled = false;-->
-<!--                }-->
-
-<!--                // Enable/disable the Agree button and Close button when checkbox state changes-->
-<!--                agreeCheckbox.addEventListener('change', function() {-->
-<!--                    agreeButton.disabled = !this.checked;-->
-<!--                    closeButton.disabled = !this.checked;-->
-<!--                });-->
-
-<!--                // When the user clicks "I Agree"-->
-<!--                agreeButton.addEventListener('click', function() {-->
-<!--                    if (agreeCheckbox.checked) {-->
-<!--                        // Save agreement status to localStorage-->
-<!--                        localStorage.setItem('userAgreedToPolicy', 'true');-->
-
-<!--                        // Optionally, send AJAX request to update the user's agreement status on the server-->
-<!--                        updateUserAgreementStatus();-->
-
-<!--                        // Hide the modal-->
-<!--                        privacyModal.hide();-->
-<!--                    }-->
-<!--                });-->
-
-<!--                // Allow the close button to work only after agreement-->
-<!--                closeButton.addEventListener('click', function() {-->
-<!--                    if (agreeCheckbox.checked) {-->
-<!--                        privacyModal.hide();-->
-<!--                    }-->
-<!--                });-->
-
-<!--                // Function to send AJAX request to update user's agreement status-->
-<!--                function updateUserAgreementStatus() {-->
-<!--                    var xhr = new XMLHttpRequest();-->
-<!--                    xhr.open('POST', '/update-agreement-status', true);-->
-<!--                    xhr.setRequestHeader('Content-Type', 'application/json;charset=UTF-8');-->
-<!--                    xhr.send(JSON.stringify({-->
-<!--                        userAgreed: true-->
-<!--                    }));-->
-
-<!--                    xhr.onload = function() {-->
-<!--                        if (xhr.status === 200) {-->
-<!--                            console.log('Agreement status updated on the server.');-->
-<!--                        } else {-->
-<!--                            console.error('Failed to update agreement status.');-->
-<!--                        }-->
-<!--                    };-->
-<!--                }-->
-<!--            });-->
-<!--        </script>-->
-
-
-        <script>
-            document.addEventListener('DOMContentLoaded', function() {
-                var showPrivacyModal = {% if show_privacy_modal %}true{% else %}false{% endif %};
-                var privacyModal = new bootstrap.Modal(document.getElementById('privacyModal'), {
-                    backdrop: 'static',
-                    keyboard: false
-                });
-                var agreeCheckbox = document.getElementById('agreeCheckbox');
-                var agreeButton = document.getElementById('agreeButton');
-                var closeButton = document.getElementById('closeButton');
-
-
-                if (showPrivacyModal) {
-                    privacyModal.show();
-                }
-
-                agreeCheckbox.addEventListener('change', function() {
-                    agreeButton.disabled = !this.checked;
-                });
-
-                agreeButton.addEventListener('click', function() {
-                    if (agreeCheckbox.checked) {
-                        // You might want to send an AJAX request here to update the user's agreement status
-                        privacyModal.hide();
-                    }
-                });
-
-                agreeCheckbox.addEventListener('change', function() {
-                    closeButton.disabled = !this.checked;
-                });
-
-                closeButton.addEventListener('click', function() {
-                    if (agreeCheckbox.checked) {
-                        // You might want to send an AJAX request here to update the user's agreement status
-                        privacyModal.hide();
-                    }
-                });
-
-            });
-        </script>
-
+        <!--galleryModal-->
         <script>
             document.addEventListener('DOMContentLoaded', function() {
               var galleryModal = document.getElementById('galleryModal');
@@ -993,6 +857,8 @@
               });
             });
         </script>
+
+        <!--servicesModal-->
         <script>
             document.addEventListener('DOMContentLoaded', function() {
               var servicesModal = document.getElementById('servicesModal');
@@ -1004,6 +870,51 @@
                 var carouselInstance = bootstrap.Carousel.getInstance(carousel);
                 carouselInstance.to(parseInt(slideIndex));
               });
+            });
+        </script>
+
+        <!--privacyModal-->
+        <script>
+            document.addEventListener('DOMContentLoaded', function() {
+                const privacyModal = document.getElementById('privacyModal');
+                const bootstrapModal = new bootstrap.Modal(privacyModal);
+
+                {% if show_privacy_modal %}
+                bootstrapModal.show();
+                {% endif %}
+
+                if (!{{ user.has_agreed_privacy_policy|yesno:"true,false" }}) {
+                    const agreeCheckbox = document.getElementById('agreeCheckbox');
+                    const agreeButton = document.getElementById('agreeButton');
+
+                    agreeCheckbox.addEventListener('change', function() {
+                        agreeButton.disabled = !this.checked;
+                    });
+
+                    agreeButton.addEventListener('click', function() {
+                        fetch('{% url "save_privacy_agreement" %}', {
+                            method: 'POST',
+                            headers: {
+                                'Content-Type': 'application/json',
+                                'X-CSRFToken': '{{ csrf_token }}'
+                            },
+                            body: JSON.stringify({agreed: true})
+                        })
+                        .then(response => response.json())
+                        .then(data => {
+                            if (data.success) {
+                                bootstrapModal.hide();
+                                location.reload(); // Reload the page to update the UI
+                            } else {
+                                alert('There was an error saving your agreement. Please try again.');
+                            }
+                        })
+                        .catch(error => {
+                            console.error('Error:', error);
+                            alert('There was an error saving your agreement. Please try again.');
+                        });
+                    });
+                }
             });
         </script>
     </body>
