@@ -255,9 +255,10 @@
                             <p class="cl-dark-green"><small>Read the <a href="#" data-bs-toggle="modal" data-bs-target="#privacyModal" class="text-decoration-none">
                                 policy and agreement</a> carefully before booking to avoid mistakes.
                                 And complete the  <a
-                                    href="{% url 'client_profile' %}" class="text-decoration-none">medical-dental questionnaire</a>
+                                    href="{% url 'client_profile' %}" class="text-decoration-none cl-dark-green">medical-dental questionnaire</a>
                                 before your appointment for your safety and best care.
                             </small></p>
+                            <p class="cl-dark-green"><small>Click Here --> <a href="{% url 'client_profile' %}" class="text-decoration-none">Medical Questionnaire</a></small></p>
                             <form method="post" id="appointment-form">
                                 {% csrf_token %}
                                 <div class="mb-3">
@@ -529,10 +530,10 @@
                     </div>
                     <div class="modal-body" style="max-height: 70vh; overflow-y: auto;">
                         <p class="fw-bold cl-dark-green">IMPORTANT REMINDER:</p>
-                        <p class="fw-bold">Please note that Jaylon Dental Clinic is not responsible for
-                            any issues that arise from not following our policies. Any inconvenience caused will be the
-                            patient's responsibility. To avoid problems, please read the following reminders
-                            carefully.</p>
+                        <p class="fw-bold">Hello Mr./Ms. {{user.first_name}}! Please be advised that Jaylon Dental Clinic is not responsible for
+                            any issues arising from failure to follow our policies. Any resulting inconvenience will be
+                            the patient's responsibility. To avoid potential problems, please carefully review the following:
+                        </p>
 
                         <h6 class="mt-4 cl-dark-green">1. Appointment Booking</h6>
                         <ul>

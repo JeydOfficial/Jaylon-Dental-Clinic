@@ -47,6 +47,9 @@
             .text-decoration-none:hover {
                 text-decoration: underline !important;
             }
+            .customized {
+                background-color: #b5c99a !important;
+            }
             .customized-bg {
                 background-color: #b5c99a !important;
             }
@@ -88,7 +91,7 @@
     </head>
     <body>
         <div class="login-container">
-            <div class="text-center py-3 customized-bg">
+            <div class="text-center py-3 customized">
                 <img src="{% static 'images/favicon.png' %}" alt="Jaylon Dental Clinic Logo" class="mb-1"
                      style="max-width: 100px;">
                 <h3 class="lobster-font m-0" style="animation: iconGreenAnimation 5s infinite alternate">Jaylon Dental Clinic</h3>
@@ -123,7 +126,7 @@
                 <hr style="margin-top: 5px; margin-bottom: 20px;">
                 <div class="text-center">
                     <p>Don't have an account? <a href="{% url 'client_register' %}"
-                                                 class="text-decoration-none">Register here</a>
+                                                 class="text-decoration-none">Register here!</a>
                     </p>
                 </div>
             </div>
