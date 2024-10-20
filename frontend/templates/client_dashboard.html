@@ -228,7 +228,7 @@
 <!--                                </a>-->
                                 <a class="btn btn-outline-primary btn-sm"
                                    href="{% url 'client_profile' %}">
-                                    <i class="fa-light fa-user"></i> Profile
+                                    <i class="fa-light fa-user"></i> {{user.first_name}}
                                 </a>
                                 <a href="#" class="btn btn-outline-danger btn-sm" data-bs-toggle="modal" data-bs-target="#logoutConfirmModal">
                                     <i class="fa-light fa-right-from-bracket"></i> Log Out</a>
@@ -254,11 +254,11 @@
                             <h3 class="lobster-font cl-dark-green"><i class="fa-light fa-calendar-plus mb-3" style="animation: iconGreenAnimation 5s infinite alternate"></i> Book an Appointment</h3>
                             <p class="cl-dark-green"><small>Read the <a href="#" data-bs-toggle="modal" data-bs-target="#privacyModal" class="text-decoration-none">
                                 policy and agreement</a> carefully before booking to avoid mistakes.
-                                And complete the  <a
+                                Completing the  <a
                                     href="{% url 'client_profile' %}" class="text-decoration-none cl-dark-green">medical-dental questionnaire</a>
-                                before your appointment for your safety and best care.
+                                is strictly required for your safety and to ensure the best care before your appointment.
+                                Click Here --> <a href="{% url 'client_profile' %}" class="text-decoration-none">Medical Questionnaire</a>.
                             </small></p>
-                            <p class="cl-dark-green"><small>Click Here --> <a href="{% url 'client_profile' %}" class="text-decoration-none">Medical Questionnaire</a></small></p>
                             <form method="post" id="appointment-form">
                                 {% csrf_token %}
                                 <div class="mb-3">
