@@ -125,6 +125,10 @@
                 max-width: 100%;
                 overflow: hidden;
             }
+            .g-recaptcha {
+                transform: scale (0.90);
+                transform-origin: 0 0;
+            }
 
             [] {
                 transition-duration: 800ms;
@@ -185,9 +189,9 @@
             }
 
             /*MEDIA QUERIES*/
-            @media (max-width: 768px) {
+            @media (max-width: 300px) {
                 .g-recaptcha {
-                    transform: scale(0.85)
+                    transform: scale(0.70)
                     transform-origin: 0 0;
                 }
             }
