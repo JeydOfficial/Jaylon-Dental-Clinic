@@ -312,7 +312,7 @@
                                             <input type="radio" class="btn-check" name="q{{ forloop.counter }}" id="q{{ forloop.counter }}_yes" value="Yes" {% if question.answer == 'Yes' %}checked{% endif %} required>
                                             <label class="btn btn-outline-success" for="q{{ forloop.counter }}_yes">Yes</label>
                                             <input type="radio" class="btn-check" name="q{{ forloop.counter }}" id="q{{ forloop.counter }}_no" value="No" {% if question.answer == 'No' %}checked{% endif %} required>
-                                            <label class="btn btn-outline-success" for="q{{ forloop.counter }}_no">No</label>
+                                            <label class="btn btn-outline-danger" for="q{{ forloop.counter }}_no">No</label>
                                         </div>
                                     {% elif question.type == 'health_status' %}
                                         <div class="btn-group w-100" role="group">
