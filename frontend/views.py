@@ -333,19 +333,19 @@ def client_login(request):
     return render(request, 'client_login.html')
 
 
-def validate_password(password):
-    errors = []
-    if len(password) < 8:
-        errors.append("Password must be at least 8 characters long.")
-    if not re.search(r'[A-Z]', password):
-        errors.append("Password must contain at least one uppercase letter.")
-    if not re.search(r'[a-z]', password):
-        errors.append("Password must contain at least one lowercase letter.")
-    if not re.search(r'\d', password):
-        errors.append("Password must contain at least one number.")
-    if not re.search(r'[!@#$%^&*(),.?":{}|<>]', password):
-        errors.append("Password must contain at least one special character.")
-    return errors
+# def validate_password(password):
+#     errors = []
+#     if len(password) < 8:
+#         errors.append("Password must be at least 8 characters long.")
+#     if not re.search(r'[A-Z]', password):
+#         errors.append("Password must contain at least one uppercase letter.")
+#     if not re.search(r'[a-z]', password):
+#         errors.append("Password must contain at least one lowercase letter.")
+#     if not re.search(r'\d', password):
+#         errors.append("Password must contain at least one number.")
+#     if not re.search(r'[!@#$%^&*(),.?":{}|<>]', password):
+#         errors.append("Password must contain at least one special character.")
+#     return errors
 
 
 def client_register(request):
@@ -365,12 +365,12 @@ def client_register(request):
         password = request.POST.get('password')
         confirm_password = request.POST.get('confirm_password')
 
-        # Validate password
-        password_errors = validate_password(password)
-        if password_errors:
-            for error in password_errors:
-                messages.error(request, error)
-            return redirect('client_register')
+        # # Validate password
+        # password_errors = validate_password(password)
+        # if password_errors:
+        #     for error in password_errors:
+        #         messages.error(request, error)
+        #     return redirect('client_register')
 
         # Check if passwords match
         if password != confirm_password:
