@@ -298,7 +298,7 @@
                                     <select class="form-select" name="service" id="serviceSelect" required>
                                         <option value="">--Select Service--</option>
                                         {% for service in services %}
-                                            <option value="{{ service.id }}">{{ service.title }} -> {{ service.duration }} minutes</option>
+                                            <option value="{{ service.id }}">{{ service.title }} - {{ service.duration }} minutes</option>
                                         {% endfor %}
                                     </select>
                                 </div>
