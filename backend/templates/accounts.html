@@ -127,16 +127,6 @@
                                                 </div>
                                             </div>
                                         </div>
-                                        <div class="form-text mt-2" style="margin-bottom: 2rem">
-                                            Password must:
-                                            <ul>
-                                                <li>At least 8 characters long</li>
-                                                <li>Contain at least one CAPITAL letter (A-Z)</li>
-                                                <li>Contain at least one small letter (a-z)</li>
-                                                <li>Contain at least one number (0-9)</li>
-                                                <li>Contain at least one special character</li>
-                                            </ul>
-                                        </div>
                                         <!-- Password fields -->
                                         <div class="row clearfix">
                                             <div class="col-sm-12 col-md-6">
@@ -178,8 +168,8 @@
                         <table class="table table-bordered table-striped table-hover dataTable js-exportable">
                             <thead>
                                 <tr>
-                                    <th>First Name</th>
                                     <th>Last Name</th>
+                                    <th>First Name</th>
                                     <th>Email Address</th>
                                     <th>Phone Number</th>
                                     <th>Sex</th>
@@ -192,8 +182,8 @@
                             <tbody>
                                 {% for user in users %}
                                     <tr>
-                                        <td>{{ user.first_name }}</td>
                                         <td>{{ user.last_name }}</td>
+                                        <td>{{ user.first_name }}</td>
                                         <td>{{ user.email }}</td>
                                         <td>{{ user.phone_number }}</td>
                                         <td>{{ user.sex }}</td>

@@ -14,8 +14,16 @@
         <link rel="icon" href="{% static 'images/favicon.png' %}" type="image/x-icon">
 
         <!-- Google Fonts -->
-        <link href="https://fonts.googleapis.com/css?family=Roboto:400,700&subset=latin,cyrillic-ext" rel="stylesheet" type="text/css">
+            <!-- Roboto Font -->
+<!--        <link href="https://fonts.googleapis.com/css?family=Roboto:400,700&subset=latin,cyrillic-ext" rel="stylesheet" type="text/css">-->
+            <!-- Material Icons -->
         <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" type="text/css">
+            <!-- Poppins Font -->
+        <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+            <!-- Rubik Font -->
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Rubik:ital,wght@0,300..900;1,300..900&display=swap" rel="stylesheet">
 
         <!-- Bootstrap Core Css -->
         <link href="{% static 'plugins/bootstrap/css/bootstrap.css' %}" rel="stylesheet">
@@ -51,6 +59,9 @@
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
 
         <style>
+            * {
+                font-family: 'Rubik', sans-serif;
+            }
             body {
                 background-color: #8eb69b;
             }
@@ -95,6 +106,28 @@
             .header {
                 background-color: #daf1de;
             }
+
+            /* KEYFRAMES */
+            @keyframes iconGreenAnimation {
+                0% {
+                        color: #6c7a5f;
+                }
+                20% {
+                        color: #4f5d40;
+                }
+                40% {
+                        color: #5a6e4d;
+                }
+                60% {
+                        color: #3f4a32;
+                }
+                80% {
+                        color: #4a5a3f;
+                }
+                100% {
+                        color: #2e3b24;
+                }
+            }
         </style>
     </head>
     <body>
@@ -125,7 +158,7 @@
                     <a href="javascript:void(0);" class="navbar-toggle collapsed" data-toggle="collapse"
                        data-target="#navbar-collapse" aria-expanded="false" style="color: black"></a>
                     <a href="javascript:void(0);" class="bars" style="color: black"></a>
-                    <a class="navbar-brand" href="{% url 'dashboard' %}" style="color: black"><strong>JAYLON | ADMINISTRATOR</strong></a>
+                    <a class="navbar-brand" href="{% url 'dashboard' %}" style="animation: iconGreenAnimation 5s infinite alternate"><strong>JAYLON DENTAL CLINIC</strong></a>
                 </div>
                 <div class="collapse navbar-collapse" id="navbar-collapse">
                     <ul class="nav navbar-nav navbar-right">
@@ -206,7 +239,7 @@
                         <h5 class="modal-title p-b-10" id="adminLogoutConfirmModalLabel">Confirm Logout</h5>
                     </div>
                         <div class="modal-body" style="padding-bottom: 0px;">
-                        Are you sure you want to logout?
+                        Are you sure you want to log out?
                         </div>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-link waves-effect" data-dismiss="modal">CANCEL</button>

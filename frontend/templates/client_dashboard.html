@@ -389,7 +389,7 @@
                                     <h5 class="lobster-font card-title cl-dark-green">{{ service.title }}</h5>
                                     <p class="card-text flex-grow-1 cl-dark-green">{{ service.description|truncatewords:20 }}</p>
                                     <div class="mt-auto">
-                                        <small class="text-muted">Duration: {{ service.duration }} minutes</small>
+                                        <small class="text-muted"><i class="fa-sharp fa-light fa-timer"></i> Duration: {{ service.duration }} minutes</small>
                                     </div>
                                 </div>
                             </div>
@@ -542,13 +542,18 @@
                 <h3 class="lobster-font mb-4 cl-dark-green" data-aos="fade-right"><i class="fa-light fa-file-contract" style="animation: iconGreenAnimation 5s infinite alternate"></i> Policy and Agreement</h3>
                 <div class="row">
                     <div class="col-md-12" data-aos="fade-up" data-aos-delay="100">
-                        <p class="cl-dark-green">Thank you for choosing us for your dental care needs. We are committed to providing exceptional
-                        care in a comfortable environment while protecting your personal information. Before we get started,
-                        please take a moment to review our important policies and agreements.</p>
+                        <p class="cl-dark-green">Thank you for choosing us for your dental care! We're dedicated to providing
+                        great service in a comfortable setting while keeping your information safe. Please review our policies
+                        to understand our procedures and your responsibilities as a patient.</p>
                         <p class="cl-dark-green"><strong>Please note:</strong> <br>
-                        • Reviewing our policies will help you understand our procedures and your responsibilities as a patient.
+                            To our valued patients,
                             <br>
-                        • By continuing, you agree to our policies and agreements.
+                        • Some dental procedures may take longer than expected. We appreciate your patience if there are
+                            delays in the schedule.
+                            <br>
+                        • Every patient receives equal, quality care. We value quality over quantity.
+                            <br>
+                        • Thank you for your patience and understanding.
                             <br>
                             <br>
                             For more details, please read our full <a href="#" data-bs-toggle="modal" data-bs-target="#privacyModal" class="text-decoration-none">Privacy Policy and User Agreement.</a></p>
@@ -565,132 +570,145 @@
                         <h5 class="modal-title cl-dark-green" id="privacyModalLabel"><i class="fa-light fa-handshake" style="animation: iconGreenAnimation 5s infinite alternate"></i> Policy and Agreement</h5>
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" id="closeButton"></button>
                     </div>
+                    <!-- "MAKE SHORT & SIMPLE" APPLIED -->
                     <div class="modal-body" style="max-height: 70vh; overflow-y: auto;">
                         <p class="fw-bold cl-dark-green">IMPORTANT REMINDER:</p>
                         {% if not request.user.is_authenticated %}
-                            <p class="fw-bold">Hello dear visitors! Please be advised that Jaylon Dental Clinic is not responsible for
-                            any issues arising from failure to follow our policies. Any resulting inconvenience will be
-                            the patient's responsibility. To avoid potential problems, please carefully review the following:
+                            <p class="fw-bold">Hello dear visitors! Jaylon Dental Clinic reminds visitors that responsibility lies with patients
+                                who do not follow our policies. Please review the guidelines below:
                             </p>
                         {% else %}
-                            <p class="fw-bold">Hello Mr./Ms. {{user.first_name}}! Please be advised that Jaylon Dental Clinic is not responsible for
-                            any issues arising from failure to follow our policies. Any resulting inconvenience will be
-                            the patient's responsibility. To avoid potential problems, please carefully review the following:
+                            <p class="fw-bold">Hello Mr./Ms. {{user.first_name}}! The Jaylon Dental Clinic reminds visitors that responsibility lies with patients
+                                who do not follow our policies. Please review the guidelines below:
                             </p>
                         {% endif %}
                         <h6 class="mt-4 cl-dark-green">1. Appointment Booking</h6>
                         <ul>
-                            <li>Appointments can be booked via phone, clinic website, or in-person.</li>
-                            <li>Patients are encouraged to book appointments in advance to secure their preferred date and
-                                time.
-                            </li>
+                            <li>Book via phone, website, or in person. Advance booking is advised.</li>
+<!--                            <li>Appointments can be booked via phone, clinic website, or in-person.</li>-->
+<!--                            <li>Patients are encouraged to book appointments in advance to secure their preferred date and-->
+<!--                                time.-->
+<!--                            </li>-->
                         </ul>
 
-                        <h6 class="mt-4 cl-dark-green">2. Appointment Approval and Reminders</h6>
+                        <h6 class="mt-4 cl-dark-green">2. Approval & Reminders</h6>
                         <ul>
-                            <li>All appointments must be approved at least 24 hours before the selected date and time.</li>
-                            <li>Patients will receive an email reminder regarding their appointment status (approved or canceled).</li>
+                            <li>Appointments need approval 24 hours in advance. Status updates will be sent via email.</li>
+<!--                            <li>All appointments must be approved at least 24 hours before the selected date and time.</li>-->
+<!--                            <li>Patients will receive an email reminder regarding their appointment status (approved or canceled).</li>-->
                         </ul>
 
-                        <h6 class="mt-4 cl-dark-green">3. Medical-Dental Questionnaire</h6>
+                        <h6 class="mt-4 cl-dark-green">3. Dental Questionnaire</h6>
                         <ul>
-                            <li>The questionnaire is accessible on your <a href="{% url 'client_profile' %}">profile</a> after you log in.</li>
-                            <li>Please update it whenever there are changes in your medical condition by checking the
-                                relevant checkboxes (Yes/No) or selecting your health status (Good/Fair/Poor).
-                            </li>
+                            <li>Accessible in your <a href="{% url 'client_profile' %}">profile</a>; update any health changes.</li>
+<!--                            <li>The questionnaire is accessible on your <a href="{% url 'client_profile' %}">profile</a> after you log in.</li>-->
+<!--                            <li>Please update it whenever there are changes in your medical condition by checking the-->
+<!--                                relevant checkboxes (Yes/No) or selecting your health status (Good/Fair/Poor).-->
+<!--                            </li>-->
                         </ul>
 
-                        <h6 class="mt-4 cl-dark-green">4. Cancellation and Rescheduling</h6>
+                        <h6 class="mt-4 cl-dark-green">4. Cancellations and Rescheduling</h6>
                         <ul>
-                            <li>If an error occurs in selecting a service, date, or time, client <strong>must choose
-                                the next available day</strong> rather than correcting the mistake on the same day.
-                            </li>
-                            <li>Only the first approved appointment will be honored for any single service and time slot.
-                                Any duplicate appointments for the same service at different times will be
-                                <strong>disregarded.</strong>
-                            </li>
-                            <li>Once an appointment is created, it cannot be canceled, deleted, nor rescheduled due to
-                                the busy schedules of our dentists.
-                            </li>
+                            <li>Only the first approved appointment is honored per service. Changes are not allowed
+                            on the same day or once booked.</li>
+<!--                            <li>If an error occurs in selecting a service, date, or time, client <strong>must choose-->
+<!--                                the next available day</strong> rather than correcting the mistake on the same day.-->
+<!--                            </li>-->
+<!--                            <li>Only the first approved appointment will be honored for any single service and time slot.-->
+<!--                                Any duplicate appointments for the same service at different times will be-->
+<!--                                <strong>disregarded.</strong>-->
+<!--                            </li>-->
+<!--                            <li>Once an appointment is created, it cannot be canceled, deleted, nor rescheduled due to-->
+<!--                                the busy schedules of our dentists.-->
+<!--                            </li>-->
                         </ul>
 
                         <h6 class="mt-4 cl-dark-green">5. Walk-in Policy</h6>
                         <ul>
-                            <li>Walk-ins are accepted but will be served based on availability.</li>
-                            <li>Scheduled appointments will take priority over walk-ins.</li>
+                            <li>Walk-ins are accepted based on availability, with priority given to scheduled appointments.</li>
+<!--                            <li>Walk-ins are accepted but will be served based on availability.</li>-->
+<!--                            <li>Scheduled appointments will take priority over walk-ins.</li>-->
                         </ul>
 
                         <h6 class="mt-4 cl-dark-green">6. Late Arrivals</h6>
                         <ul>
-                            <li>Patients are requested to arrive at least 15 minutes before their scheduled appointment.</li>
-                            <li>Patients who book through our clinic's website will receive priority based on their
-                                selected date and time.
-                            </li>
+                            <li>Arrive 15 minutes early. Website bookings get priority.</li>
+<!--                            <li>Patients are requested to arrive at least 15 minutes before their scheduled appointment.</li>-->
+<!--                            <li>Patients who book through our clinic's website will receive priority based on their-->
+<!--                                selected date and time.-->
+<!--                            </li>-->
                         </ul>
 
                         <h6 class="mt-4 cl-dark-green">7. No-Show Policy</h6>
                         <ul>
-                            <li>If a patient is a no-show, their appointment will be canceled the following day.</li>
-                            <li>If a patient is unable to attend their appointment and might be considered a no-show,
-                                they must contact the clinic in advance to inform them.</li>
-                            <li>Repeated no-shows may result in a restricted account and limited booking options.</li>
-                            <ul>
-                                <li>Three Consecutive times -- 12hrs account restriction</li>
-                                <li>Five Consecutive times -- 24hrs account restriction</li>
-                            </ul>
+                            <li>Canceled the next day if not attended. Repeated no-shows may restrict your account.</li>
+<!--                            <li>If a patient is a no-show, their appointment will be canceled the following day.</li>-->
+<!--                            <li>If a patient is unable to attend their appointment and might be considered a no-show,-->
+<!--                                they must contact the clinic in advance to inform them.</li>-->
+<!--                            <li>Repeated no-shows may result in a restricted account and limited booking options.</li>-->
+<!--                            <ul>-->
+<!--                                <li>Three Consecutive times &#45;&#45; 12hrs account restriction</li>-->
+<!--                                <li>Five Consecutive times &#45;&#45; 24hrs account restriction</li>-->
+<!--                            </ul>-->
                         </ul>
 
-                        <h6 class="mt-4 cl-dark-green">8. Emergency Appointments</h6>
+                        <h6 class="mt-4 cl-dark-green">8. Emergencies</h6>
                         <ul>
-                            <li>Emergency cases will be prioritized and accommodated as soon as possible.</li>
-                            <li>If no available slots exists, emergency patients may be referred to the nearest available clinic.</li>
+                            <li>Emergency cases are prioritized and may be referred elsewhere if no slots are available.</li>
+<!--                            <li>Emergency cases will be prioritized and accommodated as soon as possible.</li>-->
+<!--                            <li>If no available slots exists, emergency patients may be referred to the nearest available clinic.</li>-->
                         </ul>
 
-                        <h6 class="mt-4 cl-dark-green">9. Service Duration Estimates (Maximum Range)</h6>
+                        <h6 class="mt-4 cl-dark-green">9. Service Duration</h6>
                         <ul>
-                            <li>Tooth Extraction -- 10mins</li>
-                            <li>Tooth Filling -- 15mins</li>
-                            <li>Odontectomy -- 30mins</li>
-                            <li>Dentures -- 20mins</li>
-                            <li>Veneers -- 20mins</li>
-                            <li>Ortho Braces (Upper and Lower) -- 1hr and 10mins</li>
-                            <li>Ortho Braces (Upper or Lower) -- 40mins</li>
-                            <li>Crowns Fixed Bridge -- 20mins</li>
-                            <li>Denture Repair -- 15mins</li>
-                            <li>Oral Prophylaxis (Moderate) -- 45mins</li>
-                            <li>Oral Prophylaxis (Hard) -- 1hr</li>
-                            <li>Root Canal Treatment (Anterior) -- 1hr</li>
-                            <li>Root Canal Treatment (Posteriors) -- 1hr and 30mins</li>
+                            <li>Check service estimates (e.g., Extractions: 10mins, Braces: 1hr & 10mins).</li>
+<!--                            <li>Tooth Extraction &#45;&#45; 10mins</li>-->
+<!--                            <li>Tooth Filling &#45;&#45; 15mins</li>-->
+<!--                            <li>Odontectomy &#45;&#45; 30mins</li>-->
+<!--                            <li>Dentures &#45;&#45; 20mins</li>-->
+<!--                            <li>Veneers &#45;&#45; 20mins</li>-->
+<!--                            <li>Ortho Braces (Upper and Lower) &#45;&#45; 1hr and 10mins</li>-->
+<!--                            <li>Ortho Braces (Upper or Lower) &#45;&#45; 40mins</li>-->
+<!--                            <li>Crowns Fixed Bridge &#45;&#45; 20mins</li>-->
+<!--                            <li>Denture Repair &#45;&#45; 15mins</li>-->
+<!--                            <li>Oral Prophylaxis (Moderate) &#45;&#45; 45mins</li>-->
+<!--                            <li>Oral Prophylaxis (Hard) &#45;&#45; 1hr</li>-->
+<!--                            <li>Root Canal Treatment (Anterior) &#45;&#45; 1hr</li>-->
+<!--                            <li>Root Canal Treatment (Posteriors) &#45;&#45; 1hr and 30mins</li>-->
                         </ul>
 
-                        <h6 class="mt-4 cl-dark-green">10. Patient Records and Privacy</h6>
+                        <h6 class="mt-4 cl-dark-green">10. Privacy</h6>
                         <ul>
-                            <li>Patient information is kept confidential and used solely for appointment scheduling and
-                                treatment purposes.
-                            </li>
-                            <li>Patients are <strong>required</strong> to update their contact details to ensure timely
-                                communication.
-                            </li>
+                            <li>Patient information is confidential and only used for appointments and treatment.</li>
+<!--                            <li>Patient information is kept confidential and used solely for appointment scheduling and-->
+<!--                                treatment purposes.-->
+<!--                            </li>-->
+<!--                            <li>Patients are <strong>required</strong> to update their contact details to ensure timely-->
+<!--                                communication.-->
+<!--                            </li>-->
                         </ul>
 
-                        <h6 class="mt-4 cl-dark-green">11. Feedback and Complaints</h6>
+                        <h6 class="mt-4 cl-dark-green">11. Inquiries</h6>
                         <ul>
-                            <li>We welcome feedback to continuously improve our services.</li>
-                            <li>You can contact us through the "Contacts" section on our clinic website via Gmail, phone
-                                call, or connect with us on Facebook for updates.
-                            </li>
+                            For questions or assistance, contact us via the "Contacts" section.
+<!--                            <li>We welcome feedback to continuously improve our services.</li>-->
+<!--                            <li>You can contact us through the "Contacts" section on our clinic website via Gmail, phone-->
+<!--                                call, or connect with us on Facebook for updates.-->
+<!--                            </li>-->
                         </ul>
 
-                        <h6 class="mt-4 cl-dark-green">12. Preparation Reminders</h6>
+                        <h6 class="mt-4 cl-dark-green">12. Preparation</h6>
                         <ul>
-                            <li><strong>Take a screenshot</strong> of your approved appointment confirmation for easy
-                                reference during check-in.</li>
+                            <li>Screenshot your approved appointment for check-in.</li>
+<!--                            <li><strong>Take a screenshot</strong> of your approved appointment confirmation for easy-->
+<!--                                reference during check-in.</li>-->
                         </ul>
 
-                        <h6 class="mt-4 cl-dark-green">13. Follow-up Checkups</h6>
+                        <h6 class="mt-4 cl-dark-green">13. Follow-ups</h6>
                         <ul>
-                            <li>If you have any follow-up appointments, please schedule as soon as possible to maintain
-                                your treatment plan.</li>
+                            <li>Schedule follow-ups promptly to stay track with your treatment plan.</li>
+<!--                            <li>If you have any follow-up appointments, please schedule as soon as possible to maintain-->
+<!--                                your treatment plan.</li>-->
                         </ul>
 
                         {% if request.user.is_authenticated and not user.has_agreed_privacy_policy %}
@@ -718,7 +736,7 @@
           <div class="modal-dialog">
             <div class="modal-content">
               <div class="modal-header">
-                <h5 class="modal-title" id="logoutConfirmModalLabel"><i class="fa-light fa-right-from-bracket"></i> You clicked Log Out!</h5>
+                <h5 class="modal-title cl-dark-green" id="logoutConfirmModalLabel"><i class="fa-light fa-face-worried"></i> You clicked Log Out!</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
               </div>
               <div class="modal-body">
@@ -736,7 +754,7 @@
             <div class="container">
                 <div class="row justify-content-center">
                     <div class="col-md-8 text-center">
-                        <h5 class="mb-4">Connect with us on Facebook for more updates.</h5>
+                        <h5 class="mb-4">Follow us on Facebook for updates.</h5>
                         <div class="d-flex justify-content-center">
                             <a href="https://www.facebook.com/profile.php?id=100083282165584" target="_blank"
                                class="social-icon mx-3">

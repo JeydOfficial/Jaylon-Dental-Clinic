@@ -403,19 +403,19 @@ def delete_service(request, service_id):
     return redirect('services')
 
 
-def validate_password(password):
-    errors = []
-    if len(password) < 8:
-        errors.append("Password must be at least 8 characters long.")
-    if not re.search(r'[A-Z]', password):
-        errors.append("Password must contain at least one uppercase letter.")
-    if not re.search(r'[a-z]', password):
-        errors.append("Password must contain at least one lowercase letter.")
-    if not re.search(r'\d', password):
-        errors.append("Password must contain at least one number.")
-    if not re.search(r'[!@#$%^&*(),.?":{}|<>]', password):
-        errors.append("Password must contain at least one special character.")
-    return errors
+# def validate_password(password):
+#     errors = []
+#     if len(password) < 8:
+#         errors.append("Password must be at least 8 characters long.")
+#     if not re.search(r'[A-Z]', password):
+#         errors.append("Password must contain at least one uppercase letter.")
+#     if not re.search(r'[a-z]', password):
+#         errors.append("Password must contain at least one lowercase letter.")
+#     if not re.search(r'\d', password):
+#         errors.append("Password must contain at least one number.")
+#     if not re.search(r'[!@#$%^&*(),.?":{}|<>]', password):
+#         errors.append("Password must contain at least one special character.")
+#     return errors
 
 
 @login_required(login_url='login')
@@ -438,12 +438,8 @@ def view_accounts(request):
         password = request.POST.get('password')
         confirm_password = request.POST.get('confirm_password')
 
-        # Validate password
-        password_errors = validate_password(password)
-        if password_errors and password != confirm_password:
+        if password != confirm_password:
             messages.error(request, 'Passwords do not match.')
-            for error in password_errors:
-                messages.error(request, error)
             return redirect('accounts')
 
         # Check if the email is already taken

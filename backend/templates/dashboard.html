@@ -100,7 +100,7 @@
                                                 <select class="form-control show-tick" name="user" id="user" required>
                                                     <option value="">--Select User--</option>
                                                     {% for user in users %}
-                                                        <option value="{{ user.id }}">{{ user.first_name }} {{ user.last_name }}</option>
+                                                        <option value="{{ user.id }}">{{ user.last_name }}, {{ user.first_name }} - {{ user.email }}</option>
                                                     {% endfor %}
                                                 </select>
                                             </div>
