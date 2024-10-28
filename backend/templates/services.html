@@ -7,7 +7,7 @@
             <div class="card">
                 <div class="header" style="display: flex; justify-content: space-between; align-items: center;">
                     <h2>
-                        <strong>SERVICES OFFERED</strong>
+                        <i class="fa-sharp fa-light fa-teeth-open"></i> <strong>SERVICES OFFERED</strong>
                     </h2>
                     <button type="button" class="btn bg-cyan btn-sm waves-effect" data-toggle="modal"
                             data-target="#AddModal"><i class="material-icons">local_hospital</i>
@@ -18,7 +18,7 @@
                         <div class="modal-dialog" role="document">
                             <div class="modal-content">
                                 <div class="modal-header bg-cyan">
-                                    <h4 class="modal-title p-b-10" id="AddModalLabel">ADD NEW SERVICE</h4>
+                                    <h4 class="modal-title p-b-10" id="AddModalLabel"><i class="fa-sharp fa-light fa-cart-plus"></i> ADD NEW SERVICE</h4>
                                 </div>
                                 <form method="POST" enctype="multipart/form-data">
                                     {% csrf_token %}
@@ -117,7 +117,7 @@
                                 <div class="modal-dialog" role="document">
                                     <div class="modal-content">
                                         <div class="modal-header bg-cyan">
-                                            <h4 class="modal-title p-b-10">EDIT SERVICE</h4>
+                                            <h4 class="modal-title p-b-10"><i class="fa-sharp fa-light fa-pen-to-square"></i> EDIT SERVICE</h4>
                                         </div>
                                         <form method="POST" enctype="multipart/form-data">
                                             {% csrf_token %}
@@ -185,10 +185,10 @@
                                 <div class="modal-dialog modal-sm" role="document">
                                     <div class="modal-content">
                                         <div class="modal-header bg-red">
-                                            <h4 class="modal-title p-b-10" id="deleteModalLabel">DELETE SERVICE</h4>
+                                            <h4 class="modal-title p-b-10" id="deleteModalLabel"><i class="fa-sharp fa-light fa-trash"></i> DELETE SERVICE</h4>
                                         </div>
                                         <div class="modal-body">
-                                            Are you sure you want to delete this <span class="font-bold">{{ service.title }}</span> service?
+                                            Are you sure you want to delete this service named <span class="font-bold">{{ service.title }}</span>?
                                         </div>
                                         <div class="modal-footer">
                                             <button type="button" class="btn bg-grey waves-effect" data-dismiss="modal">CANCEL</button>

@@ -58,15 +58,24 @@
         <!-- Toastr CSS -->
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
 
+        <!-- Font Awesome -->
+<!--        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">-->
+        <link rel="stylesheet" href="https://site-assets.fontawesome.com/releases/v6.6.0/css/all.css">
+        <link rel="stylesheet" href="https://site-assets.fontawesome.com/releases/v6.6.0/css/sharp-duotone-solid.css">
+        <link rel="stylesheet" href="https://site-assets.fontawesome.com/releases/v6.6.0/css/sharp-thin.css">
+        <link rel="stylesheet" href="https://site-assets.fontawesome.com/releases/v6.6.0/css/sharp-solid.css">
+        <link rel="stylesheet" href="https://site-assets.fontawesome.com/releases/v6.6.0/css/sharp-regular.css">
+        <link rel="stylesheet" href="https://site-assets.fontawesome.com/releases/v6.6.0/css/sharp-light.css">
+
         <style>
             * {
-                font-family: 'Rubik', sans-serif;
+                font-family: 'Poppins', sans-serif;
             }
             body {
                 background-color: #8eb69b;
             }
             nav {
-                background-color: #8eb69b;
+                background-color: #daf1de;
             }
             .image-container {
                 position: relative;
@@ -158,7 +167,8 @@
                     <a href="javascript:void(0);" class="navbar-toggle collapsed" data-toggle="collapse"
                        data-target="#navbar-collapse" aria-expanded="false" style="color: black"></a>
                     <a href="javascript:void(0);" class="bars" style="color: black"></a>
-                    <a class="navbar-brand" href="{% url 'dashboard' %}" style="animation: iconGreenAnimation 5s infinite alternate"><strong>JAYLON DENTAL CLINIC</strong></a>
+                    <a class="navbar-brand fa-sharp fa-light fa-tooth" href="{% url 'dashboard' %}"
+                       style="animation: iconGreenAnimation 5s infinite alternate"><strong> JAYLON DENTAL CLINIC</strong></a>
                 </div>
                 <div class="collapse navbar-collapse" id="navbar-collapse">
                     <ul class="nav navbar-nav navbar-right">
@@ -236,7 +246,7 @@
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
                     <div class="modal-header bg-red">
-                        <h5 class="modal-title p-b-10" id="adminLogoutConfirmModalLabel">Confirm Logout</h5>
+                        <h5 class="modal-title p-b-10" id="adminLogoutConfirmModalLabel"><i class="fa-light fa-right-from-bracket"></i> Confirm Log Out</h5>
                     </div>
                         <div class="modal-body" style="padding-bottom: 0px;">
                         Are you sure you want to log out?

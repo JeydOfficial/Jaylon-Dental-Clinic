@@ -80,7 +80,7 @@
             <!-- Exportable Table -->
             <div class="card">
                     <div class="header" style="display: flex; justify-content: space-between; align-items: center;">
-                        <h2><strong>APPOINTMENT LIST</strong></h2>
+                        <h2><i class="fa-sharp fa-light fa-calendar-range"></i> <strong>APPOINTMENT LIST</strong></h2>
                         <button type="button" class="btn bg-cyan btn-sm waves-effect" data-toggle="modal"
                                 data-target="#AddModal"><i class="material-icons">add</i>
                             <span>NEW APPOINTMENT</span>
@@ -90,7 +90,8 @@
                             <div class="modal-dialog" role="document">
                                 <div class="modal-content">
                                     <div class="modal-header bg-cyan">
-                                        <h4 class="modal-title p-b-10" id="AddModalLabel">ADD NEW APPOINTMENT</h4>
+                                        <h4 class="modal-title p-b-10" id="AddModalLabel">
+                                            <i class="fa-sharp fa-light fa-calendar-circle-plus"></i> ADD NEW APPOINTMENT</h4>
                                     </div>
                                     <form id="addAppointmentForm" method="POST" action="{% url 'dashboard' %}">
                                         {% csrf_token %}
@@ -221,7 +222,7 @@
                                         <div class="modal-dialog modal-sm" role="document">
                                             <div class="modal-content">
                                                 <div class="modal-header bg-red">
-                                                    <h4 class="modal-title p-b-10" id="deleteModalLabel">DELETE APPOINTMENT</h4>
+                                                    <h4 class="modal-title p-b-10" id="deleteModalLabel"><i class="fa-sharp fa-light fa-trash"></i> DELETE APPOINTMENT</h4>
                                                 </div>
                                                 <div class="modal-body">
                                                     Are you sure you want to delete this appointment for <span class="font-bold">{{ appointment.user.first_name }} {{ appointment.user.last_name }}</span>?

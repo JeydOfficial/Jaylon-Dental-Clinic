@@ -76,6 +76,7 @@
             }
             .navbar {
                 box-shadow: 0 2px 4px rgba(0,0,0,.1);
+                background-color: #daf1de;
             }
             .navbar-brand {
                 font-weight: 600;
@@ -223,7 +224,7 @@
             </div>
         {% endif %}
 
-        <nav id="navbar-example2" class="navbar navbar-expand-lg sticky-top bg-white px-3">
+        <nav id="navbar-example2" class="navbar navbar-expand-lg sticky-top px-3">
             <div class="container-fluid">
                 <a class="navbar-brand lobster-font" href="{% url 'client_dashboard' %}" style="animation: colorAnimation 5s infinite alternate; font-size: 26px;">
                     <i class="fa-light fa-tooth mr-2" style="animation: colorAnimation 5s infinite alternate"></i>
@@ -298,7 +299,7 @@
                                     <select class="form-select" name="service" id="serviceSelect" required>
                                         <option value="">--Select Service--</option>
                                         {% for service in services %}
-                                            <option value="{{ service.id }}">{{ service.title }} - {{ service.duration }} minutes</option>
+                                            <option value="{{ service.id }}">{{ service.title }}</option>
                                         {% endfor %}
                                     </select>
                                 </div>
