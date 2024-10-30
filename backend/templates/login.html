@@ -29,6 +29,10 @@
         <!-- Toastr CSS -->
         <link href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css" rel="stylesheet">
 
+        <!-- Font Awesome -->
+        <link rel="stylesheet" href="https://site-assets.fontawesome.com/releases/v6.6.0/css/all.css">
+
+
         <style>
             body {
                 font-family: 'Poppins', sans-serif;
@@ -75,6 +79,23 @@
             .btn-login:hover {
                 background-color: #3a8fc7;
             }
+            input::-ms-reveal,
+            input::-ms-clear {
+                display: none;
+            }
+            /* Add these new styles for the password toggle with floating labels */
+            .password-toggle-floating {
+                position: absolute;
+                right: 10px;
+                top: 50%;
+                transform: translateY(-50%);
+                z-index: 10;
+                background: none;
+                border: none;
+                color: #212529;
+                cursor: pointer;
+                padding: 0;
+            }
 
             /* KEYFRAMES */
             @keyframes colorAnimation {
@@ -115,9 +136,12 @@
                         <label for="floatingInput">Email</label>
                     </div>
 
-                    <div class="form-floating">
+                    <div class="form-floating position-relative">
                         <input type="password" class="form-control" id="floatingPassword" name="password" placeholder="Password">
                         <label for="floatingPassword">Password</label>
+                        <button type="button" class="password-toggle-floating" id="passwordToggle">
+                            <i class="fa-light fa-eye" id="passwordToggleIcon"></i>
+                        </button>
                     </div>
 
                     <button class="btn w-100 customized py-2" type="submit" style="color: white">LOG IN</button>
@@ -198,5 +222,29 @@
                 });
             });
         </script>
+        <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Your existing DOMContentLoaded code...
+
+            // Add password toggle functionality
+            const passwordInput = document.getElementById('floatingPassword');
+            const passwordToggleIcon = document.getElementById('passwordToggleIcon');
+            const passwordToggle = document.getElementById('passwordToggle');
+
+            if (passwordToggle && passwordInput) {
+                passwordToggle.addEventListener('click', function() {
+                    if (passwordInput.type === 'password') {
+                        passwordInput.type = 'text';
+                        passwordToggleIcon.classList.remove('fa-eye');
+                        passwordToggleIcon.classList.add('fa-eye-slash');
+                    } else {
+                        passwordInput.type = 'password';
+                        passwordToggleIcon.classList.remove('fa-eye-slash');
+                        passwordToggleIcon.classList.add('fa-eye');
+                    }
+                });
+            }
+        });
+    </script>
     </body>
 </html>

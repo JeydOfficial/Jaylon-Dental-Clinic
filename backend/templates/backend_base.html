@@ -115,6 +115,10 @@
             .header {
                 background-color: #daf1de;
             }
+            input::-ms-reveal,
+            input::-ms-clear {
+                display: none;
+            }
 
             /* KEYFRAMES */
             @keyframes iconGreenAnimation {
@@ -574,5 +578,34 @@
                 });
             });
         </script>
+        <script>
+        // Function to create password toggle
+        function createPasswordToggle(passwordInputId, toggleButtonId, toggleIconId) {
+            const passwordInput = document.getElementById(passwordInputId);
+            const passwordToggleIcon = document.getElementById(toggleIconId);
+            const passwordToggle = document.getElementById(toggleButtonId);
+
+            if (passwordToggle && passwordInput) {
+                passwordToggle.addEventListener('click', function() {
+                    if (passwordInput.type === 'password') {
+                        passwordInput.type = 'text';
+                        passwordToggleIcon.classList.remove('fa-eye');
+                        passwordToggleIcon.classList.add('fa-eye-slash');
+                    } else {
+                        passwordInput.type = 'password';
+                        passwordToggleIcon.classList.remove('fa-eye-slash');
+                        passwordToggleIcon.classList.add('fa-eye');
+                    }
+                });
+            }
+        }
+
+        // Initialize all password toggles
+        document.addEventListener('DOMContentLoaded', function() {
+            // Both password and confirm_password fields
+            createPasswordToggle('password', 'passwordToggle', 'passwordToggleIcon');
+            createPasswordToggle('confirm_password', 'confirmPasswordToggle', 'confirmPasswordToggleIcon');
+        });
+    </script>
     </body>
 </html>

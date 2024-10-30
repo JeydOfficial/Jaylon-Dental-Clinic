@@ -154,10 +154,15 @@
                                                 <label for="password">*Change Password</label>
                                                 <div class="form-group">
                                                     <div class="form-line">
-                                                        <input type="password" id="password" name="password"
-                                                               class="form-control"
-                                                               placeholder="New password (leave blank to keep current)"
-                                                        >
+                                                        <div class="position-relative" style="display: flex; align-items: center;">
+                                                            <input type="password" id="password" name="password"
+                                                                   class="form-control"
+                                                                   placeholder="New password (leave blank to keep current)"
+                                                            >
+                                                            <button type="button" class="btn btn-link position-absolute end-0 text-dark" id="passwordToggle" style="z-index: 10; margin-top: -2px;">
+                                                                <i class="fa-light fa-eye" id="passwordToggleIcon"></i>
+                                                            </button>
+                                                        </div>
                                                     </div>
                                                 </div>
                                             </div>
@@ -165,10 +170,15 @@
                                                 <label for="confirm_password">*Confirm Password</label>
                                                 <div class="form-group">
                                                     <div class="form-line">
-                                                        <input type="password" id="confirm_password"
-                                                               name="confirm_password"
-                                                               class="form-control" placeholder="Confirm password"
-                                                        >
+                                                        <div class="position-relative" style="display: flex; align-items: center;">
+                                                            <input type="password" id="confirm_password"
+                                                                   name="confirm_password"
+                                                                   class="form-control" placeholder="Confirm password"
+                                                            >
+                                                            <button type="button" class="btn btn-link position-absolute end-0 text-dark" id="confirmPasswordToggle" style="z-index: 10; margin-top: -2px;">
+                                                                <i class="fa-light fa-eye" id="confirmPasswordToggleIcon"></i>
+                                                            </button>
+                                                        </div>
                                                     </div>
                                                 </div>
                                             </div>

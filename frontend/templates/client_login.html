@@ -71,6 +71,10 @@
                 width: 450px;
                 max-width: 90%;
             }
+            input::-ms-reveal,
+            input::-ms-clear {
+                display: none;
+            }
 
             /* KEYFRAMES */
             @keyframes iconGreenAnimation {
@@ -112,7 +116,12 @@
                     </div>
                     <div class="mb-3">
                         <label for="password" class="form-label"><i class="fa-light fa-lock"></i> Password</label>
-                        <input type="password" class="form-control" id="password" name="password" required>
+                        <div class="position-relative">
+                            <input type="password" class="form-control" id="password" name="password" required>
+                            <button type="button" class="btn btn-link position-absolute end-0 top-50 translate-middle-y text-dark" id="passwordToggle" style="z-index: 10;">
+                                <i class="fa-light fa-eye" id="passwordToggleIcon"></i>
+                            </button>
+                        </div>
                     </div>
                     <div class="d-grid">
                         <button type="submit" class="btn customized-bg">
@@ -206,6 +215,23 @@
                         localStorage.removeItem('rememberedClientEmail');
                     }
                 });
+            });
+        </script>
+        <script>
+            const passwordInput = document.getElementById('password');
+            const passwordToggleIcon = document.getElementById('passwordToggleIcon');
+            const passwordToggle = document.getElementById('passwordToggle') || passwordToggleIcon; // works for both button and icon versions
+
+            passwordToggle.addEventListener('click', function() {
+                if (passwordInput.type === 'password') {
+                    passwordInput.type = 'text';
+                    passwordToggleIcon.classList.remove('fa-eye');
+                    passwordToggleIcon.classList.add('fa-eye-slash');
+                } else {
+                    passwordInput.type = 'password';
+                    passwordToggleIcon.classList.remove('fa-eye-slash');
+                    passwordToggleIcon.classList.add('fa-eye');
+                }
             });
         </script>
     </body>

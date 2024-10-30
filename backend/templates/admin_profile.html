@@ -27,13 +27,23 @@
                                 <div class="form-group">
                                     <label for="password">New Password</label>
                                     <div class="form-line">
-                                        <input type="password" id="password" name="password" class="form-control" placeholder="Enter new password">
+                                        <div class="position-relative" style="display: flex; align-items: center;">
+                                            <input type="password" id="password" name="password" class="form-control" placeholder="Enter new password">
+                                            <button type="button" class="btn btn-link position-absolute end-0 text-dark" id="passwordToggle" style="z-index: 10; margin-top: -2px;">
+                                                <i class="fa-light fa-eye" id="passwordToggleIcon"></i>
+                                            </button>
+                                        </div>
                                     </div>
                                 </div>
                                 <div class="form-group">
                                     <label for="confirm_password">Confirm New Password</label>
                                     <div class="form-line">
-                                        <input type="password" id="confirm_password" name="confirm_password" class="form-control" placeholder="Confirm new password">
+                                        <div class="position-relative" style="display: flex; align-items: center;">
+                                            <input type="password" id="confirm_password" name="confirm_password" class="form-control" placeholder="Confirm new password">
+                                            <button type="button" class="btn btn-link position-absolute end-0 text-dark" id="confirmPasswordToggle" style="z-index: 10; margin-top: -2px;">
+                                                <i class="fa-light fa-eye" id="confirmPasswordToggleIcon"></i>
+                                            </button>
+                                        </div>
                                     </div>
                                 </div>
                                 <button type="submit" class="btn btn-primary m-t-15 waves-effect">UPDATE PROFILE</button>

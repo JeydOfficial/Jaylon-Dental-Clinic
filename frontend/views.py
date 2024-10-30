@@ -375,12 +375,12 @@ def client_register(request):
         # Check if passwords match
         if password != confirm_password:
             messages.error(request, 'Passwords do not match.')
-            return redirect('client_register')
+            return render(request, 'client_register.html', {'post_data': request.POST})
 
         # Check if the email is already taken
         if User.objects.filter(email=email).exists():
             messages.error(request, 'Email is already registered.')
-            return redirect('client_register')
+            return render(request, 'client_register.html', {'post_data': request.POST})
 
         # Create a new user if email is unique
         user = User(
