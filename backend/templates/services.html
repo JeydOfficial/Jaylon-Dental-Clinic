@@ -34,10 +34,19 @@
                                         <label for="desription">Description</label>
                                         <div class="form-group">
                                             <div class="form-line">
-                                                        <textarea id="desription" rows="2" name="description"
-                                                                  class="form-control no-resize"
-                                                                  placeholder="Write the description..."
-                                                                  required></textarea>
+                                                <textarea id="desription" rows="2" name="description"
+                                                          class="form-control no-resize"
+                                                          placeholder="Write the description..."
+                                                          required></textarea>
+                                            </div>
+                                        </div>
+                                        <label for="details">Details</label>
+                                        <div class="form-group">
+                                            <div class="form-line">
+                                                <textarea id="details" rows="2" name="details"
+                                                          class="form-control no-resize"
+                                                          placeholder="Write the details..."
+                                                          required></textarea>
                                             </div>
                                         </div>
                                         <label for="duration">Duration (in minutes)</label>
@@ -139,6 +148,15 @@
                                                               class="form-control no-resize"
                                                               placeholder="Write the description..."
                                                               required>{{ service.description }}</textarea>
+                                                    </div>
+                                                </div>
+                                                <label for="edit_detals">Details</label>
+                                                <div class="form-group">
+                                                    <div class="form-line">
+                                                    <textarea id="edit_detals" rows="2" name="details"
+                                                              class="form-control no-resize"
+                                                              placeholder="Write the details..."
+                                                              required>{{ service.details }}</textarea>
                                                     </div>
                                                 </div>
                                                 <label for="edit_duration">Duration (in minutes)</label>

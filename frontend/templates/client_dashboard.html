@@ -387,7 +387,14 @@
                                      style="height: 200px; object-fit: cover;" data-bs-toggle="modal"
                                      data-bs-target="#servicesModal" data-bs-slide-to="{{ forloop.counter0 }}">
                                 <div class="card-body d-flex flex-column">
-                                    <h5 class="lobster-font card-title cl-dark-green">{{ service.title }}</h5>
+                                    <div class="d-flex justify-content-between mb-2">
+                                        <h5 class="lobster-font card-title cl-dark-green">{{ service.title }}</h5>
+                                        <button type="button" class="btn btn-primary btn-sm"
+                                                data-bs-toggle="modal"
+                                                data-bs-target="#serviceDetailsModal{{ service.id }}"
+                                                style="padding: 2px 10px; font-size: 12px;">Details
+                                        </button>
+                                    </div>
                                     <p class="card-text flex-grow-1 cl-dark-green">{{ service.description|truncatewords:20 }}</p>
                                     <div class="mt-auto">
                                         <small class="text-muted"><i class="fa-sharp fa-light fa-timer"></i> Duration: {{ service.duration }} minutes</small>
@@ -399,6 +406,34 @@
                 </div>
             </div>
 
+            <!-- Service detail Modal -->
+            {% for service in services %}
+            <div class="modal fade" id="serviceDetailsModal{{ service.id }}" tabindex="-1"
+                 aria-labelledby="serviceDetailsModalLabel{{ service.id }}" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered">
+                    <div class="modal-content">
+                        <div class="modal-header bg-light">
+                            <h5 class="modal-title lobster-font cl-dark-green" id="serviceDetailsModalLabel{{ service.id }}">
+                                <i class="fa-light fa-tooth" style="animation: iconGreenAnimation 5s infinite alternate"></i>
+                                {{ service.title }} Details
+                            </h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            <div class="row">
+                                <div class="col-12">
+                                    <img src="{{ service.image.url }}" class="img-fluid rounded mb-3"
+                                         alt="{{ service.title }}" style="width: 100%; height: 200px; object-fit: cover;">
+                                </div>
+                                <div class="col-12">
+                                    <p><i class="fas fa-info-circle"></i> {{ service.details }}</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
             <!-- Services Modal -->
             <div class="modal fade" id="servicesModal" tabindex="-1" aria-labelledby="servicesModalLabel" aria-hidden="true">
                 <div class="modal-dialog modal-dialog-centered modal-md">

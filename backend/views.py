@@ -351,12 +351,14 @@ def service_operations(request):
             service = Service.objects.get(pk=service_id)
             title = request.POST.get('title')
             description = request.POST.get('description')
+            details = request.POST.get('details')
             duration = request.POST.get('duration')
             image = request.FILES.get('image')
 
             # Update the service fields
             service.title = title
             service.description = description
+            service.details = details
             service.duration = int(duration)
 
             # Only update image if a new file is uploaded
@@ -371,6 +373,7 @@ def service_operations(request):
             # Adding a new service
             title = request.POST.get('title')
             description = request.POST.get('description')
+            details = request.POST.get('details')
             duration = request.POST.get('duration')
             image = request.FILES.get('image')
 
@@ -378,6 +381,7 @@ def service_operations(request):
             service = Service(
                 title=title,
                 description=description,
+                details=details,
                 duration=int(duration),
                 image=image
             )
@@ -440,12 +444,20 @@ def view_accounts(request):
 
         if password != confirm_password:
             messages.error(request, 'Passwords do not match.')
-            return redirect('accounts')
+            return render(request, 'accounts.html', {
+                'users': users,
+                'post_data': request.POST,
+                'show_modal': True  # This will trigger the modal to show
+            })
 
         # Check if the email is already taken
         if User.objects.filter(email=email).exists():
             messages.error(request, 'Email is already registered.')
-            return redirect('accounts')
+            return render(request, 'accounts.html', {
+                'users': users,
+                'post_data': request.POST,
+                'show_modal': True
+            })
 
         # Create a new user if email is unique
         user = User(
