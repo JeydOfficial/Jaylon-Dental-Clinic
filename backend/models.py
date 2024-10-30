@@ -105,7 +105,6 @@ class GalleryImage(models.Model):
 class Service(models.Model):
     title = models.CharField(max_length=255)
     description = models.TextField()
-    details = models.TextField()
     duration = models.PositiveIntegerField()  # Duration in minutes
     image = models.ImageField(upload_to='services/')  # Path where images will be stored
 
