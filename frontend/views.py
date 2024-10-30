@@ -152,6 +152,9 @@ def view_client_dashboard(request):
     services = Service.objects.all()
     images = GalleryImage.objects.all()
 
+    for service in services:
+        service.details = '\n'.join([line for line in service.details.split('\n') if line.strip()])
+
     # Check if the user is authenticated before filtering appointments
     if request.user.is_authenticated:
         appointments = Appointment.objects.filter(user=request.user)
