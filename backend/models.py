@@ -35,15 +35,18 @@ class CustomUserManager(BaseUserManager):
 
 class User(AbstractUser):
     username = None  # Remove the username field
-    email = models.EmailField(unique=True)
-    phone_number = models.CharField(max_length=15, blank=True)
+    email = models.EmailField(blank=True, null=True)
+    phone_number = models.CharField(max_length=15, blank=True, null=True, unique=True)
     sex = models.CharField(max_length=6, choices=[('Male', 'Male'), ('Female', 'Female')])
     current_address = models.TextField(blank=True)
     birthday = models.DateField(null=True, blank=True)
     age = models.PositiveIntegerField(null=True, blank=True)
+    phone_verified = models.BooleanField(default=False)
+    phone_verification_code = models.CharField(max_length=6, blank=True, null=True)
+    phone_verification_code_created = models.DateTimeField(blank=True, null=True)
     email_verified = models.BooleanField(default=False)
-    verification_token = models.CharField(max_length=100, blank=True, null=True)
-    verification_token_created = models.DateTimeField(blank=True, null=True)
+    email_verification_token = models.CharField(max_length=100, blank=True, null=True)
+    email_verification_token_created = models.DateTimeField(blank=True, null=True)
     password_reset_token = models.CharField(max_length=100, blank=True, null=True)
     password_reset_token_created = models.DateTimeField(blank=True, null=True)
     consecutive_missed_appointments = models.IntegerField(default=0)
@@ -51,14 +54,19 @@ class User(AbstractUser):
     restriction_end_time = models.DateTimeField(null=True, blank=True)
     has_agreed_privacy_policy = models.BooleanField(default=False)
 
-    USERNAME_FIELD = 'email'
+    USERNAME_FIELD = 'phone_number'
     REQUIRED_FIELDS = []
 
     objects = CustomUserManager()  # Use the custom manager
 
-    def generate_verification_token(self):
-        self.verification_token = get_random_string(length=32)
-        self.verification_token_created = timezone.localtime(timezone.now())
+    def generate_phone_verification_code(self):
+        self.phone_verification_code = get_random_string(length=6, allowed_chars='0123456789')
+        self.phone_verification_code_created = timezone.localtime(timezone.now())
+        self.save()
+
+    def generate_email_verification_token(self):
+        self.email_verification_token = get_random_string(length=32)
+        self.email_verification_token_created = timezone.localtime(timezone.now())
         self.save()
 
     def generate_password_reset_token(self):

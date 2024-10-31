@@ -150,6 +150,9 @@ CLOUDINARY_STORAGE = {
 
 DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
 
+SEMAPHORE_API_KEY = 'c0aba749cef521a9230f14021b828e7f'
+SEMAPHORE_SENDER_NAME = 'Jaylon Dental'
+
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_PORT = 587

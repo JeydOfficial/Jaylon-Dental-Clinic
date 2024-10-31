@@ -111,8 +111,8 @@
                 <form id="loginForm" method="post">
                     {% csrf_token %}
                     <div class="mb-3">
-                        <label for="email" class="form-label"><i class="fa-light fa-envelope"></i> Email</label>
-                        <input type="email" class="form-control" id="email" name="email" required>
+                        <label for="email_or_phone" class="form-label"><i class="fa-light fa-user-circle"></i> Email or Phone Number</label>
+                        <input type="text" class="form-control" id="email_or_phone" name="email_or_phone" required>
                     </div>
                     <div class="mb-3">
                         <label for="password" class="form-label"><i class="fa-light fa-lock"></i> Password</label>
@@ -190,29 +190,29 @@
         <script>
             document.addEventListener('DOMContentLoaded', function() {
                 const form = document.getElementById('loginForm');
-                const emailInput = document.getElementById('email');
+                const emailOrPhoneInput = document.getElementById('email_or_phone');
                 const rememberMeClientCheckbox = document.getElementById('rememberMe');
 
-                // Check if email is stored in localStorage and set it
-                const storedClientEmail = localStorage.getItem('rememberedClientEmail');
-                if (storedClientEmail) {
-                    emailInput.value = storedClientEmail;
+                // Check if email or phone number is stored in localStorage and set it
+                const storedClientEmailPhoneNumber = localStorage.getItem('rememberedClientEmailPhone');
+                if (storedClientEmailPhoneNumber) {
+                    emailOrPhoneInput.value = storedClientEmailPhoneNumber;
                     rememberMeClientCheckbox.checked = true;
                 }
 
                 // Handle form submission
                 form.addEventListener('submit', function(e) {
                     if (rememberMeClientCheckbox.checked) {
-                        localStorage.setItem('rememberedClientEmail', emailInput.value);
+                        localStorage.setItem('rememberedClientEmailPhone', emailOrPhoneInput.value);
                     } else {
-                        localStorage.removeItem('rememberedClientEmail');
+                        localStorage.removeItem('rememberedClientEmailPhone');
                     }
                 });
 
                 // Handle checkbox change
                 rememberMeClientCheckbox.addEventListener('change', function() {
                     if (!this.checked) {
-                        localStorage.removeItem('rememberedClientEmail');
+                        localStorage.removeItem('rememberedClientEmailPhone');
                     }
                 });
             });

@@ -10,6 +10,7 @@ urlpatterns = [
     # path('update_medical_questionnaire/', update_medical_questionnaire, name='update_medical_questionnaire'),
     path('login/', client_login, name='client_login'),
     path('register/', client_register, name='client_register'),
+    path('verify-phone/<str:phone_number>/', verify_phone, name='client_verify_phone'),
     path('verify-email/<str:token>/', verify_email, name='client_verify_email'),
     path('forgot-password/', client_forgot_password, name='client_forgot_password'),
     path('reset-password/<str:token>/', client_reset_password, name='client_reset_password'),

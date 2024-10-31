@@ -1,3 +1,5 @@
+import clicksend_client
+from clicksend_client.rest import ApiException
 from django.contrib import messages
 from django.contrib.auth import logout, authenticate, login
 from django.contrib.auth.decorators import login_required
@@ -318,20 +320,30 @@ def client_login(request):
         return redirect('client_dashboard')
 
     if request.method == 'POST':
-        email = request.POST.get('email')
+        identifier = request.POST.get('email_or_phone')
         password = request.POST.get('password')
 
-        # Authenticate the user
-        user = authenticate(request, email=email, password=password)
+        try:
+            if '@' in identifier:
+                user = User.objects.get(email=identifier)
+                if not user.email_verified:
+                    messages.error(request, 'Please verify your email first.')
+                    return render(request, 'client_login.html')
+            else:
+                user = User.objects.get(phone_number=identifier)
+                if not user.phone_verified:
+                    messages.error(request, 'Please verify your phone number first.')
+                    return render(request, 'client_login.html')
 
-        if user is not None:
-            if user.email_verified:
+            # Authenticate the user
+            user = authenticate(request, username=user.phone_number, password=password)
+            if user:
                 login(request, user)
                 return redirect('client_dashboard')
             else:
-                messages.error(request, 'Please verify your email before logging in.')
-        else:
-            messages.error(request, 'Invalid username or password.')
+                messages.error(request, 'Invalid credentials.')
+        except User.DoesNotExist:
+            messages.error(request, 'User not found.')
 
     return render(request, 'client_login.html')
 
@@ -368,75 +380,211 @@ def client_register(request):
         password = request.POST.get('password')
         confirm_password = request.POST.get('confirm_password')
 
-        # # Validate password
-        # password_errors = validate_password(password)
-        # if password_errors:
-        #     for error in password_errors:
-        #         messages.error(request, error)
-        #     return redirect('client_register')
+        # Validate required fields first
+        if not (email or phone_number):
+            messages.error(request, 'Either email or phone number is required.')
+            return render(request, 'client_register.html', {'post_data': request.POST})
 
         # Check if passwords match
         if password != confirm_password:
             messages.error(request, 'Passwords do not match.')
             return render(request, 'client_register.html', {'post_data': request.POST})
 
-        # Check if the email is already taken
-        if User.objects.filter(email=email).exists():
-            messages.error(request, 'Email is already registered.')
+        # Handle existing email cases
+        if email:
+            existing_user = User.objects.filter(email=email).first()
+            if existing_user:
+                if existing_user.email_verified:
+                    messages.error(request, 'Email already registered.')
+                    return render(request, 'client_register.html', {'post_data': request.POST})
+                else:
+                    # Email exists but not verified - update user details and resend verification
+                    try:
+                        existing_user.first_name = first_name
+                        existing_user.last_name = last_name
+                        existing_user.phone_number = phone_number
+                        existing_user.sex = sex
+                        existing_user.current_address = current_address
+                        existing_user.birthday = birthday
+                        existing_user.age = age
+                        existing_user.set_password(password)
+                        existing_user.generate_email_verification_token()
+                        existing_user.save()
+
+                        # Send new verification email
+                        verification_link = request.build_absolute_uri(
+                            reverse('client_verify_email', args=[existing_user.email_verification_token])
+                        )
+                        html_message = render_to_string('email_verification_template.html', {
+                            'user': existing_user,
+                            'verification_link': verification_link,
+                        })
+                        plain_message = strip_tags(html_message)
+
+                        send_mail(
+                            subject='Verify Your Email - Jaylon Dental Clinic',
+                            message=plain_message,
+                            from_email=settings.EMAIL_HOST_USER,
+                            recipient_list=[existing_user.email],
+                            html_message=html_message,
+                            fail_silently=False,
+                        )
+                        messages.success(request, 'A new verification email has been sent. Please check your email.')
+                        return redirect('client_login')
+                    except Exception as e:
+                        messages.error(request, 'Failed to send verification email. Please try again.')
+                        return render(request, 'client_register.html', {'post_data': request.POST})
+
+        # Handle existing phone number cases
+        if phone_number:
+            existing_user = User.objects.filter(phone_number=phone_number).first()
+            if existing_user:
+                if existing_user.phone_verified:
+                    messages.error(request, 'Phone number already registered.')
+                    return render(request, 'client_register.html', {'post_data': request.POST})
+                else:
+                    # Phone exists but not verified - update user details and resend verification
+                    try:
+                        existing_user.first_name = first_name
+                        existing_user.last_name = last_name
+                        existing_user.email = email
+                        existing_user.sex = sex
+                        existing_user.current_address = current_address
+                        existing_user.birthday = birthday
+                        existing_user.age = age
+                        existing_user.set_password(password)
+                        existing_user.generate_phone_verification_code()
+                        existing_user.save()
+
+                        # Send new SMS verification
+                        url = 'https://api.semaphore.co/api/v4/messages'
+                        payload = {
+                            'apikey': settings.SEMAPHORE_API_KEY,
+                            'number': phone_number,
+                            'message': f'Your verification code is: {existing_user.phone_verification_code}',
+                            'sendername': settings.SEMAPHORE_SENDER_NAME
+                        }
+                        response = requests.post(url, data=payload)
+
+                        if response.status_code == 200:
+                            messages.success(request, 'A new verification code has been sent to your phone.')
+                            return redirect('client_verify_phone', phone_number=phone_number)
+                        else:
+                            messages.error(request, 'Failed to send SMS verification. Please try again.')
+                            return render(request, 'client_register.html', {'post_data': request.POST})
+                    except Exception as e:
+                        messages.error(request, 'Failed to send verification code. Please try again.')
+                        return render(request, 'client_register.html', {'post_data': request.POST})
+
+        try:
+            # Create new user if no existing unverified account found
+            user = User(
+                first_name=first_name,
+                last_name=last_name,
+                email=email,
+                phone_number=phone_number,
+                sex=sex,
+                current_address=current_address,
+                birthday=birthday,
+                age=age,
+            )
+            user.set_password(password)
+
+            # Handle email verification for new user
+            if email:
+                user.generate_email_verification_token()
+                user.save()
+
+                try:
+                    verification_link = request.build_absolute_uri(
+                        reverse('client_verify_email', args=[user.email_verification_token])
+                    )
+                    html_message = render_to_string('email_verification_template.html', {
+                        'user': user,
+                        'verification_link': verification_link,
+                    })
+                    plain_message = strip_tags(html_message)
+
+                    send_mail(
+                        subject='Verify Your Email - Jaylon Dental Clinic',
+                        message=plain_message,
+                        from_email=settings.EMAIL_HOST_USER,
+                        recipient_list=[user.email],
+                        html_message=html_message,
+                        fail_silently=False,
+                    )
+                    messages.success(request,
+                                     'Registration successful. Please check your email to verify your account.')
+                    return redirect('client_login')
+                except Exception as e:
+                    user.delete()
+                    messages.error(request, 'Failed to send verification email. Please try again.')
+                    return render(request, 'client_register.html', {'post_data': request.POST})
+
+            # Handle phone verification for new user
+            else:
+                user.generate_phone_verification_code()
+                user.save()
+
+                try:
+                    url = 'https://api.semaphore.co/api/v4/messages'
+                    payload = {
+                        'apikey': settings.SEMAPHORE_API_KEY,
+                        'number': phone_number,
+                        'message': f'Your verification code is: {user.phone_verification_code}',
+                        'sendername': settings.SEMAPHORE_SENDER_NAME
+                    }
+                    response = requests.post(url, data=payload)
+
+                    if response.status_code == 200:
+                        messages.success(request, 'Verification code sent to your phone.')
+                        return redirect('client_verify_phone', phone_number=phone_number)
+                    else:
+                        user.delete()
+                        messages.error(request, 'Failed to send SMS verification. Please try again.')
+                        return render(request, 'client_register.html', {'post_data': request.POST})
+                except Exception as e:
+                    user.delete()
+                    messages.error(request, 'Failed to send SMS verification. Please try again.')
+                    return render(request, 'client_register.html', {'post_data': request.POST})
+
+        except Exception as e:
+            messages.error(request, 'Registration failed. Please try again.')
             return render(request, 'client_register.html', {'post_data': request.POST})
-
-        # Create a new user if email is unique
-        user = User(
-            first_name=first_name,
-            last_name=last_name,
-            email=email,
-            phone_number=phone_number,
-            sex=sex,
-            current_address=current_address,
-            birthday=birthday,
-            age=age,
-        )
-        user.set_password(password)
-        user.generate_verification_token()
-        user.save()
-
-        # Send verification email
-        verification_link = request.build_absolute_uri(
-            reverse('client_verify_email', args=[user.verification_token])
-        )
-
-        # Render the HTML template
-        html_message = render_to_string('email_verification_template.html', {
-            'user': user,
-            'verification_link': verification_link,
-        })
-
-        # Create a plain text version of the HTML email
-        plain_message = strip_tags(html_message)
-
-        # Send the email
-        send_mail(
-            subject='Verify Your Email - Jaylon Dental Clinic',
-            message=plain_message,
-            from_email=settings.EMAIL_HOST_USER,
-            recipient_list=[user.email],
-            html_message=html_message,
-            fail_silently=False,
-        )
-
-        messages.success(request, 'Registration successful. Please check your email to verify your account.')
-        return redirect('client_login')
 
     return render(request, 'client_register.html')
 
 
+def verify_phone(request, phone_number):
+    if request.method == 'POST':
+        code = request.POST.get('verification_code')
+        try:
+            user = User.objects.get(phone_number=phone_number, phone_verification_code=code)
+
+            if user.phone_verification_code_created:
+                code_age = timezone.localtime(timezone.now()) - user.phone_verification_code_created
+                if code_age > timedelta(hours=24):
+                    messages.error(request, 'Code expired. Request new code.')
+                    return redirect('client_register')
+
+            user.phone_verified = True
+            user.phone_verification_code = None
+            user.phone_verification_code_created = None
+            user.save()
+            messages.success(request, 'Your phone number has been verified. You can now log in.')
+            return redirect('client_login')
+        except User.DoesNotExist:
+            messages.error(request, 'Invalid code.')
+    return render(request, 'verify_phone.html')
+
+
 def verify_email(request, token):
     try:
-        user = User.objects.get(verification_token=token)
+        user = User.objects.get(email_verification_token=token)
 
         # Check if the verification token has a creation time
-        if user.verification_token_created:
-            token_age = timezone.localtime(timezone.now()) - user.verification_token_created
+        if user.email_verification_token_created:
+            token_age = timezone.localtime(timezone.now()) - user.email_verification_token_created
             if token_age > timedelta(hours=24):
                 messages.error(request, 'Verification link has expired. Please request a new one.')
                 return redirect('client_register')
@@ -447,8 +595,8 @@ def verify_email(request, token):
 
         # If we get here, the token is valid
         user.email_verified = True
-        user.verification_token = None
-        user.verification_token_created = None
+        user.email_verification_token = None
+        user.email_verification_token_created = None
         user.save()
         messages.success(request, 'Your email has been verified. You can now log in.')
         return redirect('client_login')

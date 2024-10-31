@@ -124,22 +124,20 @@
                         </div>
                     </div>
                     <div class="mb-3">
-                        <label for="email" class="form-label"><i class="fa-light fa-envelope"></i> Email</label>
-                        <input type="email" class="form-control" id="email" name="email" value="{{ post_data.email }}" required>
+                        <label for="email" class="form-label"><i class="fa-light fa-envelope"></i> Email (Optional if phone number provided)</label>
+                        <input type="email" class="form-control" id="email" name="email" value="{{ post_data.email }}">
                     </div>
-                    <div class="row">
-                        <div class="col-md-6 mb-3">
-                            <label for="phone_number" class="form-label"><i class="fa-light fa-phone"></i> Phone Number</label>
-                            <input type="tel" class="form-control" id="phone_number" name="phone_number" value="{{ post_data.phone_number }}" required>
-                        </div>
-                        <div class="col-md-6 mb-3">
-                            <label for="sex" class="form-label"><i class="fa-light fa-venus-mars"></i> Sex</label>
-                            <select class="form-select" id="sex" name="sex" required>
-                                <option value="">Select</option>
-                                <option value="Male" {% if post_data.sex == 'Male' %}selected{% endif %}>Male</option>
-                                <option value="Female" {% if post_data.sex == 'Female' %}selected{% endif %}>Female</option>
-                            </select>
-                        </div>
+                    <div class="mb-3">
+                        <label for="phone_number" class="form-label"><i class="fa-light fa-phone"></i> Phone Number (Optional if email provided)</label>
+                        <input type="tel" class="form-control" id="phone_number" name="phone_number" pattern="[0-9]{11}" value="{{ post_data.phone_number }}">
+                    </div>
+                    <div class="mb-3">
+                        <label for="sex" class="form-label"><i class="fa-light fa-venus-mars"></i> Sex</label>
+                        <select class="form-select" id="sex" name="sex" required>
+                            <option value="">Select</option>
+                            <option value="Male" {% if post_data.sex == 'Male' %}selected{% endif %}>Male</option>
+                            <option value="Female" {% if post_data.sex == 'Female' %}selected{% endif %}>Female</option>
+                        </select>
                     </div>
                     <div class="mb-3">
                         <label for="current_address" class="form-label"><i class="fa-light fa-home"></i> Current Address</label>
@@ -230,6 +228,7 @@
                     {% endif %}
                 {% endfor %}
             {% endif %}
+
         </script>
         <script>
             const passwordInput = document.getElementById('password');
