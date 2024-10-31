@@ -320,12 +320,12 @@ def client_login(request):
         return redirect('client_dashboard')
 
     if request.method == 'POST':
-        identifier = request.POST.get('email_or_phone')
+        email_or_phone = request.POST.get('email_or_phone')
         password = request.POST.get('password')
 
         try:
-            if '@' in identifier:
-                user = User.objects.get(email=identifier)
+            if '@' in email_or_phone:
+                user = User.objects.get(email=email_or_phone)
                 if not user.email_verified:
                     messages.error(request, 'Please verify your email first.')
                     return render(request, 'client_login.html')
@@ -333,7 +333,7 @@ def client_login(request):
                 # Try to authenticate with the stored identifier
                 user = authenticate(request, username=user.identifier, password=password)
             else:
-                user = User.objects.get(phone_number=identifier)
+                user = User.objects.get(phone_number=email_or_phone)
                 if not user.phone_verified:
                     messages.error(request, 'Please verify your phone number first.')
                     return render(request, 'client_login.html')
