@@ -30,17 +30,19 @@ def user_login(request):
         email = request.POST.get('email')
         password = request.POST.get('password')
 
-        # Authenticate the user
-        user = authenticate(request, email=email, password=password)
+        # Try to find the user by email
+        user = User.objects.get(email=email)
 
-        if user is not None:
-            if user.is_superuser:  # Check if the user has admin privileges
-                login(request, user)
-                return redirect('dashboard')  # Redirect to the admin dashboard or desired page
-            else:
-                messages.error(request, 'You do not have permission to access this page.')
+        # Try to authenticate with the stored identifier
+        user = authenticate(request, username=user.identifier, password=password)
+
+        if user is not None and user.is_superuser:  # Check if the user has admin privileges
+            login(request, user)
+            return redirect('dashboard')
+        elif user is not None:
+            messages.error(request, 'You do not have permission to access this page.')
         else:
-            messages.error(request, 'Invalid username or password.')
+            messages.error(request, 'Invalid credentials.')
 
     return render(request, 'login.html')
 
@@ -428,7 +430,11 @@ def view_accounts(request):
     if not request.user.is_superuser:
         return redirect('login')
 
-    users = User.objects.filter(is_superuser=False, email_verified=True)  # Retrieve all user records
+    # Retrieve all user records
+    users = User.objects.filter(
+        Q(email_verified=True) | Q(phone_verified=True),
+        is_superuser=False
+    )
 
     if request.method == 'POST':
         first_name = request.POST.get('first_name')

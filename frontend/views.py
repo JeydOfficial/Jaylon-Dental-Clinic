@@ -329,14 +329,18 @@ def client_login(request):
                 if not user.email_verified:
                     messages.error(request, 'Please verify your email first.')
                     return render(request, 'client_login.html')
+
+                # Try to authenticate with the stored identifier
+                user = authenticate(request, username=user.identifier, password=password)
             else:
                 user = User.objects.get(phone_number=identifier)
                 if not user.phone_verified:
                     messages.error(request, 'Please verify your phone number first.')
                     return render(request, 'client_login.html')
 
-            # Authenticate the user
-            user = authenticate(request, username=user.email, password=password)
+                # Try to authenticate with the stored identifier
+                user = authenticate(request, username=user.identifier, password=password)
+
             if user:
                 login(request, user)
                 return redirect('client_dashboard')
@@ -546,7 +550,6 @@ def client_register(request):
             except Exception as e:
                 user.delete()
                 messages.error(request, 'Failed to send SMS verification. Please try again.')
-                return render(request, 'client_register.html', {'post_data': request.POST})
 
     return render(request, 'client_register.html')
 

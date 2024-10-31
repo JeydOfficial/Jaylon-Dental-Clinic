@@ -35,8 +35,9 @@ class CustomUserManager(BaseUserManager):
 
 class User(AbstractUser):
     username = None  # Remove the username field
-    email = models.EmailField(blank=True, null=True, unique=True)
+    email = models.EmailField(blank=True, null=True)
     phone_number = models.CharField(max_length=15, blank=True, null=True)
+    identifier = models.CharField(max_length=255, unique=True)
     sex = models.CharField(max_length=6, choices=[('Male', 'Male'), ('Female', 'Female')])
     current_address = models.TextField(blank=True)
     birthday = models.DateField(null=True, blank=True)
@@ -54,10 +55,15 @@ class User(AbstractUser):
     restriction_end_time = models.DateTimeField(null=True, blank=True)
     has_agreed_privacy_policy = models.BooleanField(default=False)
 
-    USERNAME_FIELD = 'email'
+    USERNAME_FIELD = 'identifier'
     REQUIRED_FIELDS = []
 
-    objects = CustomUserManager()  # Use the custom manager
+
+    def save(self, *args, **kwargs):
+        if not self.identifier:
+            # Set identifier based on what's available
+            self.identifier = self.email if self.email else self.phone_number
+        super().save(*args, **kwargs)
 
     def generate_phone_verification_code(self):
         self.phone_verification_code = get_random_string(length=6, allowed_chars='0123456789')
