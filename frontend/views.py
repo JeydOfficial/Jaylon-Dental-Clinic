@@ -1,3 +1,5 @@
+from urllib.parse import urlencode
+
 from django.contrib import messages
 from django.contrib.auth import logout, authenticate, login
 from django.contrib.auth.decorators import login_required
@@ -334,7 +336,7 @@ def client_login(request):
                     return render(request, 'client_login.html')
 
             # Authenticate the user
-            user = authenticate(request, username=user.phone_number, password=password)
+            user = authenticate(request, username=user.email, password=password)
             if user:
                 login(request, user)
                 return redirect('client_dashboard')
@@ -454,15 +456,15 @@ def client_register(request):
                         existing_user.generate_phone_verification_code()
                         existing_user.save()
 
-                        # Send new SMS verification
-                        url = 'https://api.semaphore.co/api/v4/messages'
                         payload = {
                             'apikey': settings.SEMAPHORE_API_KEY,
                             'number': phone_number,
                             'message': f'Your verification code is: {existing_user.phone_verification_code}',
                             'sendername': settings.SEMAPHORE_SENDER_NAME
                         }
-                        response = requests.post(url, data=payload)
+
+                        base_url = 'https://api.semaphore.co/api/v4/messages'
+                        response = requests.post(base_url, json=payload)
 
                         if response.status_code == 200:
                             messages.success(request, 'A new verification code has been sent to your phone.')
@@ -525,14 +527,15 @@ def client_register(request):
                 user.save()
 
                 try:
-                    url = 'https://api.semaphore.co/api/v4/messages'
                     payload = {
                         'apikey': settings.SEMAPHORE_API_KEY,
                         'number': phone_number,
                         'message': f'Your verification code is: {user.phone_verification_code}',
                         'sendername': settings.SEMAPHORE_SENDER_NAME
                     }
-                    response = requests.post(url, data=payload)
+
+                    base_url = 'https://api.semaphore.co/api/v4/messages'
+                    response = requests.post(base_url, json=payload)
 
                     if response.status_code == 200:
                         messages.success(request, 'Verification code sent to your phone.')
@@ -563,14 +566,29 @@ def verify_phone(request, phone_number):
                 code_age = timezone.localtime(timezone.now()) - user.phone_verification_code_created
                 if code_age > timedelta(hours=24):
                     messages.error(request, 'Code expired. Request new code.')
-                    return redirect('client_register')
+                    # Redirect based on whether this is for password reset or registration
+                    return redirect('client_forgot_password' if user.password_reset_token else 'client_register')
 
-            user.phone_verified = True
-            user.phone_verification_code = None
-            user.phone_verification_code_created = None
-            user.save()
-            messages.success(request, 'Your phone number has been verified. You can now log in.')
-            return redirect('client_login')
+            # Check if this is a password reset verification
+            if user.password_reset_token == 'pending':
+                # Generate the actual reset token
+                token = get_random_string(length=32)
+                user.password_reset_token = token
+                user.password_reset_token_created = timezone.localtime(timezone.now())
+                user.phone_verification_code = None
+                user.phone_verification_code_created = None
+                user.save()
+                return redirect('client_reset_password', token=token)
+
+            # Otherwise, this is a new user verification flow
+            else:
+                user.phone_verified = True
+                user.phone_verification_code = None
+                user.phone_verification_code_created = None
+                user.save()
+                messages.success(request, 'Your phone number has been verified. You can now log in.')
+                return redirect('client_login')
+
         except User.DoesNotExist:
             messages.error(request, 'Invalid code.')
     return render(request, 'verify_phone.html')
@@ -605,39 +623,68 @@ def verify_email(request, token):
 
 def client_forgot_password(request):
     if request.method == 'POST':
-        email = request.POST.get('email')
+        identifier = request.POST.get('email_or_phone')
         try:
-            user = User.objects.get(email=email, is_superuser=False)
-            # Generate a random token
-            token = get_random_string(length=32)
-            user.password_reset_token = token
-            user.password_reset_token_created = datetime.now()
-            user.save()
+            # Check if the identifier is an email
+            if '@' in identifier:
+                user = User.objects.get(email=identifier, is_superuser=False)
+                # Generate a random token
+                token = get_random_string(length=32)
+                user.password_reset_token = token
+                user.password_reset_token_created = datetime.now()
+                user.save()
 
-            # Send password reset email
-            reset_link = request.build_absolute_uri(
-                reverse('client_reset_password', args=[token])
-            )
+                # Send password reset email
+                reset_link = request.build_absolute_uri(
+                    reverse('client_reset_password', args=[token])
+                )
 
-            html_message = render_to_string('password_reset_email_template.html', {
-                'user': user,
-                'reset_link': reset_link,
-            })
-            plain_message = strip_tags(html_message)
+                html_message = render_to_string('password_reset_email_template.html', {
+                    'user': user,
+                    'reset_link': reset_link,
+                })
+                plain_message = strip_tags(html_message)
 
-            send_mail(
-                subject='Reset Your Password - Jaylon Dental Clinic',
-                message=plain_message,
-                from_email=settings.EMAIL_HOST_USER,
-                recipient_list=[user.email],
-                html_message=html_message,
-                fail_silently=False,
-            )
+                send_mail(
+                    subject='Reset Your Password - Jaylon Dental Clinic',
+                    message=plain_message,
+                    from_email=settings.EMAIL_HOST_USER,
+                    recipient_list=[user.email],
+                    html_message=html_message,
+                    fail_silently=False,
+                )
+                messages.success(request, 'Password reset instructions have been sent to your email.')
+                return redirect('client_login')
 
-            messages.success(request, 'Password reset instructions have been sent to your email.')
-            return redirect('client_login')
+            else:
+                # Handle phone number case
+                user = User.objects.get(phone_number=identifier, is_superuser=False)
+                # Generate verification code
+                user.generate_phone_verification_code()
+                # Set a temporary token to identify this as a password reset flow
+                user.password_reset_token = 'pending'
+                user.password_reset_token_created = timezone.localtime(timezone.now())
+                user.save()
+
+                # Send SMS with verification code
+                payload = {
+                    'apikey': settings.SEMAPHORE_API_KEY,
+                    'number': identifier,
+                    'message': f'Your password reset code is: {user.phone_verification_code}',
+                    'sendername': settings.SEMAPHORE_SENDER_NAME
+                }
+
+                response = requests.post('https://api.semaphore.co/api/v4/messages', json=payload)
+
+                if response.status_code == 200:
+                    messages.success(request, 'Password reset code has been sent to your phone.')
+                    return redirect('client_verify_phone', phone_number=identifier)
+                else:
+                    messages.error(request, 'Failed to send SMS verification. Please try again.')
+                    return redirect('client_forgot_password')
+
         except User.DoesNotExist:
-            messages.error(request, 'No user with that email address exists.')
+            messages.error(request, 'No user found with the provided email/phone number.')
 
     return render(request, 'client_forgot_password.html')
 

@@ -35,8 +35,8 @@ class CustomUserManager(BaseUserManager):
 
 class User(AbstractUser):
     username = None  # Remove the username field
-    email = models.EmailField(blank=True, null=True)
-    phone_number = models.CharField(max_length=15, blank=True, null=True, unique=True)
+    email = models.EmailField(blank=True, null=True, unique=True)
+    phone_number = models.CharField(max_length=15, blank=True, null=True)
     sex = models.CharField(max_length=6, choices=[('Male', 'Male'), ('Female', 'Female')])
     current_address = models.TextField(blank=True)
     birthday = models.DateField(null=True, blank=True)
@@ -54,7 +54,7 @@ class User(AbstractUser):
     restriction_end_time = models.DateTimeField(null=True, blank=True)
     has_agreed_privacy_policy = models.BooleanField(default=False)
 
-    USERNAME_FIELD = 'phone_number'
+    USERNAME_FIELD = 'email'
     REQUIRED_FIELDS = []
 
     objects = CustomUserManager()  # Use the custom manager
