@@ -1,5 +1,3 @@
-import clicksend_client
-from clicksend_client.rest import ApiException
 from django.contrib import messages
 from django.contrib.auth import logout, authenticate, login
 from django.contrib.auth.decorators import login_required
