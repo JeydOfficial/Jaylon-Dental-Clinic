@@ -476,82 +476,77 @@ def client_register(request):
                         messages.error(request, 'Failed to send verification code. Please try again.')
                         return render(request, 'client_register.html', {'post_data': request.POST})
 
-        try:
-            # Create new user if no existing unverified account found
-            user = User(
-                first_name=first_name,
-                last_name=last_name,
-                email=email,
-                phone_number=phone_number,
-                sex=sex,
-                current_address=current_address,
-                birthday=birthday,
-                age=age,
-            )
-            user.set_password(password)
+        # Create new user if no existing unverified account found
+        user = User(
+            first_name=first_name,
+            last_name=last_name,
+            email=email,
+            phone_number=phone_number,
+            sex=sex,
+            current_address=current_address,
+            birthday=birthday,
+            age=age,
+        )
+        user.set_password(password)
 
-            # Handle email verification for new user
-            if email:
-                user.generate_email_verification_token()
-                user.save()
+        # Handle email verification for new user
+        if email:
+            user.generate_email_verification_token()
+            user.save()
 
-                try:
-                    verification_link = request.build_absolute_uri(
-                        reverse('client_verify_email', args=[user.email_verification_token])
-                    )
-                    html_message = render_to_string('email_verification_template.html', {
-                        'user': user,
-                        'verification_link': verification_link,
-                    })
-                    plain_message = strip_tags(html_message)
+            try:
+                verification_link = request.build_absolute_uri(
+                    reverse('client_verify_email', args=[user.email_verification_token])
+                )
+                html_message = render_to_string('email_verification_template.html', {
+                    'user': user,
+                    'verification_link': verification_link,
+                })
+                plain_message = strip_tags(html_message)
 
-                    send_mail(
-                        subject='Verify Your Email - Jaylon Dental Clinic',
-                        message=plain_message,
-                        from_email=settings.EMAIL_HOST_USER,
-                        recipient_list=[user.email],
-                        html_message=html_message,
-                        fail_silently=False,
-                    )
-                    messages.success(request,
-                                     'Registration successful. Please check your email to verify your account.')
-                    return redirect('client_login')
-                except Exception as e:
-                    user.delete()
-                    messages.error(request, 'Failed to send verification email. Please try again.')
-                    return render(request, 'client_register.html', {'post_data': request.POST})
+                send_mail(
+                    subject='Verify Your Email - Jaylon Dental Clinic',
+                    message=plain_message,
+                    from_email=settings.EMAIL_HOST_USER,
+                    recipient_list=[user.email],
+                    html_message=html_message,
+                    fail_silently=False,
+                )
+                messages.success(request,
+                                 'Registration successful. Please check your email to verify your account.')
+                return redirect('client_login')
+            except Exception as e:
+                user.delete()
+                messages.error(request, 'Failed to send verification email. Please try again.')
+                return render(request, 'client_register.html', {'post_data': request.POST})
 
-            # Handle phone verification for new user
-            else:
-                user.generate_phone_verification_code()
-                user.save()
+        # Handle phone verification for new user
+        else:
+            user.generate_phone_verification_code()
+            user.save()
 
-                try:
-                    payload = {
-                        'apikey': settings.SEMAPHORE_API_KEY,
-                        'number': phone_number,
-                        'message': f'Your verification code is: {user.phone_verification_code}',
-                        'sendername': settings.SEMAPHORE_SENDER_NAME
-                    }
+            try:
+                payload = {
+                    'apikey': settings.SEMAPHORE_API_KEY,
+                    'number': phone_number,
+                    'message': f'Your verification code is: {user.phone_verification_code}',
+                    'sendername': settings.SEMAPHORE_SENDER_NAME
+                }
 
-                    base_url = 'https://api.semaphore.co/api/v4/messages'
-                    response = requests.post(base_url, json=payload)
+                base_url = 'https://api.semaphore.co/api/v4/messages'
+                response = requests.post(base_url, json=payload)
 
-                    if response.status_code == 200:
-                        messages.success(request, 'Verification code sent to your phone.')
-                        return redirect('client_verify_phone', phone_number=phone_number)
-                    else:
-                        user.delete()
-                        messages.error(request, 'Failed to send SMS verification. Please try again.')
-                        return render(request, 'client_register.html', {'post_data': request.POST})
-                except Exception as e:
+                if response.status_code == 200:
+                    messages.success(request, 'Verification code sent to your phone.')
+                    return redirect('client_verify_phone', phone_number=phone_number)
+                else:
                     user.delete()
                     messages.error(request, 'Failed to send SMS verification. Please try again.')
                     return render(request, 'client_register.html', {'post_data': request.POST})
-
-        except Exception as e:
-            messages.error(request, 'Registration failed. Please try again.')
-            return render(request, 'client_register.html', {'post_data': request.POST})
+            except Exception as e:
+                user.delete()
+                messages.error(request, 'Failed to send SMS verification. Please try again.')
+                return render(request, 'client_register.html', {'post_data': request.POST})
 
     return render(request, 'client_register.html')
 
