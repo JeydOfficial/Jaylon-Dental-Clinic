@@ -389,7 +389,7 @@
                                 <div class="card-body d-flex flex-column">
                                     <div class="d-flex justify-content-between mb-2">
                                         <h5 class="lobster-font card-title cl-dark-green">{{ service.title }}</h5>
-                                        <button type="button" class="btn btn-primary btn-sm"
+                                        <button type="button" class="btn btn-success btn-sm"
                                                 data-bs-toggle="modal"
                                                 data-bs-target="#serviceDetailsModal{{ service.id }}"
                                                 style="padding: 2px 10px; font-size: 12px;">Details
@@ -412,7 +412,7 @@
                  aria-labelledby="serviceDetailsModalLabel{{ service.id }}" aria-hidden="true">
                 <div class="modal-dialog modal-dialog-centered">
                     <div class="modal-content">
-                        <div class="modal-header bg-light">
+                        <div class="modal-header customized-bg">
                             <h5 class="modal-title lobster-font cl-dark-green" id="serviceDetailsModalLabel{{ service.id }}">
                                 <i class="fa-light fa-tooth" style="animation: iconGreenAnimation 5s infinite alternate"></i>
                                 {{ service.title }} Details
@@ -427,7 +427,8 @@
                                 </div>
                                 <div class="col-12">
                                     <div style="max-height: 300px; overflow-y: auto;">
-                                        <p style="white-space: pre-line">{{ service.details }}</p>
+                                        <p class="cl-dark-green"
+                                                style="white-space: pre-line">{{ service.details }}</p>
                                     </div>
                                 </div>
                             </div>
