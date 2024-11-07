@@ -1,8 +1,8 @@
-from django.db import models
 from django.contrib.auth.models import AbstractUser
 from django.contrib.auth.models import BaseUserManager
-from django.utils.crypto import get_random_string
+from django.db import models
 from django.utils import timezone
+from django.utils.crypto import get_random_string
 
 
 class CustomUserManager(BaseUserManager):
@@ -58,11 +58,15 @@ class User(AbstractUser):
     USERNAME_FIELD = 'identifier'
     REQUIRED_FIELDS = []
 
-
     def save(self, *args, **kwargs):
+        # Set identifier based on what's available, ensuring it's always the login credential
         if not self.identifier:
-            # Set identifier based on what's available
-            self.identifier = self.email if self.email else self.phone_number
+            if self.email:
+                self.identifier = self.email
+            elif self.phone_number:
+                self.identifier = self.phone_number
+            else:
+                raise ValueError('Either email or phone number must be provided')
         super().save(*args, **kwargs)
 
     def generate_phone_verification_code(self):

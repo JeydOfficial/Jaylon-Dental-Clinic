@@ -330,19 +330,17 @@ def client_login(request):
                     messages.error(request, 'Please verify your email first.')
                     return render(request, 'client_login.html')
 
-                # Try to authenticate with the stored identifier
-                user = authenticate(request, username=user.identifier, password=password)
             else:
                 user = User.objects.get(phone_number=email_or_phone)
                 if not user.phone_verified:
                     messages.error(request, 'Please verify your phone number first.')
                     return render(request, 'client_login.html')
 
-                # Try to authenticate with the stored identifier
-                user = authenticate(request, username=user.identifier, password=password)
+            # Try to authenticate with the stored identifier
+            authenticated_user = authenticate(request, username=user.identifier, password=password)
 
-            if user:
-                login(request, user)
+            if authenticated_user is not None:
+                login(request, authenticated_user)
                 return redirect('client_dashboard')
             else:
                 messages.error(request, 'Invalid credentials.')
@@ -491,6 +489,8 @@ def client_register(request):
             birthday=birthday,
             age=age,
         )
+        # Set identifier based on what's provided
+        user.identifier = email if email else phone_number
         user.set_password(password)
 
         # Handle email verification for new user

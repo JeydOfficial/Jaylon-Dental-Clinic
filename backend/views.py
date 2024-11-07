@@ -1,5 +1,6 @@
 import re
 
+import requests
 from django.conf import settings
 from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
@@ -634,7 +635,14 @@ def update_appointment_status(request, appointment_id):
         appointment.status = status
         appointment.save()
 
+        # Format date and time for SMS
+        formatted_date = appointment.date.strftime('%B %d, %Y')
+        formatted_start_time = appointment.start_time.strftime('%I:%M %p')
+        formatted_end_time = appointment.end_time.strftime('%I:%M %p')
+
         if appointment.status == 'Approved':
+
+            # Send email message
             appointment_details_link = request.build_absolute_uri(
                 reverse('client_dashboard')
             )
@@ -655,6 +663,35 @@ def update_appointment_status(request, appointment_id):
                 fail_silently=False,
             )
 
+            if appointment.user.phone_number:
+                # Create SMS message matching email content
+                sms_message = (
+                    f"Dear {appointment.user.first_name},\n\n"
+                    f"Your appointment at Jaylon Dental Clinic has been APPROVED.\n\n"
+                    f"Service: {appointment.service.title}\n"
+                    f"Date: {formatted_date}\n"
+                    f"Time: {formatted_start_time} - {formatted_end_time}\n\n"
+                    f"We look forward to seeing you. For questions or rescheduling, "
+                    f"please contact us.\n\n"
+                    f"View details at: {appointment_details_link}\n\n"
+                    f"Thank you for choosing Jaylon Dental Clinic."
+                )
+
+                # Send SMS
+                payload = {
+                    'apikey': settings.SEMAPHORE_API_KEY,
+                    'number': appointment.user.phone_number,
+                    'message': sms_message,
+                    'sendername': settings.SEMAPHORE_SENDER_NAME
+                }
+
+                base_url = 'https://api.semaphore.co/api/v4/messages'
+                response = requests.post(base_url, json=payload)
+
+                if response.status_code != 200:
+                    messages.error(request, 'Failed to send SMS notification.')
+
+
         elif appointment.status == 'Cancelled':
 
             # Render the HTML template
@@ -671,6 +708,35 @@ def update_appointment_status(request, appointment_id):
                 html_message=html_message,
                 fail_silently=False,
             )
+
+            if appointment.user.phone_number:
+                # Create SMS message matching email content
+                sms_message = (
+                    f"Dear {appointment.user.first_name},\n\n"
+                    f"We regret to inform you that your appointment at Jaylon Dental Clinic "
+                    f"has been CANCELLED.\n\n"
+                    f"Service: {appointment.service.title}\n"
+                    f"Date: {formatted_date}\n"
+                    f"Time: {formatted_start_time} - {formatted_end_time}\n\n"
+                    f"We apologize for any inconvenience. For questions, please contact us.\n\n"
+                    f"Thank you for your understanding.\n"
+                    f"- Jaylon Dental Clinic"
+                )
+
+                # Send SMS
+                payload = {
+                    'apikey': settings.SEMAPHORE_API_KEY,
+                    'number': appointment.user.phone_number,
+                    'message': sms_message,
+                    'sendername': settings.SEMAPHORE_SENDER_NAME
+                }
+
+                base_url = 'https://api.semaphore.co/api/v4/messages'
+                response = requests.post(base_url, json=payload)
+
+                if response.status_code != 200:
+                    messages.error(request, 'Failed to send SMS notification.')
+
         messages.success(request, 'Appointment status updated successfully.')
 
     # Get the URL of the referring page
