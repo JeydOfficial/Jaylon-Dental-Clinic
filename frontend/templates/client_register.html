@@ -78,6 +78,11 @@
             input::-ms-clear {
                 display: none;
             }
+            /* Make age input read-only visually distinct */
+            input[readonly] {
+                background-color: #e9ecef;
+                cursor: not-allowed;
+            }
 
             /* KEYFRAMES */
             @keyframes colorAnimation {
@@ -150,7 +155,7 @@
                         </div>
                         <div class="col-md-6 mb-3">
                             <label for="age" class="form-label"><i class="fa-light fa-user-clock"></i> Age</label>
-                            <input type="number" class="form-control" id="age" name="age" value="{{ post_data.age }}" required>
+                            <input type="number" class="form-control" id="age" name="age" placeholder="Auto-calculated from birthday" value="{{ post_data.age }}" readonly>
                         </div>
                     </div>
                     <div class="mb-3">
@@ -264,5 +269,53 @@
                 }
             });
         </script>
-    </body>
+
+        <script>
+                document.addEventListener('DOMContentLoaded', function() {
+                    const birthdayInput = document.getElementById('birthday');
+                    const ageInput = document.getElementById('age');
+
+                    // Function to calculate age
+                    function calculateAge(birthDate) {
+                        const today = new Date();
+                        const birth = new Date(birthDate);
+
+                        // Calculate age
+                        let age = today.getFullYear() - birth.getFullYear();
+                        const monthDiff = today.getMonth() - birth.getMonth();
+
+                        // Adjust age if birthday hasn't occurred this year
+                        if (monthDiff < 0 || (monthDiff === 0 && today.getDate() < birth.getDate())) {
+                            age--;
+                        }
+
+                        return age;
+                    }
+
+                    // Function to update age
+                    function updateAge() {
+                        if (birthdayInput.value) {
+                            const age = calculateAge(birthdayInput.value);
+                            if (age >= 0) {
+                                ageInput.value = age;
+                            } else {
+                                ageInput.value = '';
+                                birthdayInput.value = '';
+                                toastr.error('Please select a valid birth date');
+                            }
+                        } else {
+                            ageInput.value = '';
+                        }
+                    }
+
+                    // Calculate age on page load if birthday is set
+                    if (birthdayInput.value) {
+                        updateAge();
+                    }
+
+                    // Add event listener for birthday changes
+                    birthdayInput.addEventListener('change', updateAge);
+                });
+            </script>
+        </body>
 </html>
