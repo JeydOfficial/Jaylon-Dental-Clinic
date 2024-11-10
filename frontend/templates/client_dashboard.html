@@ -436,9 +436,9 @@
                                     <img src="{{ service.image.url }}" class="img-fluid rounded mb-3"
                                          alt="{{ service.title }}" style="width: 100%; height: 200px; object-fit: cover;">
                                 </div>
-                                <div class="col-12">
+                                <div class="col-12 cl-dark-green">
                                     <div style="max-height: 300px; overflow-y: auto;">
-                                        <p style="white-space: pre-line">{{ service.details }}</p>
+                                        <p style="white-space: pre-line;">{{ service.details }}</p>
                                     </div>
                                 </div>
                             </div>
@@ -533,23 +533,23 @@
 
             <div id="scrollspyContacts" class="mt-4" data-aos="fade-up">
                 <h3 class="lobster-font mb-4 cl-dark-green" data-aos="fade-right"><i class="fa-light fa-phone-volume" style="animation: iconGreenAnimation 5s infinite alternate"></i> Contact Us</h3>
-                <p class="lead" data-aos="fade-right">For appointments or inquiries, please fill out the form below, <br> and
+                <p class="lead cl-dark-green" data-aos="fade-right">For appointments or inquiries, please fill out the form below, <br> and
                 we will get back to you as soon as possible.</p>
                 <div class="row gy-5">
                     <div class="col-md-6" data-aos="fade-up">
                         <form method="post" id="contactForm">
                             {% csrf_token %}
                             <div class="mb-3">
-                                <label for="contactName" class="form-label">Name</label>
+                                <label for="contactName" class="form-label cl-dark-green">Name</label>
                                 <input type="text" class="form-control" id="contactName" name="name" required>
                             </div>
                             <div class="mb-3">
-                                <label for="contactEmail" class="form-label">Email</label>
+                                <label for="contactEmail" class="form-label cl-dark-green">Email</label>
                                 <input type="email" class="form-control" id="contactEmail" name="email" required>
                             </div>
                             <div class="mb-3">
-                                <label for="contactMessage" class="form-label">Message</label>
-                                <textarea class="form-control" id="contactMessage" rows="4" name="message" required></textarea>
+                                <label for="contactMessage" class="form-label cl-dark-green">Message</label>
+                                <textarea class="form-control cl-dark-green" id="contactMessage" rows="4" name="message" required></textarea>
                             </div>
                             <div class="d-grid">
                                 <button type="submit" class="btn btn-bg-dark-green" style="color: white;"><i class="fa-light fa-paper-plane"></i> Send Message
