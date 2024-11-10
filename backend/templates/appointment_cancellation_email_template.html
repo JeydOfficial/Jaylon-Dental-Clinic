@@ -17,11 +17,11 @@
         </style>
     </head>
     <body style="font-family: Arial, sans-serif; line-height: 1.6; color: #333; max-width: 600px; margin: 0 auto; padding: 20px;">
-        <div style="background-color: #0D6EFD; color: white; text-align: center; padding: 10px;">
+        <div style="background-color: red; color: white; text-align: center; padding: 10px; border-top-left-radius: 5px; border-top-right-radius: 5px;">
             <h1>Appointment Cancellation</h1>
         </div>
-        <div style="background-color: #f9f9f9; border: 1px solid #ddd; padding: 20px; border-radius: 5px;">
-            <p>Dear {{appointment.user.first_name}},</p>
+        <div style="background-color: #f9f9f9; border: 1px solid #ddd; padding: 20px; border-bottom-left-radius: 5px; border-bottom-right-radius: 5px;">
+            <p><strong>Dear {{appointment.user.first_name}},</strong></p>
             <p>We regret to inform you that your appointment at Jaylon Dental Clinic has been <strong>CANCELLED</strong>. The details of the cancelled appointment are as follows:</p>
             <table style="width: 100%; border-collapse: collapse; margin-top: 20px;">
                 <tr>
@@ -39,10 +39,12 @@
             </table>
             <p style="margin-top: 20px;">We apologize for any inconvenience this may cause. If you have any questions, please don't hesitate to contact us.</p>
             <p>Thank you for your understanding and continued trust in Jaylon Dental Clinic for your dental care needs.</p>
-            <a href="https://jaylondentalclinic.vercel.app" style="display: inline-block; background-color: #0D6EFD; color: white; padding: 10px 20px; text-decoration: none; border-radius: 5px; margin-top: 10px;">View Appointment Details</a>
+            <p style="text-align: center;">
+                <a href="https://jaylondentalclinic.vercel.app" style="display: inline-block; background-color: red; color: white; padding: 10px 20px; text-decoration: none; border-radius: 5px; margin-top: 10px;">View Appointment Details</a>
+            </p>
             <p style="margin-top: 20px;">If the button above doesn't work, you can also copy and paste the following link into your browser:</p>
             <p>https://jaylondentalclinic.vercel.app</p>
-            <p>Best regards,<br>The Jaylon Dental Clinic Team</p>
+            <p><strong>Best regards,<br>The Jaylon Dental Clinic Team</strong></p>
         </div>
     </body>
 </html>

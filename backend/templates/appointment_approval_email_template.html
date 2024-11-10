@@ -9,11 +9,11 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
     </head>
     <body style="font-family: Arial, sans-serif; line-height: 1.6; color: #333; max-width: 600px; margin: 0 auto; padding: 20px;">
-        <div style="background-color: #0D6EFD; color: white; text-align: center; padding: 10px;">
+        <div style="background-color: green; color: white; text-align: center; padding: 10px; border-top-left-radius: 5px; border-top-right-radius: 5px;">
             <h1>Appointment Approved - Jaylon Dental Clinic</h1>
         </div>
-        <div style="background-color: #f9f9f9; border: 1px solid #ddd; padding: 20px; border-radius: 5px;">
-            <p>Dear {{appointment.user.first_name}},</p>
+        <div style="background-color: #f9f9f9; border: 1px solid #ddd; padding: 20px; border-bottom-left-radius: 5px; border-bottom-right-radius: 5px;">
+            <p><strong>Dear {{appointment.user.first_name}},</strong></p>
             <p>We are pleased to inform you that your appointment at Jaylon Dental Clinic has been <strong>APPROVED</strong>. Here are the details of your scheduled appointment:</p>
             <table style="width: 100%; border-collapse: collapse; margin-top: 20px;">
                 <tr>
@@ -30,11 +30,13 @@
                 </tr>
             </table>
             <p style="margin-top: 20px;">We look forward to seeing you on the scheduled date. If you need to reschedule or have any questions, please contact us as soon as possible.</p>
-            <a href="{{appointment_details_link}}" style="display: inline-block; background-color: #0D6EFD; color: white; padding: 10px 20px; text-decoration: none; border-radius: 5px; margin-top: 20px;">View Appointment Details</a>
+            <p style="text-align: center">
+                <a href="{{appointment_details_link}}" style="display: inline-block; background-color: green; color: white; padding: 10px 20px; text-decoration: none; border-radius: 5px; margin-top: 20px;">View Appointment Details</a>
+            </p>
             <p style="margin-top: 20px;">If the button above doesn't work, you can also copy and paste the following link into your browser:</p>
             <p>{{appointment_details_link}}</p>
             <p>Thank you for choosing Jaylon Dental Clinic for your dental care needs.</p>
-            <p>Best regards,<br>The Jaylon Dental Clinic Team</p>
+            <p><strong>Best regards,<br>The Jaylon Dental Clinic Team</strong></p>
         </div>
     </body>
 </html>

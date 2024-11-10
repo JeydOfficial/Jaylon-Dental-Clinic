@@ -69,7 +69,7 @@
                 transition: color 0.3s ease;
             }
             .nav-link:hover {
-                color: #235347;
+                color: green !important;
             }
             h1, h2, h3, h4, h5, h6 {
                 font-weight: 600;
@@ -282,12 +282,12 @@
                                 <input type="text" class="form-control" id="current_address" name="current_address" value="{{ user.current_address }}" required>
                             </div>
                             <div class="mb-3">
-                                <label for="birthday" class="form-label">Birthday</label>
+                                <label for="birthday" class="form-label">Date of Birth</label>
                                 <input type="date" class="form-control" id="birthday" name="birthday" value="{{ user.birthday|date:'Y-m-d' }}" required>
                             </div>
                             <div class="mb-3">
                                 <label for="age" class="form-label">Age</label>
-                                <input type="number" class="form-control" id="age" name="age" placeholder="Auto-calculated from birthday" value="{{ user.age }}" readonly>
+                                <input type="number" class="form-control" id="age" name="age" placeholder="Enter your birth date first." value="{{ user.age }}" readonly>
                             </div>
                             <div class="mb-3" style="margin-top: 2rem;">
                                 <strong>Password Suggestions    (Optional):</strong>
@@ -322,7 +322,7 @@
                     </div>
                 </div>
 
-                <div class="col-md-6">
+                <div class="col-md-6" id="scrollspyMedQue">
                     <div class="bg-white p-4 shadow rounded-lg border-top border-success border-5" data-aos="fade-up">
                         <h4 class="lobster-font mb-4 text-success"><i class="fa-light fa-files-medical"></i> Medical-Dental Questionnaire</h4>
                         <p class="text-muted mb-4">Your safety is our top priority, and knowing your medical history helps
@@ -491,7 +491,7 @@
                         } else {
                             ageInput.value = '';
                             birthdayInput.value = '';
-                            toastr.error('Please select a valid birth date');
+                            toastr.error('Please select a valid birth date!');
                         }
                     } else {
                         ageInput.value = '';

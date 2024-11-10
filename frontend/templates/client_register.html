@@ -150,12 +150,12 @@
                     </div>
                     <div class="row">
                         <div class="col-md-6 mb-3">
-                            <label for="birthday" class="form-label"><i class="fa-light fa-birthday-cake"></i> Birthday</label>
+                            <label for="birthday" class="form-label"><i class="fa-light fa-birthday-cake"></i> Date of Birth</label>
                             <input type="date" class="form-control" id="birthday" name="birthday" value="{{ post_data.birthday }}" required>
                         </div>
                         <div class="col-md-6 mb-3">
                             <label for="age" class="form-label"><i class="fa-light fa-user-clock"></i> Age</label>
-                            <input type="number" class="form-control" id="age" name="age" placeholder="Auto-calculated from birthday" value="{{ post_data.age }}" readonly>
+                            <input type="number" class="form-control" id="age" name="age" placeholder="Enter your birth date first." value="{{ post_data.age }}" readonly>
                         </div>
                     </div>
                     <div class="mb-3">
@@ -301,7 +301,7 @@
                             } else {
                                 ageInput.value = '';
                                 birthdayInput.value = '';
-                                toastr.error('Please select a valid birth date');
+                                toastr.error('Please select a valid birth date!');
                             }
                         } else {
                             ageInput.value = '';

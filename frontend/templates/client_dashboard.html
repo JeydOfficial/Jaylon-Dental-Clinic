@@ -82,18 +82,29 @@
                 font-weight: 600;
                 font-size: 1.5rem;
             }
+            .navbar .active {
+                background-color: green !important;
+                color: white !important;
+            }
+            .navbar .active {
+                background-color: green !important;
+                color: white !important;
+            }
+            .navbar .active:hover {
+                color: white! important;
+            }
             .nav-link {
                 font-weight: 400;
                 transition: color 0.3s ease;
             }
             .nav-link:hover {
-                color: #235347;
+                color: green !important;
             }
             h1, h2, h3, h4, h5, h6 {
                 font-weight: 600;
             }
             #scrollspyHome, #scrollspyServices, #scrollspyGallery, #scrollspyContacts, #scrollspyPrivacy {
-                padding: 3rem;
+                padding:3rem;
                 background-color: #daf1de;
                 color: black;
                 border-radius: 15px;
@@ -288,9 +299,9 @@
                             <p class="cl-dark-green"><small>Read the <a href="#" data-bs-toggle="modal" data-bs-target="#privacyModal" class="text-decoration-none">
                                 policy and agreement</a> carefully before booking to avoid mistakes.
                                 Completing the  <a
-                                    href="{% url 'client_profile' %}" class="text-decoration-none cl-dark-green">medical-dental questionnaire</a>
+                                    href="{% url 'client_profile' %}#scrollspyMedQue" class="text-decoration-none cl-dark-green">medical-dental questionnaire</a>
                                 is strictly required for your safety and to ensure the best care before your appointment.
-                                Click Here --> <a href="{% url 'client_profile' %}" class="text-decoration-none">Medical Questionnaire</a>.
+                                Click Here --> <a href="{% url 'client_profile' %}#scrollspyMedQue" class="text-decoration-none">Medical Questionnaire</a>.
                             </small></p>
                             <form method="post" id="appointment-form">
                                 {% csrf_token %}
@@ -839,7 +850,7 @@
         <script src="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.js"></script>
         <script>
             AOS.init({
-                duration: 1000,
+                duration: 1500,
                 offset: 100,
             });
         </script>
