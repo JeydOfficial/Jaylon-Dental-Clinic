@@ -196,6 +196,26 @@
                         color: #2e3b24;
                 }
             }
+            @keyframes customAnimation {
+                0% {
+                    color: #032f30;
+                }
+                20% {
+                    color: #oa7075;
+                }
+                40% {
+                    color: #0c969c;
+                }
+                60% {
+                    color: #6ba3be;
+                }
+                80% {
+                    color: #274d60;
+                }
+                100% {
+                    color: #031716;
+                }
+            }
 
             /* MEDIA QUERIES */
             @media (max-width: 427px) {
@@ -237,8 +257,8 @@
 
         <nav id="navbar-example2" class="navbar navbar-expand-lg sticky-top px-3">
             <div class="container-fluid">
-                <a class="navbar-brand lobster-font" href="{% url 'client_dashboard' %}" style="animation: colorAnimation 5s infinite alternate; font-size: 26px;">
-                    <i class="fa-light fa-tooth mr-2" style="animation: colorAnimation 5s infinite alternate"></i>
+                <a class="navbar-brand lobster-font" href="{% url 'client_dashboard' %}" style="animation: customAnimation 5s infinite alternate; font-size: 26px;">
+                    <i class="fa-light fa-tooth mr-2" style="animation: customAnimation 5s infinite alternate"></i>
                     Jaylon Dental Clinic
                 </a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
@@ -299,9 +319,8 @@
                             <p class="cl-dark-green"><small>Read the <a href="#" data-bs-toggle="modal" data-bs-target="#privacyModal" class="text-decoration-none">
                                 policy and agreement</a> carefully before booking to avoid mistakes.
                                 Completing the  <a
-                                    href="{% url 'client_profile' %}#scrollspyMedQue" class="text-decoration-none cl-dark-green">medical-dental questionnaire</a>
+                                    href="{% url 'client_profile' %}#scrollspyMedQue" class="text-decoration-none">medical-dental questionnaire</a>
                                 is strictly required for your safety and to ensure the best care before your appointment.
-                                Click Here --> <a href="{% url 'client_profile' %}#scrollspyMedQue" class="text-decoration-none">Medical Questionnaire</a>.
                             </small></p>
                             <form method="post" id="appointment-form">
                                 {% csrf_token %}
@@ -373,7 +392,7 @@
                         <img src="{% static 'images/favicon.png' %}" alt="Jaylon Dental Clinic" class="logo">
                     </div>
                     <h1 class="lobster-font text-center mb-4 cl-dark-green">Welcome to Jaylon Dental Clinic!</h1>
-                    <p class="lead text-center">We're excited to help you achieve your perfect smile and boost your confidence.</p>
+                    <p class="lead text-center cl-dark-green">We're excited to help you achieve your perfect smile and boost your confidence.</p>
 <!--                    <p class="text-center">We believe every smile has a story worth telling. Trust us to help you achieve the radiant smile you've-->
 <!--                    always dreamed of!</p>-->
                     <div class="text-center">
