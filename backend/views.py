@@ -28,14 +28,11 @@ def user_login(request):
         return redirect('dashboard')  # Redirect to the dashboard if logged in
 
     if request.method == 'POST':
-        email = request.POST.get('email')
+        identifier = request.POST.get('identifier')
         password = request.POST.get('password')
 
-        # Try to find the user by email
-        user = User.objects.get(email=email)
-
         # Try to authenticate with the stored identifier
-        user = authenticate(request, username=user.identifier, password=password)
+        user = authenticate(request, username=identifier, password=password)
 
         if user is not None and user.is_superuser:  # Check if the user has admin privileges
             login(request, user)

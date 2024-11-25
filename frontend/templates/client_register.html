@@ -130,11 +130,11 @@
                     </div>
                     <div class="mb-3">
                         <label for="email" class="form-label"><i class="fa-light fa-envelope"></i> Email (Optional if phone number provided)</label>
-                        <input type="email" class="form-control" id="email" name="email" value="{{ post_data.email }}" autocomplete="username email">
+                        <input type="email" class="form-control" id="email" name="email" value="{{ post_data.email }}" autocomplete="email username">
                     </div>
                     <div class="mb-3">
                         <label for="phone_number" class="form-label"><i class="fa-light fa-phone"></i> Phone Number (Optional if email provided)</label>
-                        <input type="tel" class="form-control" id="phone_number" name="phone_number" pattern="[0-9]{11}" value="{{ post_data.phone_number }}" autocomplete="username tel">
+                        <input type="tel" class="form-control" id="phone_number" name="phone_number" pattern="[0-9]{11}" value="{{ post_data.phone_number }}" autocomplete="tel username">
                     </div>
                     <div class="mb-3">
                         <label for="sex" class="form-label"><i class="fa-light fa-venus-mars"></i> Sex</label>

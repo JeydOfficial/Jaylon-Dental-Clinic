@@ -132,12 +132,12 @@
                     {% csrf_token %}
 
                     <div class="form-floating">
-                        <input type="email" class="form-control" id="floatingInput" name="email" placeholder="name@example.com">
-                        <label for="floatingInput">Email</label>
+                        <input type="text" class="form-control" id="floatingInput" name="identifier">
+                        <label for="floatingInput">Email or Username</label>
                     </div>
 
                     <div class="form-floating position-relative">
-                        <input type="password" class="form-control" id="floatingPassword" name="password" placeholder="Password">
+                        <input type="password" class="form-control" id="floatingPassword" name="password">
                         <label for="floatingPassword">Password</label>
                         <button type="button" class="password-toggle-floating" id="passwordToggle">
                             <i class="fa-light fa-eye" id="passwordToggleIcon"></i>

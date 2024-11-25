@@ -6,31 +6,32 @@ from django.utils.crypto import get_random_string
 
 
 class CustomUserManager(BaseUserManager):
-    def create_user(self, email, password=None, **extra_fields):
+    def create_user(self, identifier, password=None, **extra_fields):
         """
-        Create and return a regular user with an email and password.
+        Create and return a regular user with an identifier and password.
         """
-        if not email:
-            raise ValueError('The Email field must be set')
-        email = self.normalize_email(email)
-        user = self.model(email=email, **extra_fields)
+        if not identifier:
+            raise ValueError('The identifier field must be set')
+
+        user = self.model(identifier=identifier, **extra_fields)
         user.set_password(password)
         user.save(using=self._db)
         return user
 
-    def create_superuser(self, email, password=None, **extra_fields):
+    def create_superuser(self, identifier, password=None, **extra_fields):
         """
-        Create and return a superuser with an email and password.
+        Create and return a superuser with an identifier and password.
         """
         extra_fields.setdefault('is_staff', True)
         extra_fields.setdefault('is_superuser', True)
+        extra_fields.setdefault('is_active', True)
 
         if extra_fields.get('is_staff') is not True:
             raise ValueError('Superuser must have is_staff=True.')
         if extra_fields.get('is_superuser') is not True:
             raise ValueError('Superuser must have is_superuser=True.')
 
-        return self.create_user(email, password, **extra_fields)
+        return self.create_user(identifier, password, **extra_fields)
 
 
 class User(AbstractUser):
@@ -54,6 +55,8 @@ class User(AbstractUser):
     is_restricted = models.BooleanField(default=False)
     restriction_end_time = models.DateTimeField(null=True, blank=True)
     has_agreed_privacy_policy = models.BooleanField(default=False)
+
+    objects = CustomUserManager()
 
     USERNAME_FIELD = 'identifier'
     REQUIRED_FIELDS = []
