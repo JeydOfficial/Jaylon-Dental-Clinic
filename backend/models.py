@@ -177,4 +177,4 @@ class MedicalQuestionnaire(models.Model):
                                          null=True, blank=True)
 
     def __str__(self):
-        return f"Medical Questionnaire for {self.first_name} {self.last_name}"
+        return f"Medical Questionnaire for {self.user.first_name} {self.user.last_name}"

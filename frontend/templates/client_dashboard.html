@@ -799,6 +799,51 @@
             </div>
         </div>
 
+        <!-- Medical Questionnaire Modal -->
+        <div id="medicalQuestionnaireModal" class="modal fade" tabindex="-1" aria-labelledby="medicalQuestionnaireModalLabel" aria-hidden="true" data-bs-backdrop="static" data-bs-keyboard="false">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title cl-dark-green" id="medicalQuestionnaireModalLabel">
+                    <i class="fa-light fa-files-medical" style="animation: iconGreenAnimation 5s infinite alternate"></i> Medical-Dental Questionnaire
+                </h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" id="closeMedicalButton"></button>
+            </div>
+            <div class="modal-body" style="max-height: 70vh; overflow-y: auto;">
+                <p class="text-muted mb-4">Your safety is our top priority, and knowing your medical history helps us provide the best, most personalized care for you. Please take a moment to answer the following questions <strong>honestly</strong>.</p>
+                <form method="post" id="medicalQuestionnaireForm">
+                    {% csrf_token %}
+                    {% for question in medical_questions %}
+                        <div class="mb-4">
+                            <label class="form-label cl-dark-green">{{ question.text }}</label>
+                            {% if question.type == 'yes_no' %}
+                                <div class="btn-group w-100" role="group">
+                                    <input type="radio" class="btn-check" name="q{{ forloop.counter }}" id="q{{ forloop.counter }}_yes" value="Yes" required>
+                                    <label class="btn btn-outline-success" for="q{{ forloop.counter }}_yes">Yes</label>
+                                    <input type="radio" class="btn-check" name="q{{ forloop.counter }}" id="q{{ forloop.counter }}_no" value="No" required>
+                                    <label class="btn btn-outline-danger" for="q{{ forloop.counter }}_no">No</label>
+                                </div>
+                            {% elif question.type == 'health_status' %}
+                                <div class="btn-group w-100" role="group">
+                                    <input type="radio" class="btn-check" name="q{{ forloop.counter }}" id="q{{ forloop.counter }}_good" value="Good" required>
+                                    <label class="btn btn-outline-success" for="q{{ forloop.counter }}_good">Good</label>
+                                    <input type="radio" class="btn-check" name="q{{ forloop.counter }}" id="q{{ forloop.counter }}_fair" value="Fair" required>
+                                    <label class="btn btn-outline-warning" for="q{{ forloop.counter }}_fair">Fair</label>
+                                    <input type="radio" class="btn-check" name="q{{ forloop.counter }}" id="q{{ forloop.counter }}_poor" value="Poor" required>
+                                    <label class="btn btn-outline-danger" for="q{{ forloop.counter }}_poor">Poor</label>
+                                </div>
+                            {% endif %}
+                        </div>
+                    {% endfor %}
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" id="submitMedicalQuestionnaire">Submit</button>
+            </div>
+        </div>
+    </div>
+</div>
+
         <!-- Logout Confirmation Modal -->
         <div class="modal fade" id="logoutConfirmModal" tabindex="-1" aria-labelledby="logoutConfirmModalLabel" aria-hidden="true">
           <div class="modal-dialog">
@@ -1003,20 +1048,24 @@
             });
         </script>
 
-        <!--privacyModal-->
+        <!-- Remove the duplicate script and merge the functionality -->
         <script>
             document.addEventListener('DOMContentLoaded', function() {
                 const privacyModal = document.getElementById('privacyModal');
-                const bootstrapModal = new bootstrap.Modal(privacyModal);
+                const medicalModal = document.getElementById('medicalQuestionnaireModal');
+                const bootstrapPrivacyModal = new bootstrap.Modal(privacyModal);
+                const bootstrapMedicalModal = new bootstrap.Modal(medicalModal);
 
                 {% if show_privacy_modal %}
-                bootstrapModal.show();
+                    bootstrapPrivacyModal.show();
                 {% endif %}
 
+                // Handle privacy policy agreement
                 if (!{{ user.has_agreed_privacy_policy|yesno:"true,false" }}) {
                     const agreeCheckbox = document.getElementById('agreeCheckbox');
                     const agreeButton = document.getElementById('agreeButton');
 
+                    // Enable/disable agree button based on checkbox
                     agreeCheckbox.addEventListener('change', function() {
                         agreeButton.disabled = !this.checked;
                     });
@@ -1033,19 +1082,70 @@
                         .then(response => response.json())
                         .then(data => {
                             if (data.success) {
-                                bootstrapModal.hide();
-                                location.reload(); // Reload the page to update the UI
+                                bootstrapPrivacyModal.hide();
+                                // Show medical questionnaire modal if it hasn't been filled out
+                                {% if not has_medical_questionnaire %}
+                                    setTimeout(() => {
+                                        bootstrapMedicalModal.show();
+                                    }, 500); // Add small delay for better UX
+                                {% else %}
+                                    location.reload();
+                                {% endif %}
                             } else {
-                                alert('There was an error saving your agreement. Please try again.');
+                                toastr.error('There was an error saving your agreement. Please try again.');
                             }
                         })
                         .catch(error => {
                             console.error('Error:', error);
-                            alert('There was an error saving your agreement. Please try again.');
+                            toastr.error('There was an error saving your agreement. Please try again.');
                         });
                     });
                 }
+
+                // Handle medical questionnaire submission
+                document.getElementById('submitMedicalQuestionnaire').addEventListener('click', function() {
+                    const form = document.getElementById('medicalQuestionnaireForm');
+                    const formData = new FormData(form);
+
+                    fetch('{% url "update_medical_questionnaire" %}', {
+                        method: 'POST',
+                        body: formData,
+                        headers: {
+                            'X-CSRFToken': '{{ csrf_token }}'
+                        }
+                    })
+                    .then(response => response.json())
+                    .then(data => {
+                        if (data.success) {
+                            // Remove the hide event listener before hiding the modal
+                            medicalModal.removeEventListener('hide.bs.modal', preventHide);
+                            bootstrapMedicalModal.hide();
+                            toastr.success('Medical questionnaire submitted successfully!');
+                            location.reload();
+                        } else {
+                            toastr.error('Please fill out all questions.');
+                        }
+                    })
+                    .catch(error => {
+                        console.error('Error:', error);
+                        toastr.error('An error occurred. Please try again.');
+                    });
+                });
+
+                // Prevent closing medical questionnaire modal if it's required
+                {% if not has_medical_questionnaire %}
+                // Define the prevent hide function separately so we can remove it later
+                const preventHide = function(event) {
+                    if (!{{ has_medical_questionnaire|yesno:"true,false" }}) {
+                        event.preventDefault();
+                        toastr.warning('Please complete the medical questionnaire before proceeding.');
+                    }
+                };
+
+                medicalModal.addEventListener('hide.bs.modal', preventHide);
+                {% endif %}
             });
         </script>
+
     </body>
 </html>
