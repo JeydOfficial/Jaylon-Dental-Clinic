@@ -328,7 +328,12 @@
                                         {% for service in services %}
                                             <option value="{{ service.id }}">{{ service.title }}</option>
                                         {% endfor %}
+                                        <option value="other">Other (Custom Concern)</option>
                                     </select>
+                                </div>
+                                <div class="mb-3" id="otherServiceDiv" style="display: none;">
+                                    <label for="otherServiceInput" class="form-label cl-dark-green"><strong>Please describe your concern</strong></label>
+                                    <textarea class="form-control" name="other_service" id="otherServiceInput" rows="2" placeholder="Example: Sakit ang ngipin, pa-check up"></textarea>
                                 </div>
                                 <div class="mb-3">
                                     <label for="dateInput" class="form-label cl-dark-green"><strong>Preferred Date</strong></label>
@@ -363,7 +368,22 @@
                                     <tbody>
                                         {% for appointment in appointments %}
                                             <tr>
-                                                <td>{{ appointment.service }}</td>
+                                                <td>
+                                                    {% if appointment.service %}
+                                                        {{ appointment.service.title }}
+                                                    {% else %}
+                                                        Custom Concern:
+                                                        {% if appointment.custom_concern|length > 50 %}
+                                                            <span class="text-muted concern-preview-{{ appointment.id }}">{{ appointment.custom_concern|truncatechars:50 }}</span>
+                                                            <span class="text-muted concern-full-{{ appointment.id }}" style="display: none;">{{ appointment.custom_concern }}</span>
+                                                            <button class="btn btn-link btn-xs p-0 m-0" data-id="{{ appointment.id }}" onclick="toggleConcern(this)">
+                                                                <i class="fa-light fa-eye toggle-icon-{{ appointment.id }}" style="font-size: 16px;"></i>
+                                                            </button>
+                                                        {% else %}
+                                                            <span class="text-muted">{{ appointment.custom_concern }}</span>
+                                                        {% endif %}
+                                                    {% endif %}
+                                                </td>
                                                 <td>{{ appointment.date }}</td>
                                                 <td>{{ appointment.start_time }} - {{ appointment.end_time }}</td>
                                                 <td>
@@ -860,6 +880,26 @@
           </div>
         </div>
 
+        <!-- Appointment Success Modal -->
+        <div class="modal fade" id="appointmentSuccessModal" tabindex="-1" aria-labelledby="appointmentSuccessModalLabel" aria-hidden="true">
+          <div class="modal-dialog">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title cl-dark-green" id="appointmentSuccessModalLabel">
+                    <i class="fa-light fa-calendar-check"></i> Appointment Submitted
+                </h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+              </div>
+              <div class="modal-body">
+                Your appointment is under review. You will be notified once approved or cancelled. Thank you!
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-success" data-bs-dismiss="modal">Close</button>
+              </div>
+            </div>
+          </div>
+        </div>
+
         <footer class="bg-dark-green text-light py-3" data-aos="fade-down">
             <div class="container">
                 <div class="row justify-content-center">
@@ -954,6 +994,81 @@
         <!--updateTimeSlots-->
         <script>
             $(document).ready(function() {
+                // Handle service selection change
+                $('#serviceSelect').change(function() {
+                    var selectedService = $(this).val();
+                    if (selectedService === 'other') {
+                        $('#otherServiceDiv').show();
+                        $('#otherServiceInput').prop('required', true);
+                    } else {
+                        $('#otherServiceDiv').hide();
+                        $('#otherServiceInput').prop('required', false);
+                    }
+                });
+
+                // Handle appointment form submission
+                $('#appointment-form').submit(function(e) {
+                    e.preventDefault();
+                    var form = $(this);
+                    $.ajax({
+                        type: 'POST',
+                        url: window.location.href,
+                        data: form.serialize(),
+                        headers: {
+                            'X-Requested-With': 'XMLHttpRequest'
+                        },
+                        success: function(response) {
+                            if (response.success) {
+                                $('#appointmentSuccessModal').modal('show');
+                                form[0].reset();
+                                // Update the appointment table with new data
+                                var table = $('#appointmentHistoryTable').DataTable();
+                                var newData = response.appointments.map(function(apt) {
+                                    var serviceCell = apt.service;
+                                    if (apt.service === 'Custom Concern') {
+                                        if (apt.custom_concern.length > 50) {
+                                            serviceCell = 'Custom Concern: ' +
+                                                '<span class="text-muted concern-preview-' + apt.id + '">' + apt.custom_concern.substring(0, 50) + '...</span>' +
+                                                '<span class="text-muted concern-full-' + apt.id + '" style="display: none;">' + apt.custom_concern + '</span>' +
+                                                '<button class="btn btn-link btn-xs p-0 m-0" data-id="' + apt.id + '" onclick="toggleConcern(this)">' +
+                                                '<i class="fa-light fa-eye toggle-icon-' + apt.id + '" style="font-size: 16px;"></i></button>';
+                                        } else {
+                                            serviceCell = 'Custom Concern: <span class="text-muted">' + apt.custom_concern + '</span>';
+                                        }
+                                    }
+                                    
+                                    var statusCell = '';
+                                    if (apt.status === 'Approved' && apt.attended) {
+                                        statusCell = '<span class="badge bg-success"><i class="fa-light fa-check-double"></i> Done</span>';
+                                    } else if (apt.status === 'Approved') {
+                                        statusCell = '<span class="badge bg-success"><i class="fa-light fa-circle-check"></i> ' + apt.status + '</span>';
+                                    } else if (apt.status === 'Pending') {
+                                        statusCell = '<span class="badge bg-warning"><i class="fa-light fa-clock"></i> ' + apt.status + '</span>';
+                                    } else {
+                                        statusCell = '<span class="badge bg-danger"><i class="fa-light fa-circle-xmark"></i> ' + apt.status + '</span>';
+                                    }
+                                    
+                                    return [
+                                        serviceCell,
+                                        apt.date,
+                                        apt.start_time + ' - ' + apt.end_time,
+                                        statusCell
+                                    ];
+                                });
+                                
+                                table.clear();
+                                table.rows.add(newData);
+                                table.draw();
+                            } else {
+                                toastr.error(response.message || 'An error occurred. Please try again.');
+                            }
+                        },
+                        error: function() {
+                            toastr.error('An error occurred. Please try again.');
+                        }
+                    });
+                });
+
                 function updateTimeSlots(data) {
                     var timeSlotSelect = $('#timeSlotSelect');
                     timeSlotSelect.empty();
@@ -989,6 +1104,11 @@
                     console.log('Date:', date);
 
                     if (serviceId && date) {
+                        // Show loading state in time slot select
+                        var timeSlotSelect = $('#timeSlotSelect');
+                        timeSlotSelect.empty();
+                        timeSlotSelect.append($('<option></option>').attr('value', '').text('Loading time slots...'));
+
                         $.ajax({
                             url: '{% url "client_get_available_time_slots" %}',
                             data: {
@@ -1002,7 +1122,9 @@
                             },
                             error: function(jqXHR, textStatus, errorThrown) {
                                 console.error('AJAX error:', textStatus, errorThrown);
-                                alert('Error fetching time slots. Please try again.');
+                                toastr.error('Error fetching time slots. Please try again.');
+                                timeSlotSelect.empty();
+                                timeSlotSelect.append($('<option></option>').attr('value', '').text('--Select Time--'));
                             }
                         });
                     } else {
@@ -1142,6 +1264,28 @@
                 medicalModal.addEventListener('hide.bs.modal', preventHide);
                 {% endif %}
             });
+        </script>
+
+        <!-- Custom JavaScript for toggling concern visibility -->
+        <script>
+            function toggleConcern(button) {
+                var id = button.getAttribute('data-id');
+                var preview = document.querySelector('.concern-preview-' + id);
+                var full = document.querySelector('.concern-full-' + id);
+                var icon = document.querySelector('.toggle-icon-' + id);
+
+                if (preview.style.display !== 'none') {
+                    preview.style.display = 'none';
+                    full.style.display = 'inline';
+                    icon.classList.remove('fa-eye');
+                    icon.classList.add('fa-eye-slash');
+                } else {
+                    preview.style.display = 'inline';
+                    full.style.display = 'none';
+                    icon.classList.remove('fa-eye-slash');
+                    icon.classList.add('fa-eye');
+                }
+            }
         </script>
 
     </body>

@@ -175,7 +175,7 @@
                     <a href="javascript:void(0);" class="navbar-toggle collapsed" data-toggle="collapse"
                        data-target="#navbar-collapse" aria-expanded="false" style="color: black"></a>
                     <a href="javascript:void(0);" class="bars" style="color: black"></a>
-                    <a class="navbar-brand fa-sharp fa-light fa-tooth" href="{% url 'dashboard' %}"
+                    <a class="navbar-brand fa-sharp fa-light fa-tooth" href="{% url 'appointment_dashboard' %}"
                        style="animation: iconGreenAnimation 5s infinite alternate"><strong> JAYLON DENTAL CLINIC</strong></a>
                 </div>
                 <div class="collapse navbar-collapse" id="navbar-collapse">
@@ -200,7 +200,7 @@
 
                 <!-- User Info -->
                 <div class="" style="display: flex; justify-content: center; align-items: center;">
-                    <div class="image" style="">
+                    <div class="image">
                         <img src="{% static 'images/threedocs.jpg' %}" width="300" height="150" alt="User"/>
                     </div>
                 </div>
@@ -210,10 +210,16 @@
                     <ul class="list">
                         <li class="header">DENTIST'S NAVIGATION</li>
 
-                        <li class="{% if request.resolver_match.url_name == 'dashboard' %}active{% endif %}">
-                            <a href="{% url 'dashboard' %}">
+                        <li class="{% if request.resolver_match.url_name == 'appointment_dashboard' %}active{% endif %}">
+                            <a href="{% url 'appointment_dashboard' %}">
                                 <i class="material-icons">event</i>
-                                <span>Appointment</span>
+                                <span>Appointment Dashboard</span>
+                            </a>
+                        </li>
+                        <li class="{% if request.resolver_match.url_name == 'appointment_history' %}active{% endif %}">
+                            <a href="{% url 'appointment_history' %}">
+                                <i class="material-icons">history</i>
+                                <span>Appointment History</span>
                             </a>
                         </li>
                         <li class="{% if request.resolver_match.url_name == 'services' %}active{% endif %}">
@@ -659,6 +665,45 @@
             // Add event listener for birthday changes
             birthdayInput.addEventListener('change', updateAge);
         });
+    </script>
+
+    <!-- Custom JavaScript for handling "Other" service option -->
+    <script>
+        $(document).ready(function() {
+            // Handle service selection change
+            $('#serviceSelect').change(function() {
+                var selectedService = $(this).val();
+                if (selectedService === 'other') {
+                    $('#otherServiceDiv').show();
+                    $('#otherServiceInput').prop('required', true);
+                } else {
+                    $('#otherServiceDiv').hide();
+                    $('#otherServiceInput').prop('required', false);
+                }
+            });
+        });
+    </script>
+
+    <!-- Custom JavaScript for toggling concern visibility -->
+    <script>
+        function toggleConcern(button) {
+            var id = button.getAttribute('data-id');
+            var preview = document.querySelector('.concern-preview-' + id);
+            var full = document.querySelector('.concern-full-' + id);
+            var icon = document.querySelector('.toggle-icon-' + id);
+            
+            if (preview.style.display !== 'none') {
+                preview.style.display = 'none';
+                full.style.display = 'inline';
+                icon.classList.remove('fa-eye');
+                icon.classList.add('fa-eye-slash');
+            } else {
+                preview.style.display = 'inline';
+                full.style.display = 'none';
+                icon.classList.remove('fa-eye-slash');
+                icon.classList.add('fa-eye');
+            }
+        }
     </script>
 
     </body>

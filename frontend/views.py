@@ -61,6 +61,7 @@ def view_client_dashboard(request):
 
     if request.method == 'POST':
         service_id = request.POST.get('service')
+        other_service = request.POST.get('other_service')
 
         if service_id:
             date_str = request.POST.get('date')
@@ -77,10 +78,8 @@ def view_client_dashboard(request):
             result = response.json()
 
             if result['success']:
-
-                # Assuming that user_id and service_id refers to the User and Service model's primary key
+                # Get the user
                 user = User.objects.get(pk=request.user.id)
-                service = Service.objects.get(pk=service_id)
 
                 # Parse the time slot
                 start_time, end_time = time_slot.split(' - ')
@@ -91,21 +90,53 @@ def view_client_dashboard(request):
                     # Convert the restriction_end_time to the current time zone
                     localized_end_time = timezone.localtime(request.user.restriction_end_time)
                     formatted_end_time = localized_end_time.strftime("%B %d, %Y at %I:%M %p")
+                    if request.headers.get('X-Requested-With') == 'XMLHttpRequest':
+                        return JsonResponse({'success': False, 'message': f'Account restricted until {formatted_end_time}'})
                     messages.error(request, f'Account restricted until {formatted_end_time}')
                 else:
                     # Create the appointment
                     appointment = Appointment(
                         user=user,
-                        service=service,
                         date=date_str,
                         start_time=start_time,
                         end_time=end_time,
                     )
+                    
+                    # Handle regular service vs custom concern
+                    if service_id == 'other':
+                        appointment.custom_concern = other_service
+                    else:
+                        appointment.service = Service.objects.get(pk=service_id)
+                    
                     appointment.save()
+                    if request.headers.get('X-Requested-With') == 'XMLHttpRequest':
+                        # Get updated appointments
+                        appointments = Appointment.objects.filter(user=request.user)
+                        appointments_data = []
+                        for apt in appointments:
+                            apt_data = {
+                                'id': apt.id,
+                                'date': apt.date.strftime('%Y-%m-%d'),
+                                'start_time': apt.start_time.strftime('%I:%M %p'),
+                                'end_time': apt.end_time.strftime('%I:%M %p'),
+                                'status': apt.status,
+                                'attended': apt.attended,
+                            }
+                            if apt.service:
+                                apt_data['service'] = apt.service.title
+                            else:
+                                apt_data['service'] = 'Custom Concern'
+                                apt_data['custom_concern'] = apt.custom_concern
+                            appointments_data.append(apt_data)
+                        return JsonResponse({'success': True, 'appointments': appointments_data})
                     messages.success(request, 'Appointment added successfully.')
             else:
+                if request.headers.get('X-Requested-With') == 'XMLHttpRequest':
+                    return JsonResponse({'success': False, 'message': 'Invalid reCAPTCHA. Please try again.'})
                 messages.error(request, 'Invalid reCAPTCHA. Please try again.')
 
+            if request.headers.get('X-Requested-With') == 'XMLHttpRequest':
+                return JsonResponse({'success': False, 'message': 'An error occurred'})
             return redirect('client_dashboard')
         else:
             name = request.POST.get('name')

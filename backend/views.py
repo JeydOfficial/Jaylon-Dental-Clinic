@@ -18,6 +18,7 @@ from django.views.decorators.http import require_GET
 from datetime import datetime, timedelta
 from django.core.cache import cache
 from django.db.models import Count, Q, Max
+from django.db import models
 
 from backend.models import GalleryImage, Service, User, Appointment, MedicalQuestionnaire
 
@@ -25,7 +26,7 @@ from backend.models import GalleryImage, Service, User, Appointment, MedicalQues
 def user_login(request):
     # Check if the user is already authenticated
     if request.user.is_authenticated and request.user.is_superuser:
-        return redirect('dashboard')  # Redirect to the dashboard if logged in
+        return redirect('appointment_dashboard')  # Redirect to the dashboard if logged in
 
     if request.method == 'POST':
         identifier = request.POST.get('identifier')
@@ -36,7 +37,7 @@ def user_login(request):
 
         if user is not None and user.is_superuser:  # Check if the user has admin privileges
             login(request, user)
-            return redirect('dashboard')
+            return redirect('appointment_dashboard')
         elif user is not None:
             messages.error(request, 'You do not have permission to access this page.')
         else:
@@ -161,7 +162,13 @@ def get_available_time_slots(request):
     service_id = request.GET.get('service_id')
     date = request.GET.get('date')
 
-    service = Service.objects.get(pk=service_id)
+    # Handle "Other" service option with default duration of 30 minutes
+    if service_id == 'other':
+        service_duration = 30
+    else:
+        service = Service.objects.get(pk=service_id)
+        service_duration = service.duration
+
     selected_date = datetime.strptime(date, '%Y-%m-%d').date()
 
     # Get operating hours for the selected date
@@ -185,8 +192,8 @@ def get_available_time_slots(request):
     available_slots = []
     current_time = start_time
 
-    while current_time + timedelta(minutes=service.duration) <= end_time:
-        slot_end = current_time + timedelta(minutes=service.duration)
+    while current_time + timedelta(minutes=service_duration) <= end_time:
+        slot_end = current_time + timedelta(minutes=service_duration)
         is_available = True
 
         for busy_start, busy_end in busy_slots:
@@ -200,36 +207,47 @@ def get_available_time_slots(request):
                 'start': current_time.strftime('%I:%M %p'),
                 'end': slot_end.strftime('%I:%M %p')
             })
-            current_time += timedelta(minutes=service.duration)
+            current_time += timedelta(minutes=service_duration)
         elif not is_available and current_time == busy_end:
             # If we've jumped to the end of a busy slot, don't increment further
             continue
         else:
             # If not available and not at the end of a busy slot, increment by the service duration
-            current_time += timedelta(minutes=service.duration)
+            current_time += timedelta(minutes=service_duration)
 
     return JsonResponse({'available_slots': available_slots})
 
 
 @login_required(login_url='login')
-def view_dashboard(request):
+def appointment_dashboard(request):
     if not request.user.is_superuser:
         return redirect('login')
 
     # Get current date
     today = timezone.localtime(timezone.now()).date()
 
-    # Use select_related to reduce database queries
-    appointments = Appointment.objects.select_related('user', 'service').all()
+    # Use select_related to reduce database queries and filter for today and future appointments
+    appointments = Appointment.objects.select_related('user', 'service').filter(
+        date__gte=today  # Get appointments from today onwards
+    ).order_by(
+        models.Case(
+            models.When(status='Pending', then=1),
+            models.When(status='Approved', then=2),
+            models.When(status='Cancelled', then=3),
+            default=4,
+            output_field=models.IntegerField(),
+        ),
+        'date',
+        'start_time'
+    )
 
     # Use database aggregation for appointment counts
-    appointment_stats = Appointment.objects.aggregate(
+    appointment_stats = Appointment.objects.filter(date__gte=today).aggregate(
         all_appointments=Count('id'),
         todays_appointments=Count('id', filter=Q(date=today)),
         pending_appointments=Count('id', filter=Q(status='Pending')),
         approved_appointments=Count('id', filter=Q(status='Approved')),
-        cancelled_appointments=Count('id', filter=Q(status='Cancelled')),
-        done_appointments=Count('id', filter=Q(status='Approved', attended=True))
+        todays_finished_appointments=Count('id', filter=Q(date=today, status='Approved', attended=True))
     )
 
     # Optimize monthly data query and caching
@@ -279,31 +297,102 @@ def view_dashboard(request):
         # Handle form submission (appointment creation)
         user_id = request.POST.get('user')
         service_id = request.POST.get('service')
+        other_service = request.POST.get('other_service')
         date = request.POST.get('date')
         time_slot = request.POST.get('time_slot')
         status = request.POST.get('status')
 
         user = User.objects.get(pk=user_id)
-        service = Service.objects.get(pk=service_id)
 
         start_time, end_time = time_slot.split(' - ')
         start_time = datetime.strptime(start_time, '%I:%M %p').time()
         end_time = datetime.strptime(end_time, '%I:%M %p').time()
 
+        # Create the appointment
         appointment = Appointment(
             user=user,
-            service=service,
             date=date,
             start_time=start_time,
             end_time=end_time,
             status=status,
         )
+
+        # Handle regular service vs custom concern
+        if service_id == 'other':
+            appointment.custom_concern = other_service
+        else:
+            appointment.service = Service.objects.get(pk=service_id)
+
         appointment.save()
-
         messages.success(request, 'Appointment added successfully.')
-        return redirect('dashboard')
+        return redirect('appointment_dashboard')
 
-    return render(request, 'dashboard.html', context)
+    return render(request, 'appointment_dashboard.html', context)
+
+
+@login_required(login_url='login')
+def appointment_history(request):
+    if not request.user.is_superuser:
+        return redirect('login')
+
+    # Get current date
+    today = timezone.localtime(timezone.now()).date()
+
+    # Use select_related to reduce database queries and filter for past appointments
+    appointments = Appointment.objects.select_related('user', 'service').filter(
+        date__lt=today  # Only get appointments before today
+    ).order_by('-date', '-start_time')  # Order by most recent first
+
+    # Update appointment stats to only count historical appointments
+    appointment_stats = Appointment.objects.filter(date__lt=today).aggregate(
+        all_appointments=Count('id'),
+        done_appointments=Count('id', filter=Q(status='Approved', attended=True)),
+        cancelled_appointments=Count('id', filter=Q(status='Cancelled')),
+    )
+
+
+    context = {
+        'users': User.objects.filter(is_superuser=False, email_verified=True),
+        'services': Service.objects.all(),
+        'appointments': appointments,
+        **appointment_stats,
+    }
+
+    if request.method == 'POST':
+        # Handle form submission (appointment creation)
+        user_id = request.POST.get('user')
+        service_id = request.POST.get('service')
+        other_service = request.POST.get('other_service')
+        date = request.POST.get('date')
+        time_slot = request.POST.get('time_slot')
+        status = request.POST.get('status')
+
+        user = User.objects.get(pk=user_id)
+
+        start_time, end_time = time_slot.split(' - ')
+        start_time = datetime.strptime(start_time, '%I:%M %p').time()
+        end_time = datetime.strptime(end_time, '%I:%M %p').time()
+
+        # Create the appointment
+        appointment = Appointment(
+            user=user,
+            date=date,
+            start_time=start_time,
+            end_time=end_time,
+            status=status,
+        )
+
+        # Handle regular service vs custom concern
+        if service_id == 'other':
+            appointment.custom_concern = other_service
+        else:
+            appointment.service = Service.objects.get(pk=service_id)
+
+        appointment.save()
+        messages.success(request, 'Appointment added successfully.')
+        return redirect('appointment_dashboard')
+
+    return render(request, 'appointment_history.html', context)
 
 
 @login_required(login_url='login')
@@ -509,26 +598,31 @@ def user_details(request, user_id):
         if 'service' in request.POST:
             # Extract appointment data from POST request
             service_id = request.POST.get('service')
+            other_service = request.POST.get('other_service')
             appointment_date = request.POST.get('date')
             appointment_time_slot = request.POST.get('time_slot')
             appointment_status = request.POST.get('status')
-
-            service = Service.objects.get(pk=service_id)
 
             # Parse the time slot
             start_time, end_time = appointment_time_slot.split(' - ')
             start_time = datetime.strptime(start_time, '%I:%M %p').time()
             end_time = datetime.strptime(end_time, '%I:%M %p').time()
 
-            # Create and save the new appointment
+            # Create the appointment
             appointment = Appointment(
                 user=user,
-                service=service,
                 date=appointment_date,
                 start_time=start_time,
                 end_time=end_time,
                 status=appointment_status
             )
+
+            # Handle regular service vs custom concern
+            if service_id == 'other':
+                appointment.custom_concern = other_service
+            else:
+                appointment.service = Service.objects.get(pk=service_id)
+
             appointment.save()
             messages.success(request, 'Appointment created successfully!')
 
@@ -665,11 +759,12 @@ def update_appointment_status(request, appointment_id):
                 sms_message = (
                     f"Dear {appointment.user.first_name},\n\n"
                     f"Your appointment at Jaylon Dental Clinic has been APPROVED.\n\n"
-                    f"Service: {appointment.service.title}\n"
+                    f"Service: {appointment.service.title if appointment.service else 'Custom: ' + appointment.custom_concern[:50]}\n"
                     f"Date: {formatted_date}\n"
                     f"Time: {formatted_start_time} - {formatted_end_time}\n\n"
                     f"We look forward to seeing you. For questions or rescheduling, "
-                    f"please contact us.\n\n"
+                    f"you can send a message through our email, contact us via phone, "
+                    f"or visit the clinic directly to clarify your concern.\n\n"
                     f"View details at: {appointment_details_link}\n\n"
                     f"Thank you for choosing Jaylon Dental Clinic."
                 )
@@ -687,6 +782,7 @@ def update_appointment_status(request, appointment_id):
 
                 if response.status_code != 200:
                     messages.error(request, 'Failed to send SMS notification.')
+
 
 
         elif appointment.status == 'Cancelled':
@@ -712,7 +808,7 @@ def update_appointment_status(request, appointment_id):
                     f"Dear {appointment.user.first_name},\n\n"
                     f"We regret to inform you that your appointment at Jaylon Dental Clinic "
                     f"has been CANCELLED.\n\n"
-                    f"Service: {appointment.service.title}\n"
+                    f"Service: {appointment.service.title if appointment.service else 'Custom: ' + appointment.custom_concern[:50]}\n"
                     f"Date: {formatted_date}\n"
                     f"Time: {formatted_start_time} - {formatted_end_time}\n\n"
                     f"We apologize for any inconvenience. For questions, please contact us.\n\n"

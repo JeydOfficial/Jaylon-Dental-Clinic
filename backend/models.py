@@ -142,7 +142,8 @@ class Appointment(models.Model):
     ]
 
     user = models.ForeignKey(User, on_delete=models.CASCADE)
-    service = models.ForeignKey(Service, on_delete=models.CASCADE)
+    service = models.ForeignKey(Service, on_delete=models.CASCADE, null=True, blank=True)  # Make service optional
+    custom_concern = models.TextField(null=True, blank=True)  # Add field for custom concerns
     date = models.DateField()
     start_time = models.TimeField()
     end_time = models.TimeField()
@@ -157,7 +158,8 @@ class Appointment(models.Model):
         ]
 
     def __str__(self):
-        return f"{self.user.first_name} {self.user.last_name} - {self.service.title} on {self.date} at {self.start_time}"
+        service_name = self.service.title if self.service else f"Custom: {self.custom_concern[:50]}"
+        return f"{self.user.first_name} {self.user.last_name} - {service_name} on {self.date} at {self.start_time}"
 
 
 class MedicalQuestionnaire(models.Model):

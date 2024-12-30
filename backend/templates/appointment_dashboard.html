@@ -43,7 +43,7 @@
                     </div>
                 </div>
                 <div class="col-md-4">
-                    <div class="info-box bg-light-green hover-expand-effect">
+                    <div class="info-box bg-green hover-expand-effect">
                         <div class="icon">
                             <i class="material-icons">check</i>
                         </div>
@@ -54,24 +54,13 @@
                     </div>
                 </div>
                 <div class="col-md-4">
-                    <div class="info-box bg-red hover-expand-effect">
+                    <div class="info-box bg-teal hover-expand-effect">
                         <div class="icon">
-                            <i class="material-icons">block</i>
+                            <i class="material-icons">event_available</i>
                         </div>
                         <div class="content">
-                            <div class="text">CANCELLED APPOINTMENTS</div>
-                            <div class="number">{{ cancelled_appointments }}</div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-4">
-                    <div class="info-box bg-green hover-expand-effect">
-                        <div class="icon">
-                            <i class="material-icons">done_all</i>
-                        </div>
-                        <div class="content">
-                            <div class="text">DONE APPOINTMENTS</div>
-                            <div class="number">{{ done_appointments }}</div>
+                            <div class="text">TODAY'S FINISHED</div>
+                            <div class="number">{{ todays_finished_appointments }}</div>
                         </div>
                     </div>
                 </div>
@@ -93,7 +82,7 @@
                                         <h4 class="modal-title p-b-10" id="AddModalLabel">
                                             <i class="fa-sharp fa-light fa-calendar-circle-plus"></i> ADD NEW APPOINTMENT</h4>
                                     </div>
-                                    <form id="addAppointmentForm" method="POST" action="{% url 'dashboard' %}">
+                                    <form id="addAppointmentForm" method="POST" action="{% url 'appointment_dashboard' %}">
                                         {% csrf_token %}
                                         <div class="modal-body" style="padding-bottom: 0px;">
                                             <label for="user">User</label>
@@ -112,7 +101,15 @@
                                                     {% for service in services %}
                                                         <option value="{{ service.id }}">{{ service.title }}</option>
                                                     {% endfor %}
+                                                    <option value="other">Other (Custom Concern)</option>
                                                 </select>
+                                            </div>
+                                            <div class="form-group" id="otherServiceDiv" style="display: none;">
+                                                <label for="otherServiceInput">Please describe the concern</label>
+                                                <div class="form-line">
+                                                    <textarea rows="2" class="form-control" name="other_service"
+                                                              id="otherServiceInput" placeholder="Example: Sakit ang ngipin, pa-check up"></textarea>
+                                                </div>
                                             </div>
                                             <label for="dateInput">Date</label>
                                             <div class="form-group">
@@ -147,7 +144,7 @@
                     </div>
                     <div class="body">
                         <div class="table-responsive">
-                            <table class="table table-bordered table-striped table-hover dataTable js-exportable">
+                            <table class="table table-bordered table-striped table-hover dataTable js-exportable" data-order='[]' data-ordering="false">
                                 <thead>
                                 <tr>
                                     <th>Name</th>
@@ -166,7 +163,22 @@
                                 {% for appointment in appointments %}
                                     <tr>
                                         <td>{{ appointment.user.first_name }} {{ appointment.user.last_name }}</td>
-                                        <td>{{ appointment.service.title }}</td>
+                                        <td>
+                                            {% if appointment.service %}
+                                                {{ appointment.service.title }}
+                                            {% else %}
+                                                Custom Concern:
+                                                {% if appointment.custom_concern|length > 50 %}
+                                                    <span class="text-muted concern-preview-{{ appointment.id }}">{{ appointment.custom_concern|truncatechars:50 }}</span>
+                                                    <span class="text-muted concern-full-{{ appointment.id }}" style="display: none;">{{ appointment.custom_concern }}</span>
+                                                    <button class="btn btn-link btn-xs p-0 m-0" data-id="{{ appointment.id }}" onclick="toggleConcern(this)">
+                                                        <i class="fa-light fa-eye toggle-icon-{{ appointment.id }}" style="font-size: 12px;"></i>
+                                                    </button>
+                                                {% else %}
+                                                    <span class="text-muted">{{ appointment.custom_concern }}</span>
+                                                {% endif %}
+                                            {% endif %}
+                                        </td>
                                         <td>{{ appointment.date }}</td>
                                         <td>{{ appointment.start_time }} - {{ appointment.end_time }}</td>
                                         <td>{{ appointment.user.current_address }}</td>
