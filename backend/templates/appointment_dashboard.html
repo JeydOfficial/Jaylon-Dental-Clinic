@@ -162,14 +162,14 @@
                                 <tbody>
                                 {% for appointment in appointments %}
                                     <tr>
-                                        <td>{{ appointment.user.first_name }} {{ appointment.user.last_name }}</td>
+                                        <td>{{ appointment.user.last_name }}, {{ appointment.user.first_name }}</td>
                                         <td>
                                             {% if appointment.service %}
                                                 {{ appointment.service.title }}
                                             {% else %}
                                                 Custom Concern:
                                                 {% if appointment.custom_concern|length > 50 %}
-                                                    <span class="text-muted concern-preview-{{ appointment.id }}">{{ appointment.custom_concern|truncatechars:50 }}</span>
+                                                    <span class="text-muted concern-preview-{{ appointment.id }}">{{ appointment.custom_concern|truncatechars:20 }}</span>
                                                     <span class="text-muted concern-full-{{ appointment.id }}" style="display: none;">{{ appointment.custom_concern }}</span>
                                                     <button class="btn btn-link btn-xs p-0 m-0" data-id="{{ appointment.id }}" onclick="toggleConcern(this)">
                                                         <i class="fa-light fa-eye toggle-icon-{{ appointment.id }}" style="font-size: 12px;"></i>
