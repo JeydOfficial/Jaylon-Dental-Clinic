@@ -26,7 +26,13 @@
             <table style="width: 100%; border-collapse: collapse; margin-top: 20px;">
                 <tr>
                     <th style="text-align: left; padding: 10px; border-bottom: 1px solid #ddd; background-color: #f2f2f2;">Service</th>
-                    <td style="padding: 10px; border-bottom: 1px solid #ddd;">{{appointment.service.title}}</td>
+                    <td style="padding: 10px; border-bottom: 1px solid #ddd;">
+                        {% if appointment.service %}
+                            {{ appointment.service.title }}
+                        {% else %}
+                            Custom: {{ appointment.custom_concern|slice:":50" }}
+                        {% endif %}
+                    </td>
                 </tr>
                 <tr>
                     <th style="text-align: left; padding: 10px; border-bottom: 1px solid #ddd; background-color: #f2f2f2;">Date</th>

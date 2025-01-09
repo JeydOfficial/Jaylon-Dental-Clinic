@@ -762,7 +762,7 @@ def update_appointment_status(request, appointment_id):
                     f"Service: {appointment.service.title if appointment.service else 'Custom: ' + appointment.custom_concern[:50]}\n"
                     f"Date: {formatted_date}\n"
                     f"Time: {formatted_start_time} - {formatted_end_time}\n\n"
-                    f"We look forward to seeing you. For questions or rescheduling, "
+                    f"We look forward to seeing you. For questions, "
                     f"you can send a message through our email, contact us via phone, "
                     f"or visit the clinic directly to clarify your concern.\n\n"
                     f"View details at: {appointment_details_link}\n\n"
