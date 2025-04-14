@@ -158,7 +158,7 @@ EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True
 EMAIL_HOST_USER = 'jaylondentalclinic@gmail.com'
-EMAIL_HOST_PASSWORD = 'tclt wkiz mtgf hote'
+EMAIL_HOST_PASSWORD = 'ijzq bwnf arcj ucht'
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
