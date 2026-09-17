@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+    <head>
+        <!-- Tab Title -->
+        <title>Login | Jaylon Dental Clinic</title>
+
+        <!-- Meta Tags -->
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+        <!-- Favicon -->
+        <link rel="icon" href="{% static 'images/favicon.png' %}" type="image/x-icon">
+
+        <!-- Bootstrap CSS -->
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+
+        <!-- Google Fonts -->
+            <!-- Poppins Font -->
+        <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+            <!-- Lobster Font -->
+        <link href="https://fonts.googleapis.com/css2?family=Lobster&display=swap" rel="stylesheet">
+
+        <!-- Toastr CSS -->
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
+
+        <!-- Font Awesome -->
+<!--        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">-->
+        <link rel="stylesheet" href="https://site-assets.fontawesome.com/releases/v6.6.0/css/all.css">
+        <link rel="stylesheet" href="https://site-assets.fontawesome.com/releases/v6.6.0/css/all.css">
+        <link rel="stylesheet" href="https://site-assets.fontawesome.com/releases/v6.6.0/css/sharp-duotone-solid.css">
+        <link rel="stylesheet" href="https://site-assets.fontawesome.com/releases/v6.6.0/css/sharp-thin.css">
+        <link rel="stylesheet" href="https://site-assets.fontawesome.com/releases/v6.6.0/css/sharp-solid.css">
+        <link rel="stylesheet" href="https://site-assets.fontawesome.com/releases/v6.6.0/css/sharp-regular.css">
+        <link rel="stylesheet" href="https://site-assets.fontawesome.com/releases/v6.6.0/css/sharp-light.css">
+
+        <style>
+            body {
+                font-family: 'Poppins', sans-serif;
+                background-color: #97a97c;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                min-height: 100vh;
+                margin: 0;
+            }
+            .lobster-font {
+                font-family: 'Lobster', cursive;
+            }
+            .btn:hover {
+                background-color: #416a93;
+            }
+            .text-decoration-none:hover {
+                text-decoration: underline !important;
+            }
+            .customized {
+                background-color: #b5c99a !important;
+            }
+            .customized-bg {
+                background-color: #b5c99a !important;
+            }
+            .customized-bg:hover {
+                color: white;
+                background-color: #8a9a5b !important;
+            }
+            .login-container {
+                background-color: #ffffff;
+                border-radius: 10px;
+                box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+                overflow: hidden;
+                width: 450px;
+                max-width: 90%;
+            }
+            input::-ms-reveal,
+            input::-ms-clear {
+                display: none;
+            }
+
+            /* KEYFRAMES */
+            @keyframes iconGreenAnimation {
+                0% {
+                        color: #6c7a5f;
+                }
+                20% {
+                        color: #4f5d40;
+                }
+                40% {
+                        color: #5a6e4d;
+                }
+                60% {
+                        color: #3f4a32;
+                }
+                80% {
+                        color: #4a5a3f;
+                }
+                100% {
+                        color: #2e3b24;
+                }
+            }
+
+            @media (max-width: 375px) {
+                .resize {
+                    font-size: 14px;
+                }
+            }
+        </style>
+    </head>
+    <body>
+        <div class="login-container">
+            <div class="text-center py-3 customized">
+                <img src="{% static 'images/favicon.png' %}" alt="Jaylon Dental Clinic Logo" class="mb-1"
+                     style="max-width: 100px;">
+                <h3 class="lobster-font m-0" style="animation: iconGreenAnimation 5s infinite alternate">Jaylon Dental Clinic</h3>
+            </div>
+            <div class="px-4 pt-4">
+                <form id="loginForm" method="post">
+                    {% csrf_token %}
+                    <div class="mb-3">
+                        <label for="email_or_phone" class="form-label"><i class="fa-light fa-user-circle"></i> Email or Phone Number</label>
+                        <input type="text" class="form-control" id="email_or_phone" name="email_or_phone" autocomplete="username" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="password" class="form-label"><i class="fa-light fa-lock"></i> Password</label>
+                        <div class="position-relative">
+                            <input type="password" class="form-control" id="password" name="password" required>
+                            <button type="button" class="btn btn-link position-absolute end-0 top-50 translate-middle-y text-dark" id="passwordToggle" style="z-index: 10;">
+                                <i class="fa-light fa-eye" id="passwordToggleIcon"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="d-grid">
+                        <button type="submit" class="btn customized-bg">
+                            <i class="fa-light fa-right-to-bracket"></i> Log In</button>
+                    </div>
+                </form>
+
+                <div class="d-flex justify-content-between align-items-center mt-3 mx-1">
+                    <div class="form-check">
+                        <input class="resize form-check-input" type="checkbox" value="" id="rememberMe">
+                        <label class="form-check-label" for="rememberMe">
+                            Remember Me
+                        </label>
+                    </div>
+                    <a href="{% url 'client_forgot_password' %}" class="resize text-decoration-none">Forgot Password?</a>
+                </div>
+                <hr style="margin-top: 5px; margin-bottom: 20px;">
+                <div class="resize text-center">
+                    <p>Don't have an account? <a href="{% url 'client_register' %}"
+                                                 class="text-decoration-none">Register here!</a>
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
+        <!-- jQuery (required for Toastr) -->
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+
+        <!-- Toastr JS -->
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
+        <script>
+                // Toastr configuration
+                toastr.options = {
+                  "closeButton": true,
+                  "debug": false,
+                  "newestOnTop": true,
+                  "progressBar": true,
+                  "positionClass": "toast-top-right",
+                  "preventDuplicates": false,
+                  "onclick": null,
+                  "showDuration": "300",
+                  "hideDuration": "1000",
+                  "timeOut": "10000",
+                  "extendedTimeOut": "1000",
+                  "showEasing": "swing",
+                  "hideEasing": "linear",
+                  "showMethod": "fadeIn",
+                  "hideMethod": "fadeOut"
+                }
+
+                // Check for success message in Django messages
+                {% if messages %}
+                    {% for message in messages %}
+                        {% if message.tags == 'success' %}
+                            toastr.success("{{ message }}");
+                        {% elif message.tags == 'error' %}
+                            toastr.error("{{ message }}");
+                        {% endif %}
+                    {% endfor %}
+                {% endif %}
+
+        </script>
+
+        <script>
+            document.addEventListener('DOMContentLoaded', function() {
+                const form = document.getElementById('loginForm');
+                const emailOrPhoneInput = document.getElementById('email_or_phone');
+                const rememberMeClientCheckbox = document.getElementById('rememberMe');
+
+                // Check if email or phone number is stored in localStorage and set it
+                const storedClientEmailPhoneNumber = localStorage.getItem('rememberedClientEmailPhone');
+                if (storedClientEmailPhoneNumber) {
+                    emailOrPhoneInput.value = storedClientEmailPhoneNumber;
+                    rememberMeClientCheckbox.checked = true;
+                }
+
+                // Handle form submission
+                form.addEventListener('submit', function(e) {
+                    if (rememberMeClientCheckbox.checked) {
+                        localStorage.setItem('rememberedClientEmailPhone', emailOrPhoneInput.value);
+                    } else {
+                        localStorage.removeItem('rememberedClientEmailPhone');
+                    }
+                });
+
+                // Handle checkbox change
+                rememberMeClientCheckbox.addEventListener('change', function() {
+                    if (!this.checked) {
+                        localStorage.removeItem('rememberedClientEmailPhone');
+                    }
+                });
+            });
+        </script>
+
+        <script>
+            const passwordInput = document.getElementById('password');
+            const passwordToggleIcon = document.getElementById('passwordToggleIcon');
+            const passwordToggle = document.getElementById('passwordToggle') || passwordToggleIcon; // works for both button and icon versions
+
+            passwordToggle.addEventListener('click', function() {
+                if (passwordInput.type === 'password') {
+                    passwordInput.type = 'text';
+                    passwordToggleIcon.classList.remove('fa-eye');
+                    passwordToggleIcon.classList.add('fa-eye-slash');
+                } else {
+                    passwordInput.type = 'password';
+                    passwordToggleIcon.classList.remove('fa-eye-slash');
+                    passwordToggleIcon.classList.add('fa-eye');
+                }
+            });
+        </script>
+    </body>
+</html>

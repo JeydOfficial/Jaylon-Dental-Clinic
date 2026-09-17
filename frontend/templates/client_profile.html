@@ -1,0 +1,511 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+    <head>
+        <!-- Tab Title -->
+        <title>Profile | Jaylon Dental Clinic</title>
+
+        <!-- Meta Tags -->
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=Edge">
+        <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+
+        <!-- Favicon -->
+        <link rel="icon" href="{% static 'images/favicon.png' %}" type="image/x-icon">
+
+        <!-- Bootstrap CSS -->
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
+              integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+
+        <!-- Font Awesome -->
+<!--        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">-->
+        <link rel="stylesheet" href="https://site-assets.fontawesome.com/releases/v6.6.0/css/all.css">
+        <link rel="stylesheet" href="https://site-assets.fontawesome.com/releases/v6.6.0/css/all.css">
+        <link rel="stylesheet" href="https://site-assets.fontawesome.com/releases/v6.6.0/css/sharp-duotone-solid.css">
+        <link rel="stylesheet" href="https://site-assets.fontawesome.com/releases/v6.6.0/css/sharp-thin.css">
+        <link rel="stylesheet" href="https://site-assets.fontawesome.com/releases/v6.6.0/css/sharp-solid.css">
+        <link rel="stylesheet" href="https://site-assets.fontawesome.com/releases/v6.6.0/css/sharp-regular.css">
+        <link rel="stylesheet" href="https://site-assets.fontawesome.com/releases/v6.6.0/css/sharp-light.css">
+
+        <!-- Google Fonts -->
+            <!-- Poppins Font -->
+        <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+            <!-- Lobster Font -->
+        <link href="https://fonts.googleapis.com/css2?family=Lobster&display=swap" rel="stylesheet">
+
+        <!-- AOS CSS -->
+        <link href="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.css" rel="stylesheet">
+
+        <!-- jQuery (required for Toastr) -->
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+
+        <!-- Toastr CSS -->
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
+
+        <!-- DataTable CSS -->
+        <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.11.5/css/dataTables.bootstrap5.min.css">
+
+        <style>
+            body {
+                font-family: 'Poppins', sans-serif;
+                background-color: #8eb69b;
+                overflow-x: hidden;
+            }
+            .lobster-font {
+                font-family: 'Lobster', cursive;
+            }
+            .cl-dark-green {
+                color: #235347;
+            }
+            .navbar {
+                box-shadow: 0 2px 4px rgba(0,0,0,.1);
+            }
+            .navbar-brand {
+                font-weight: 600;
+                font-size: 1.5rem;
+            }
+            .nav-link {
+                font-weight: 400;
+                transition: color 0.3s ease;
+            }
+            .nav-link:hover {
+                color: green !important;
+            }
+            h1, h2, h3, h4, h5, h6 {
+                font-weight: 600;
+            }
+            #scrollspyHome, #scrollspyServices, #scrollspyGallery, #scrollspyContacts, #scrollspyPrivacy {
+                padding: 3rem;
+                background-color: white;
+                border-radius: 15px;
+                box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+                margin-bottom: 2rem;
+            }
+            .btn {
+                border-radius: 8px;
+                transition: all 0.3s ease;
+                padding: 0.5rem 1.5rem;
+            }
+            .form-control, .form-select {
+                border-radius: 8px;
+                transition: all 0.3s ease;
+            }
+            .form-control:focus, .form-select:focus {
+                border-color: #007bff;
+                box-shadow: 0 0 0 0.2rem rgba(0,123,255,.25);
+            }
+            .btn-outline-primary, .btn-outline-success, .btn-outline-warning, .btn-outline-danger {
+                background-color: white;
+                transition: all 0.3s ease;
+            }
+            .btn-check:checked + .btn-outline-primary,
+            .btn-check:checked + .btn-outline-success,
+            .btn-check:checked + .btn-outline-warning,
+            .btn-check:checked + .btn-outline-danger {
+                color: white;
+            }
+            .btn-primary {
+                background-color: #007bff;
+                border-color: #007bff;
+            }
+            .btn-primary:hover, .btn-success:hover {
+                filter: brightness(110%);
+            }
+            .shadow {
+                box-shadow: 0 .5rem 1rem rgba(0,0,0,.15)!important;
+            }
+            .rounded-lg {
+                border-radius: 1rem!important;
+            }
+            .border-top {
+                border-top-width: 5px !important;
+            }
+            .form-label {
+                font-weight: 600;
+                color: #495057;
+            }
+            .btn-group {
+                border-radius: 8px;
+                overflow: hidden;
+            }
+            .btn-group {
+                border-radius: 0;
+            }
+
+            /* TRANSITIONS */
+            [data-aos] {
+                transition-duration: 800ms;
+            }
+
+            [data-aos="fade-right"] {
+                transform: translateX(-50px);
+            }
+
+            [data-aos="fade-left"] {
+                transform: translateX(50px);
+            }
+
+            [data-aos="fade-right"].aos-animate,
+            [data-aos="fade-left"].aos-animate {
+                transform: translateX(0);
+            }
+            input::-ms-reveal,
+            input::-ms-clear {
+                display: none;
+            }
+            input[readonly] {
+                background-color: #e9ecef;
+                cursor: not-allowed;
+            }
+
+            /* KEYFRAMES */
+            @keyframes customAnimation {
+                0% {
+                    color: #032f30;
+                }
+                20% {
+                    color: #oa7075;
+                }
+                40% {
+                    color: #0c969c;
+                }
+                60% {
+                    color: #6ba3be;
+                }
+                80% {
+                    color: #274d60;
+                }
+                100% {
+                    color: #031716;
+                }
+            }
+        </style>
+    </head>
+    <body>
+        <nav id="navbar-example2" class="navbar navbar-expand-xxl sticky-top bg-white px-3">
+            <div class="container-fluid">
+                <a class="lobster-font navbar-brand" href="{% url 'client_dashboard' %}" style="animation: customAnimation 5s infinite alternate; font-size: 26px;">
+                    <i class="fa-light fa-tooth mr-2" style="animation: colorAnimation 5s infinite alternate"></i>
+                    Jaylon Dental Clinic
+                </a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+                        aria-controls="navbarNav" aria-expanded="false" style="border: none;" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarNav">
+                    <ul class="navbar-nav nav-pills me-auto">
+                        <li class="nav-item">
+                            <a class="nav-link px-2" href="{% url 'client_dashboard' %}#scrollspyHome">
+                                <i class="fa-light fa-home"></i> Home
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link px-2" href="{% url 'client_dashboard' %}#scrollspyServices">
+                                <i class="fa-light fa-toothbrush"></i> Services
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link px-2" href="{% url 'client_dashboard' %}#scrollspyGallery">
+                                <i class="fa-light fa-images"></i> Gallery
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link px-2" href="{% url 'client_dashboard' %}#scrollspyContacts">
+                                <i class="fa-light fa-phone-volume"></i> Contacts
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link px-2" href="{% url 'client_dashboard' %}#scrollspyPrivacy">
+                                <i class="fa-light fa-file-contract"></i> Policy and Agreement
+                            </a>
+                        </li>
+                    </ul>
+                    <ul class="navbar-nav nav-pills">
+                        {% if request.user.is_authenticated and not request.user.is_superuser %}
+                            <li class="nav-item ms-auto">
+<!--                                <a class="btn btn-outline-primary btn-sm" href="{% url 'client_profile' %}"><i-->
+<!--                                        class="fa-light fa-user"></i> Profile</a>-->
+                                <a href="#" class="btn btn-outline-danger btn-sm" data-bs-toggle="modal" data-bs-target="#logoutConfirmModal">
+                                    <i class="fa-light fa-right-from-bracket"></i> Log Out</a>
+                            </li>
+                        {% else %}
+                            <li class="nav-item ms-auto">
+                                <a class="btn btn-primary" href="{% url 'client_login' %}">
+                                    <i class="fa-light fa-calendar-check"></i> BOOK NOW
+                                </a>
+                            </li>
+                        {% endif %}
+                    </ul>
+                </div>
+            </div>
+        </nav>
+
+        <div class="container my-4">
+            <div class="text-center mb-4">
+                <h3 class="lobster-font cl-dark-green mb-3" data-aos="fade-up"><u>Profile Dashboard</u></h3>
+            </div>
+
+            <div class="row g-5">
+                <div class="col-md-6" data-aos="fade-up">
+                    <div class="bg-white p-4 shadow rounded-lg border-top border-success border-5">
+                        <h4 class="lobster-font mb-4 text-success"><i class="fa-light fa-id-card"></i> Personal Information</h4>
+                        <p class="text-muted mb-4">Before updating your personal information, please take a moment to
+                            review the following important details to ensure everything is accurate and up-to-date.</p>
+                        <form method="post">
+                            {% csrf_token %}
+                            <input type="hidden" name="profile_id" value="{{ user.id }}">
+                            <div class="mb-3">
+                                <label for="first_name" class="form-label">First Name</label>
+                                <input type="text" class="form-control" id="first_name" name="first_name" value="{{ user.first_name }}" required>
+                            </div>
+                            <div class="mb-3">
+                                <label for="last_name" class="form-label">Last Name</label>
+                                <input type="text" class="form-control" id="last_name" name="last_name" value="{{ user.last_name }}" required>
+                            </div>
+                            <div class="mb-3">
+                                <label for="email" class="form-label">Email</label>
+                                <input type="email" class="form-control" id="email" value="{{ user.email }}" disabled>
+                            </div>
+                            <div class="mb-3">
+                                <label for="phone_number" class="form-label">Phone Number</label>
+                                <input type="tel" class="form-control" id="phone_number" name="phone_number" value="{{ user.phone_number }}" required>
+                            </div>
+                            <div class="mb-3">
+                                <label for="sex" class="form-label">Sex</label>
+                                <select class="form-select" id="sex" name="sex" required>
+                                    <option value="Male" {% if user.sex == 'Male' %}selected{% endif %}>Male</option>
+                                    <option value="Female" {% if user.sex == 'Female' %}selected{% endif %}>Female</option>
+                                </select>
+                            </div>
+                            <div class="mb-3">
+                                <label for="current_address" class="form-label">Current Address</label>
+                                <input type="text" class="form-control" id="current_address" name="current_address" value="{{ user.current_address }}" required>
+                            </div>
+                            <div class="mb-3">
+                                <label for="birthday" class="form-label">Date of Birth</label>
+                                <input type="date" class="form-control" id="birthday" name="birthday" value="{{ user.birthday|date:'Y-m-d' }}" required>
+                            </div>
+                            <div class="mb-3">
+                                <label for="age" class="form-label">Age</label>
+                                <input type="number" class="form-control" id="age" name="age" placeholder="Enter your birth date first." value="{{ user.age }}" readonly>
+                            </div>
+                            <div class="mb-3" style="margin-top: 2rem;">
+                                <strong>Password Suggestions    (Optional):</strong>
+                                <ul>
+                                    <li>At least 8 characters long</li>
+                                    <li>Contain at least one CAPITAL letter (A-Z)</li>
+                                    <li>Contain at least one small letter (a-z)</li>
+                                    <li>Contain at least one number (0-9)</li>
+                                    <li>Contain at least one special character</li>
+                                </ul>
+                            </div>
+                            <div class="mb-3">
+                                <label for="password" class="form-label">New Password (optional)</label>
+                                <div class="position-relative">
+                                    <input type="password" class="form-control" id="password" name="password" placeholder="Leave blank to keep current password">
+                                    <button type="button" class="btn btn-link position-absolute end-0 top-50 translate-middle-y text-dark" id="passwordToggle" style="z-index: 10;">
+                                        <i class="fa-light fa-eye" id="passwordToggleIcon"></i>
+                                    </button>
+                                </div>
+                            </div>
+                            <div class="mb-3">
+                                <label for="confirm_password" class="form-label">Confirm New Password</label>
+                                <div class="position-relative">
+                                    <input type="password" class="form-control" id="confirm_password" name="confirm_password" placeholder="Confirm new password">
+                                    <button type="button" class="btn btn-link position-absolute end-0 top-50 translate-middle-y text-dark" id="confirmPasswordToggle" style="z-index: 10;">
+                                        <i class="fa-light fa-eye" id="confirmPasswordToggleIcon"></i>
+                                    </button>
+                                </div>
+                            </div>
+                            <button type="submit" class="btn btn-success w-100 mt-4">Update Profile</button>
+                        </form>
+                    </div>
+                </div>
+
+                <div class="col-md-6" id="scrollspyMedQue">
+                    <div class="bg-white p-4 shadow rounded-lg border-top border-success border-5" data-aos="fade-up">
+                        <h4 class="lobster-font mb-4 text-success"><i class="fa-light fa-files-medical"></i> Medical-Dental Questionnaire</h4>
+                        <p class="text-muted mb-4">Your safety is our top priority, and knowing your medical history helps
+                        us provide best, most personalized care for you. Please take a moment to answer the following questions <strong>honestly</strong>.</p>
+                        <form method="post" action="{% url 'client_profile' %}">
+                            {% csrf_token %}
+                            {% for question in medical_questions %}
+                                <div class="mb-4">
+                                    <label class="form-label fw-bold">{{ question.text }}</label>
+                                    {% if question.type == 'yes_no' %}
+                                        <div class="btn-group w-100" role="group">
+                                            <input type="radio" class="btn-check" name="q{{ forloop.counter }}" id="q{{ forloop.counter }}_yes" value="Yes" {% if question.answer == 'Yes' %}checked{% endif %} required>
+                                            <label class="btn btn-outline-success" for="q{{ forloop.counter }}_yes">Yes</label>
+                                            <input type="radio" class="btn-check" name="q{{ forloop.counter }}" id="q{{ forloop.counter }}_no" value="No" {% if question.answer == 'No' %}checked{% endif %} required>
+                                            <label class="btn btn-outline-danger" for="q{{ forloop.counter }}_no">No</label>
+                                        </div>
+                                    {% elif question.type == 'health_status' %}
+                                        <div class="btn-group w-100" role="group">
+                                            <input type="radio" class="btn-check" name="q{{ forloop.counter }}" id="q{{ forloop.counter }}_good" value="Good" {% if question.answer == 'Good' %}checked{% endif %} required>
+                                            <label class="btn btn-outline-success" for="q{{ forloop.counter }}_good">Good</label>
+                                            <input type="radio" class="btn-check" name="q{{ forloop.counter }}" id="q{{ forloop.counter }}_fair" value="Fair" {% if question.answer == 'Fair' %}checked{% endif %} required>
+                                            <label class="btn btn-outline-warning" for="q{{ forloop.counter }}_fair">Fair</label>
+                                            <input type="radio" class="btn-check" name="q{{ forloop.counter }}" id="q{{ forloop.counter }}_poor" value="Poor" {% if question.answer == 'Poor' %}checked{% endif %} required>
+                                            <label class="btn btn-outline-danger" for="q{{ forloop.counter }}_poor">Poor</label>
+                                        </div>
+                                    {% endif %}
+                                </div>
+                            {% endfor %}
+                            <button type="submit" class="btn btn-success w-100 mt-4">Update Questionnaire</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Logout Confirmation Modal -->
+        <div class="modal fade" id="logoutConfirmModal" tabindex="-1" aria-labelledby="logoutConfirmModalLabel" aria-hidden="true">
+          <div class="modal-dialog">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title" id="logoutConfirmModalLabel"><i class="fa-light fa-face-worried"></i> You clicked Log Out!</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+              </div>
+              <div class="modal-body">
+                Are you sure you want to log out?
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                <a href="{% url 'client_logout' %}" class="btn btn-danger">Log Out</a>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Bootstrap JS -->
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+                integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
+                crossorigin="anonymous">
+        </script>
+
+        <!-- AOS JS -->
+        <script src="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.js"></script>
+        <script>
+            AOS.init({
+                duration: 1000,
+                offset: 100,
+            });
+        </script>
+
+        <!-- Toastr JS -->
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
+
+        <script>
+            // Toastr configuration
+            toastr.options = {
+              "closeButton": true,
+              "debug": false,
+              "newestOnTop": true,
+              "progressBar": true,
+              "positionClass": "toast-top-right",
+              "preventDuplicates": false,
+              "onclick": null,
+              "showDuration": "300",
+              "hideDuration": "1000",
+              "timeOut": "10000",
+              "extendedTimeOut": "1000",
+              "showEasing": "swing",
+              "hideEasing": "linear",
+              "showMethod": "fadeIn",
+              "hideMethod": "fadeOut"
+            }
+
+            // Check for success message in Django messages
+            {% if messages %}
+                {% for message in messages %}
+                    {% if message.tags == 'success' %}
+                        toastr.success("{{ message }}");
+                    {% elif message.tags == 'error' %}
+                        toastr.error("{{ message }}");
+                    {% endif %}
+                {% endfor %}
+            {% endif %}
+        </script>
+        <script>
+            const passwordInput = document.getElementById('password');
+            const passwordToggleIcon = document.getElementById('passwordToggleIcon');
+            const passwordToggle = document.getElementById('passwordToggle') || passwordToggleIcon; // works for both button and icon versions
+
+            passwordToggle.addEventListener('click', function() {
+                if (passwordInput.type === 'password') {
+                    passwordInput.type = 'text';
+                    passwordToggleIcon.classList.remove('fa-eye');
+                    passwordToggleIcon.classList.add('fa-eye-slash');
+                } else {
+                    passwordInput.type = 'password';
+                    passwordToggleIcon.classList.remove('fa-eye-slash');
+                    passwordToggleIcon.classList.add('fa-eye');
+                }
+            });
+        </script>
+        <script>
+            const confirmPasswordInput = document.getElementById('confirm_password');
+            const confirmPasswordToggleIcon = document.getElementById('confirmPasswordToggleIcon');
+            const confirmPasswordToggle = document.getElementById('confirmPasswordToggle') || confirmPasswordToggleIcon; // works for both button and icon versions
+
+            confirmPasswordToggle.addEventListener('click', function() {
+                if (confirmPasswordInput.type === 'password') {
+                    confirmPasswordInput.type = 'text';
+                    confirmPasswordToggleIcon.classList.remove('fa-eye');
+                    confirmPasswordToggleIcon.classList.add('fa-eye-slash');
+                } else {
+                    confirmPasswordInput.type = 'password';
+                    confirmPasswordToggleIcon.classList.remove('fa-eye-slash');
+                    confirmPasswordToggleIcon.classList.add('fa-eye');
+                }
+            });
+        </script>
+        <script>
+            document.addEventListener('DOMContentLoaded', function() {
+                const birthdayInput = document.getElementById('birthday');
+                const ageInput = document.getElementById('age');
+
+                // Function to calculate age
+                function calculateAge(birthDate) {
+                    const today = new Date();
+                    const birth = new Date(birthDate);
+
+                    // Calculate age
+                    let age = today.getFullYear() - birth.getFullYear();
+                    const monthDiff = today.getMonth() - birth.getMonth();
+
+                    // Adjust age if birthday hasn't occurred this year
+                    if (monthDiff < 0 || (monthDiff === 0 && today.getDate() < birth.getDate())) {
+                        age--;
+                    }
+
+                    return age;
+                }
+
+                // Function to update age
+                function updateAge() {
+                    if (birthdayInput.value) {
+                        const age = calculateAge(birthdayInput.value);
+                        if (age >= 0) {
+                            ageInput.value = age;
+                        } else {
+                            ageInput.value = '';
+                            birthdayInput.value = '';
+                            toastr.error('Please select a valid birth date!');
+                        }
+                    } else {
+                        ageInput.value = '';
+                    }
+                }
+
+                // Calculate age on page load if birthday is set
+                if (birthdayInput.value) {
+                    updateAge();
+                }
+
+                // Add event listener for birthday changes
+                birthdayInput.addEventListener('change', updateAge);
+            });
+        </script>
+    </body>
+</html>

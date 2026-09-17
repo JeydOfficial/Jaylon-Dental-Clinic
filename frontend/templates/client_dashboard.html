@@ -1,0 +1,1292 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+    <head>
+        <!-- Tab Title -->
+        <title>Jaylon Dental Clinic</title>
+
+        <!-- Meta Tags -->
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=Edge">
+        <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+
+        <!-- Favicon -->
+        <link rel="icon" href="{% static 'images/favicon.png' %}" type="image/x-icon">
+
+        <!-- Bootstrap CSS -->
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
+              integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+
+        <!-- Font Awesome -->
+<!--        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">-->
+        <link rel="stylesheet" href="https://site-assets.fontawesome.com/releases/v6.6.0/css/all.css">
+        <link rel="stylesheet" href="https://site-assets.fontawesome.com/releases/v6.6.0/css/sharp-duotone-solid.css">
+        <link rel="stylesheet" href="https://site-assets.fontawesome.com/releases/v6.6.0/css/sharp-thin.css">
+        <link rel="stylesheet" href="https://site-assets.fontawesome.com/releases/v6.6.0/css/sharp-solid.css">
+        <link rel="stylesheet" href="https://site-assets.fontawesome.com/releases/v6.6.0/css/sharp-regular.css">
+        <link rel="stylesheet" href="https://site-assets.fontawesome.com/releases/v6.6.0/css/sharp-light.css">
+
+        <!-- Google Fonts -->
+            <!-- Poppins Font -->
+        <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+            <!-- Lobster Font -->
+        <link href="https://fonts.googleapis.com/css2?family=Lobster&display=swap" rel="stylesheet">
+
+        <!-- AOS CSS -->
+        <link href="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.css" rel="stylesheet">
+
+        <!-- jQuery (required for Toastr) -->
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+
+        <!-- Toastr CSS -->
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
+
+        <!-- DataTable CSS -->
+        <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.11.5/css/dataTables.bootstrap5.min.css">
+
+        <style>
+            body {
+                font-family: 'Poppins', sans-serif;
+                background-color: #8eb69b;
+            }
+            .customized-bg {
+                background-color: #8eb69b;
+            }
+            .lobster-font {
+                font-family: 'Lobster', cursive;
+            }
+            .bg-dark-green {
+                background-color: #285f52;
+            }
+            .btn-bg-dark-green {
+                background-color: #285f52 !important;
+            }
+            .btn-bg-dark-green:hover {
+                background-color: #4b8f8c !important;
+            }
+            .cl-dark-green {
+                color: #235347;
+            }
+            .logo {
+                width: 120px;
+                margin-bottom: 20px;
+            }
+            .text-decoration-none:hover {
+                text-decoration: underline !important;
+            }
+            .navbar {
+                box-shadow: 0 2px 4px rgba(0,0,0,.1);
+                background-color: #daf1de;
+            }
+            .navbar-brand {
+                font-weight: 600;
+                font-size: 1.5rem;
+            }
+            .navbar .active {
+                background-color: green !important;
+                color: white !important;
+            }
+            .navbar .active {
+                background-color: green !important;
+                color: white !important;
+            }
+            .navbar .active:hover {
+                color: white! important;
+            }
+            .nav-link {
+                font-weight: 400;
+                transition: color 0.3s ease;
+            }
+            .nav-link:hover {
+                color: green !important;
+            }
+            h1, h2, h3, h4, h5, h6 {
+                font-weight: 600;
+            }
+            #scrollspyHome, #scrollspyServices, #scrollspyGallery, #scrollspyContacts, #scrollspyPrivacy {
+                padding:3rem;
+                background-color: #daf1de;
+                color: black;
+                border-radius: 15px;
+                box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+                margin-bottom: 2rem;
+            }
+            .card {
+                transition: transform 0.3s ease;
+                border: none;
+                box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            }
+            .card:hover {
+                transform: translateY(-5px);
+            }
+            .btn {
+                border-radius: 8px;
+                transition: all 0.3s ease;
+                padding: 0.5rem 1.5rem;
+            }
+            footer {
+                background-color: #7da0ca;
+                color: white;
+                padding: 2rem 0;
+            }
+            .social-icon {
+                color: white;
+                transition: transform 0.3s ease, color 0.3s ease;
+            }
+            .social-icon:hover {
+                transform: scale(1.2);
+                color: #f8f9fa;
+            }
+
+            /* TRANSITIONS */
+            [] {
+                transition-duration: 800ms;
+            }
+
+            [="fade-right"] {
+                transform: translateX(-50px);
+            }
+
+            [="fade-left"] {
+                transform: translateX(50px);
+            }
+            [="fade-right"].aos-animate,
+            [="fade-left"].aos-animate {
+                transform: translateX(0);
+            }
+
+            /* KEYFRAMES */
+            @keyframes colorAnimation {
+                0% {
+                        color: #d98257;
+                }
+                20% {
+                        color: #a86776;
+                }
+                40% {
+                        color: #68829e;
+                }
+                60% {
+                        color: #f0af58;
+                }
+                80% {
+                        color: #8f9db8;
+                }
+                100% {
+                        color: #4b8f8c;
+                }
+            }
+            @keyframes iconGreenAnimation {
+                0% {
+                        color: #6c7a5f;
+                }
+                20% {
+                        color: #4f5d40;
+                }
+                40% {
+                        color: #5a6e4d;
+                }
+                60% {
+                        color: #3f4a32;
+                }
+                80% {
+                        color: #4a5a3f;
+                }
+                100% {
+                        color: #2e3b24;
+                }
+            }
+            @keyframes customAnimation {
+                0% {
+                    color: #032f30;
+                }
+                20% {
+                    color: #oa7075;
+                }
+                40% {
+                    color: #0c969c;
+                }
+                60% {
+                    color: #6ba3be;
+                }
+                80% {
+                    color: #274d60;
+                }
+                100% {
+                    color: #031716;
+                }
+            }
+
+            /* MEDIA QUERIES */
+            @media (max-width: 427px) {
+                .recaptcha-container {
+                    width: 100%;
+                    max-width: 200%;
+                    overflow: hidden;
+                }
+            }
+            @media (max-width: 360px) {
+                .recaptcha-container {
+                    width: 99%;
+                    max-width: 200%;
+                    overflow: hidden;
+                }
+            }
+            @media (max-width: 350px) {
+                .navbar-brand {
+                    font-size: 21px !important;
+                }
+            }
+            @media (max-width: 306px) {
+                .navbar-brand {
+                    font-size: 18px !important;
+                }
+            }
+        </style>
+    </head>
+    <body>
+        {% if request.user.is_restricted %}
+            <div class="alert alert-warning alert-dismissible fade show position-fixed w-100 text-center mb-0"
+                 style="z-index: 1060;" role="alert">
+                <i class="fa-light fa-triangle-exclamation"></i>
+                <strong>Account Restricted:</strong> Due to missed appointments, you can't book new appointments until
+                {{ request.user.restriction_end_time|date:"F d, Y" }} at {{ request.user.restriction_end_time|time:"g:i A" }}.
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+        {% endif %}
+
+        <nav id="navbar-example2" class="navbar navbar-expand-xxl sticky-top px-3">
+            <div class="container-fluid">
+                <a class="navbar-brand lobster-font" href="{% url 'client_dashboard' %}" style="animation: customAnimation 5s infinite alternate; font-size: 26px;">
+                    <i class="fa-light fa-tooth mr-2" style="animation: customAnimation 5s infinite alternate"></i>
+                    Jaylon Dental Clinic
+                </a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+                        aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation" style="border: none;">
+                    <span class="fa-light fa-bars" style="font-size: 25px;"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarNav">
+                    <ul class="navbar-nav nav-pills me-auto my-1">
+                        <li class="nav-item">
+                            <a class="nav-link px-2" href="#scrollspyHome"><i class="fa-light fa-house"></i> Home</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link px-2" href="#scrollspyServices"><i class="fa-light fa-toothbrush"></i> Services</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link px-2" href="#scrollspyGallery"><i class="fa-light fa-images"></i> Gallery</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link px-2" href="#scrollspyContacts"><i class="fa-light fa-phone-volume"></i> Contacts</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link px-2" href="#scrollspyPrivacy"><i class="fa-light fa-file-contract"></i> Policy and Agreement</a>
+                        </li>
+                    </ul>
+                    <ul class="navbar-nav nav-pills">
+                        {% if request.user.is_authenticated and not request.user.is_superuser %}
+                            <li class="nav-item ms-auto">
+<!--                                <a class="btn btn-dark-mode-icon"-->
+<!--                                   onclick="darkMode()" style="font-size: 25px;" title="Dark/Light Mode">-->
+<!--                                    <i class="fa-solid fa-circle-half-stroke"></i>-->
+<!--                                </a>-->
+                                <a class="btn btn-outline-success btn-sm"
+                                   href="{% url 'client_profile' %}">
+                                    <i class="fa-light fa-user"></i> {{user.first_name}}
+                                </a>
+                                <a href="#" class="btn btn-outline-danger btn-sm" data-bs-toggle="modal" data-bs-target="#logoutConfirmModal">
+                                    <i class="fa-light fa-right-from-bracket"></i> Log Out</a>
+                            </li>
+                        {% else %}
+                            <li class="nav-item ms-auto">
+                                <a class="btn btn-bg-dark-green" href="{% url 'client_login' %}" style="color: white;">
+                                    <i class="fa-light fa-calendar-check"></i> BOOK NOW!
+                                </a>
+                            </li>
+                        {% endif %}
+                    </ul>
+                </div>
+            </div>
+        </nav>
+
+        <div data-bs-spy="scroll" data-bs-target="#navbar-example2" data-bs-root-margin="0px 0px -40%"  data-bs-smooth-scroll="true" data-bs-offset="300" class="scrollspy-example customized-bg p-3 rounded-2" tabindex="0">
+
+            <div id="scrollspyHome" data-aos="fade-down"> <!--class="mt-4-->
+                {% if request.user.is_authenticated and not request.user.is_superuser %}
+                    <div class="row gy-5">
+                        <div class="col-md-6">
+                            <h3 class="lobster-font cl-dark-green"><i class="fa-light fa-calendar-plus mb-3" style="animation: iconGreenAnimation 5s infinite alternate"></i> Book an Appointment</h3>
+                            <p class="cl-dark-green"><small><b>NOTICE!!!</b> Read the <a href="#" data-bs-toggle="modal" data-bs-target="#privacyModal" class="text-decoration-none">
+                                policy and agreement</a> carefully before booking to avoid mistakes. Service charges may vary and are subject to change without prior notice.
+                            </small></p>
+                            <form method="post" id="appointment-form">
+                                {% csrf_token %}
+                                <div class="mb-3">
+                                    <label for="serviceSelect" class="form-label cl-dark-green"><strong>Service</strong></label>
+                                    <select class="form-select" name="service" id="serviceSelect" required>
+                                        <option value="">--Select Service--</option>
+                                        {% for service in services %}
+                                            <option value="{{ service.id }}">{{ service.title }}</option>
+                                        {% endfor %}
+                                        <option value="other">Other (Custom Concern)</option>
+                                    </select>
+                                </div>
+                                <div class="mb-3" id="otherServiceDiv" style="display: none;">
+                                    <label for="otherServiceInput" class="form-label cl-dark-green"><strong>Please describe your concern</strong></label>
+                                    <textarea class="form-control" name="other_service" id="otherServiceInput" rows="2" placeholder="Example: Sakit ang ngipin, pa-check up"></textarea>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="dateInput" class="form-label cl-dark-green"><strong>Preferred Date</strong></label>
+                                    <input type="date" class="form-control" name="date" id="dateInput" required>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="timeSlotSelect" class="form-label cl-dark-green"><strong>Preferred Time</strong></label>
+                                    <select class="form-select" name="time_slot" id="timeSlotSelect" required>
+                                        <option value="">--Select Time--</option>
+                                    </select>
+                                </div>
+                                <div class="recaptcha-container mb-3">
+                                    <div class="g-recaptcha" data-sitekey="{{ recaptcha_site_key }}"></div>
+                                </div>
+                                <div class="d-grid">
+                                    <button type="submit" class="btn btn-bg-dark-green" style="color: white;"><i class="fas fa-check"></i> Book Appointment</button>
+                                </div>
+                            </form>
+                        </div>
+                        <div class="col-md-6">
+                            <h3 class="lobster-font cl-dark-green"><i class="fa-light fa-clock-rotate-left mb-3" style="animation: iconGreenAnimation 5s infinite alternate"></i> Appointment History</h3>
+                            <div class="table-responsive py-4">
+                                <table id="appointmentHistoryTable" class="table table-striped py-2">
+                                    <thead>
+                                        <tr>
+                                            <th>Service</th>
+                                            <th>Date</th>
+                                            <th>Time</th>
+                                            <th>Status</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        {% for appointment in appointments %}
+                                            <tr>
+                                                <td>
+                                                    {% if appointment.service %}
+                                                        {{ appointment.service.title }}
+                                                    {% else %}
+                                                        Custom Concern:
+                                                        {% if appointment.custom_concern|length > 50 %}
+                                                            <span class="text-muted concern-preview-{{ appointment.id }}">{{ appointment.custom_concern|truncatechars:50 }}</span>
+                                                            <span class="text-muted concern-full-{{ appointment.id }}" style="display: none;">{{ appointment.custom_concern }}</span>
+                                                            <button class="btn btn-link btn-xs p-0 m-0" data-id="{{ appointment.id }}" onclick="toggleConcern(this)">
+                                                                <i class="fa-light fa-eye toggle-icon-{{ appointment.id }}" style="font-size: 16px;"></i>
+                                                            </button>
+                                                        {% else %}
+                                                            <span class="text-muted">{{ appointment.custom_concern }}</span>
+                                                        {% endif %}
+                                                    {% endif %}
+                                                </td>
+                                                <td>{{ appointment.date }}</td>
+                                                <td>{{ appointment.start_time }} - {{ appointment.end_time }}</td>
+                                                <td>
+                                                    {% if appointment.status == 'Approved' and appointment.attended %}
+                                                        <span class="badge bg-success"><i class="fa-light fa-check-double"></i> Done</span>
+                                                    {% elif appointment.status == 'Approved' %}
+                                                        <span class="badge bg-success"><i class="fa-light fa-circle-check"></i> {{ appointment.status }}</span>
+                                                    {% elif appointment.status == 'Pending' %}
+                                                        <span class="badge bg-warning"><i class="fa-light fa-clock"></i> {{ appointment.status }}</span>
+                                                    {% else %}
+                                                        <span class="badge bg-danger"><i class="fa-light fa-circle-xmark"></i> {{ appointment.status }}</span>
+                                                    {% endif %}
+                                                </td>
+                                            </tr>
+                                        {% endfor %}
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                {% else %}
+                    <div class="text-center">
+                        <img src="{% static 'images/favicon.png' %}" alt="Jaylon Dental Clinic" class="logo">
+                    </div>
+                    <h1 class="lobster-font text-center mb-4 cl-dark-green">Welcome to L&A Gadgets!</h1>
+                    <p class="lead text-center cl-dark-green">We're excited to help you achieve your perfect smile and boost your confidence.</p>
+<!--                    <p class="text-center">We believe every smile has a story worth telling. Trust us to help you achieve the radiant smile you've-->
+<!--                    always dreamed of!</p>-->
+                    <div class="text-center">
+                        <a href="{% url 'client_login' %}" class="btn btn-lg btn-bg-dark-green" style="color: white">
+                            <i class="fa-light fa-calendar-check"></i>
+                            Book Your Appointment Now!</a>
+                    </div>
+                {% endif %}
+            </div>
+
+            <div id="scrollspyServices" class="mt-4" data-aos="fade-up">
+                <h3 class="lobster-font mb-4 cl-dark-green" data-aos="fade-right"><i class="fa-light fa-toothbrush" style="animation: iconGreenAnimation 5s infinite alternate"></i> Our Services</h3>
+                <p class="cl-dark-green" data-aos="fade-right">Ready for a smile transformation? Let <strong>Jaylon Dental Clinic</strong> take the first
+                    step towards a more confident you!</p>
+
+                <div class="row">
+                    {% for service in services %}
+                        <div class="col-md-6 col-lg-4 mb-4" data-aos="zoom-in"
+                             data-aos-delay="{{ forloop.counter0|divisibleby:3|yesno:'0,100,200' }}">
+                            <div class="card h-100 shadow-sm">
+                                <img src="{{ service.image.url }}" class="card-img-top service-image" alt="{{ service.title }}"
+                                     style="height: 200px; object-fit: cover;" data-bs-toggle="modal"
+                                     data-bs-target="#servicesModal" data-bs-slide-to="{{ forloop.counter0 }}">
+                                <div class="card-body d-flex flex-column">
+                                    <div class="d-flex justify-content-between mb-2">
+                                        <h5 class="lobster-font card-title cl-dark-green">{{ service.title }}</h5>
+                                        <button type="button" class="btn btn-success btn-sm"
+                                                data-bs-toggle="modal"
+                                                data-bs-target="#serviceDetailsModal{{ service.id }}"
+                                                style="padding: 2px 10px; font-size: 12px;">Details
+                                        </button>
+                                    </div>
+                                    <p class="card-text flex-grow-1 cl-dark-green">{{ service.description|truncatewords:20 }}</p>
+                                    <div class="mt-auto">
+                                        <small class="text-muted"><i class="fa-sharp fa-light fa-timer"></i> Duration: {{ service.duration }} minutes</small>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    {% endfor %}
+                </div>
+            </div>
+
+            <!-- Service detail Modal -->
+            {% for service in services %}
+            <div class="modal fade" id="serviceDetailsModal{{ service.id }}" tabindex="-1"
+                 aria-labelledby="serviceDetailsModalLabel{{ service.id }}" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered">
+                    <div class="modal-content">
+                        <div class="modal-header bg-light">
+                            <h5 class="modal-title lobster-font cl-dark-green" id="serviceDetailsModalLabel{{ service.id }}">
+                                <i class="fa-light fa-tooth" style="animation: iconGreenAnimation 5s infinite alternate"></i>
+                                {{ service.title }} Details
+                            </h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            <div class="row">
+                                <div class="col-12">
+                                    <img src="{{ service.image.url }}" class="img-fluid rounded mb-3"
+                                         alt="{{ service.title }}" style="width: 100%; height: 200px; object-fit: cover;">
+                                </div>
+                                <div class="col-12 cl-dark-green">
+                                    <div style="max-height: 300px; overflow-y: auto;">
+                                        <p style="white-space: pre-line;">{{ service.details }}</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+            <!-- Services Modal -->
+            <div class="modal fade" id="servicesModal" tabindex="-1" aria-labelledby="servicesModalLabel" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered modal-md">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title cl-dark-green lobster-font" id="servicesModalLabel"> Our Services</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body p-0">
+                            <div id="servicesCarousel" class="carousel slide" data-bs-ride="carousel">
+                                <div class="carousel-inner">
+                                    {% for service in services %}
+                                        <div class="carousel-item {% if forloop.first %}active{% endif %}">
+                                            <img src="{{ service.image.url }}" class="d-block w-100" alt="{{ service.title }}"
+                                                 style="height: 300px; object-fit: cover;">
+<!--                                            <div class="carousel-caption d-block bg-dark bg-opacity-75 text-start p-3">-->
+<!--                                                <h5 class="mb-2">{{ service.title }}</h5>-->
+<!--                                                <p class="mb-2 small">{{ service.description }}</p>-->
+<!--                                                <p class="mb-0"><small>Duration: {{ service.duration }} minutes</small></p>-->
+<!--                                            </div>-->
+                                        </div>
+                                    {% endfor %}
+                                </div>
+                                <button class="carousel-control-prev" type="button" data-bs-target="#servicesCarousel"
+                                        data-bs-slide="prev">
+                                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                                    <span class="visually-hidden">Previous</span>
+                                </button>
+                                <button class="carousel-control-next" type="button" data-bs-target="#servicesCarousel"
+                                        data-bs-slide="next">
+                                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                                    <span class="visually-hidden">Next</span>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div id="scrollspyGallery" class="mt-4" data-aos="fade-up">
+                <h3 class="lobster-font mb-4 cl-dark-green" data-aos="fade-right"><i class="fa-light fa-images" style="animation: iconGreenAnimation 5s infinite alternate"></i> Clinic Gallery</h3>
+                <p class="cl-dark-green">Explore our gallery to see the stunning results we create. Come visit and see how we turn smiles into works of art!</p>
+                <div class="row">
+                    {% for image in images %}
+                        <div class="col-md-4 col-lg-3 mb-4" data-aos="flip-left" data-aos-delay="{{ forloop.counter0|divisibleby:4|yesno:'0,100,200,300' }}">
+                            <div class="card">
+                                <img src="{{ image.image.url }}" class="img-thumbnail gallery-image" alt="Clinic Image {{ forloop.counter }}" style="height: 300px; object-fit: cover;" data-bs-toggle="modal" data-bs-target="#galleryModal" data-bs-slide-to="{{ forloop.counter0 }}">
+                            </div>
+                        </div>
+                    {% endfor %}
+                </div>
+            </div>
+
+            <!-- Gallery Modal -->
+            <div class="modal fade" id="galleryModal" tabindex="-1" aria-labelledby="galleryModalLabel" aria-hidden="true">
+              <div class="modal-dialog modal-dialog-centered modal-md">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <h5 class="modal-title cl-dark-green" id="galleryModalLabel">Clinic Gallery</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                  </div>
+                  <div class="modal-body">
+                    <div id="galleryCarousel" class="carousel slide" data-bs-ride="carousel">
+                      <div class="carousel-inner">
+                        {% for image in images %}
+                            <div class="carousel-item {% if forloop.first %}active{% endif %}">
+                              <img src="{{ image.image.url }}" class="d-block w-100" alt="Clinic Image {{ forloop.counter }}">
+                            </div>
+                        {% endfor %}
+                      </div>
+                      <button class="carousel-control-prev" type="button" data-bs-target="#galleryCarousel" data-bs-slide="prev">
+                        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                        <span class="visually-hidden">Previous</span>
+                      </button>
+                      <button class="carousel-control-next" type="button" data-bs-target="#galleryCarousel" data-bs-slide="next">
+                        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                        <span class="visually-hidden">Next</span>
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div id="scrollspyContacts" class="mt-4" data-aos="fade-up">
+                <h3 class="lobster-font mb-4 cl-dark-green" data-aos="fade-right"><i class="fa-light fa-phone-volume" style="animation: iconGreenAnimation 5s infinite alternate"></i> Contact Us</h3>
+                <p class="lead cl-dark-green" data-aos="fade-right">For appointments or inquiries, please fill out the form below, <br> and
+                we will get back to you as soon as possible.</p>
+                <div class="row gy-5">
+                    <div class="col-md-6" data-aos="fade-up">
+                        <form method="post" id="contactForm">
+                            {% csrf_token %}
+                            <div class="mb-3">
+                                <label for="contactName" class="form-label cl-dark-green">Name</label>
+                                <input type="text" class="form-control" id="contactName" name="name" required>
+                            </div>
+                            <div class="mb-3">
+                                <label for="contactEmail" class="form-label cl-dark-green">Email</label>
+                                <input type="email" class="form-control" id="contactEmail" name="email" required>
+                            </div>
+                            <div class="mb-3">
+                                <label for="contactMessage" class="form-label cl-dark-green">Message</label>
+                                <textarea class="form-control cl-dark-green" id="contactMessage" rows="4" name="message" required></textarea>
+                            </div>
+                            <div class="d-grid">
+                                <button type="submit" class="btn btn-bg-dark-green" style="color: white;"><i class="fa-light fa-paper-plane"></i> Send Message
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="col-md-5 offset-md-1" data-aos="fade-up">
+                        <h4 class="cl-dark-green"><i class="fa-light fa-square-info" style="animation: iconGreenAnimation 5s infinite alternate"></i> Clinic Information</h4>
+                        <p><i class="fa-light fa-location-dot"></i>  <strong>Address: </strong>
+                            <a href="https://maps.app.goo.gl/o3jN7r3ymXMoNGWN9" target="_blank" class="text-decoration-none">Along Dayao St., Infront of KMCC Mall & RCBC Bank</a>
+                        </p>
+                        <p><i class="fa-light fa-mobile"></i> <strong>Phone: </strong><a href="tel:+639999599018" target="_blank" class="text-decoration-none">+63 999 959 9018</a></p>
+                        <p><i class="fa-light fa-mobile"></i> <strong>Phone: </strong><a href="tel:+639158553520" target="_blank" class="text-decoration-none">+63 915 855 3520</a></p>
+                        <p><i class="fa-light fa-envelope"></i> <strong>Email: </strong>
+                            <a href="mailto:jaylondentalclinic@gmail.com?subject=Subject%20Here&body=Message%20Here" target="_blank" class="text-decoration-none">jaylondentalclinic@gmail.com</a>
+                        </p>
+<!--                        <p><i class="fa-light fa-laptop-code" style="margin-left: -2.2px;"></i>-->
+<!--                            <a href="https://m.me/jeyd.wxc" target="_blank" class="text-decoration-none">Contact the developer of this site.</a>-->
+<!--                        </p>-->
+                        <h4 class="mt-4 cl-dark-green"><i class="fa-light fa-clock" style="animation: iconGreenAnimation 5s infinite alternate"></i> Office Hours</h4>
+                        <p>Monday to Saturday: 9:00 AM - 4:00 PM</p>
+                        <p>Sunday: 9:00 AM - 12:00 PM</p>
+                    </div>
+                </div>
+                <div class="row mt-4">
+                    <div class="col-12" data-aos="zoom-in">
+                        <h4 class="lobster-font cl-dark-green"><i class="fa-light fa-map-location-dot" style="animation: iconGreenAnimation 5s infinite alternate"></i> Find Us</h4>
+                        <div class="embed-responsive embed-responsive-16by9">
+                            <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3959.967304180738!2d125.08718601145742!3d7.013128192959139!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x32f8f9e289b147af%3A0xa6fd91898c8910a0!2sJaylon%20Dental%20group!5e0!3m2!1sen!2sph!4v1725349059605!5m2!1sen!2sph"
+                                    width="100%" height="450" style="border:0; border-radius: 10px" allowfullscreen="" loading="lazy">
+                            </iframe>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div id="scrollspyPrivacy" class="mt-4" data-aos="fade-up">
+                <h3 class="lobster-font mb-4 cl-dark-green" data-aos="fade-right"><i class="fa-light fa-file-contract" style="animation: iconGreenAnimation 5s infinite alternate"></i> Policy and Agreement</h3>
+                <div class="row">
+                    <div class="col-md-12" data-aos="fade-up" data-aos-delay="100">
+                        <p class="cl-dark-green">Thank you for choosing us for your dental care! We're dedicated to providing
+                        great service in a comfortable setting while keeping your information safe. Please review our policies
+                        to understand our procedures and your responsibilities as a patient.</p>
+                        <p class="cl-dark-green"><strong>Please note:</strong> <br>
+                            To our valued patients,
+                            <br>
+                        • Some dental procedures may take longer than expected. We appreciate your patience if there are
+                            delays in the schedule.
+                            <br>
+                        • Every patient receives equal, quality care. We value quality over quantity.
+                            <br>
+                        • Thank you for your patience and understanding.
+                            <br>
+                            <br>
+                            For more details, please read our full <a href="#" data-bs-toggle="modal" data-bs-target="#privacyModal" class="text-decoration-none">Privacy Policy and User Agreement.</a></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Privacy Policy Modal -->
+        <div id="privacyModal" class="modal fade" tabindex="-1" aria-labelledby="privacyModalLabel" aria-hidden="true" data-bs-backdrop="static" data-bs-keyboard="false">
+            <div class="modal-dialog modal-lg">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title cl-dark-green" id="privacyModalLabel"><i class="fa-light fa-handshake" style="animation: iconGreenAnimation 5s infinite alternate"></i> Policy and Agreement</h5>
+<!--                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" id="closeButton"></button>-->
+                    </div>
+                    <!-- "MAKE SHORT & SIMPLE" APPLIED -->
+                    <div class="modal-body" style="max-height: 70vh; overflow-y: auto;">
+                        <p class="fw-bold cl-dark-green">IMPORTANT REMINDER:</p>
+                        {% if not request.user.is_authenticated %}
+                            <p class="fw-bold">Hello dear visitors! Jaylon Dental Clinic reminds visitors that responsibility lies with patients
+                                who do not follow our policies. Please review the guidelines below:
+                            </p>
+                        {% else %}
+                            <p class="fw-bold">Hello Mr./Ms. {{user.first_name}}! The Jaylon Dental Clinic reminds visitors that responsibility lies with patients
+                                who do not follow our policies. Please review the guidelines below:
+                            </p>
+                        {% endif %}
+                        <h6 class="mt-4 cl-dark-green">1. Appointment Booking</h6>
+                        <ul>
+                            <li>Book via phone, website, or in person. Advance booking is advised.</li>
+<!--                            <li>Appointments can be booked via phone, clinic website, or in-person.</li>-->
+<!--                            <li>Patients are encouraged to book appointments in advance to secure their preferred date and-->
+<!--                                time.-->
+<!--                            </li>-->
+                        </ul>
+
+                        <h6 class="mt-4 cl-dark-green">2. Approval & Reminders</h6>
+                        <ul>
+                            <li>Appointments need approval 24 hours in advance. Status updates will be sent via email.</li>
+<!--                            <li>All appointments must be approved at least 24 hours before the selected date and time.</li>-->
+<!--                            <li>Patients will receive an email reminder regarding their appointment status (approved or canceled).</li>-->
+                        </ul>
+
+                        <h6 class="mt-4 cl-dark-green">3. Dental Questionnaire</h6>
+                        <ul>
+                            <li>Accessible in your profile; update any health changes.</li>
+<!--                            <li>The questionnaire is accessible on your <a href="{% url 'client_profile' %}">profile</a> after you log in.</li>-->
+<!--                            <li>Please update it whenever there are changes in your medical condition by checking the-->
+<!--                                relevant checkboxes (Yes/No) or selecting your health status (Good/Fair/Poor).-->
+<!--                            </li>-->
+                        </ul>
+
+                        <h6 class="mt-4 cl-dark-green">4. Cancellations and Rescheduling</h6>
+                        <ul>
+                            <li>Only the first approved appointment is honored per service. Changes are not allowed
+                            on the same day or once booked.</li>
+<!--                            <li>If an error occurs in selecting a service, date, or time, client <strong>must choose-->
+<!--                                the next available day</strong> rather than correcting the mistake on the same day.-->
+<!--                            </li>-->
+<!--                            <li>Only the first approved appointment will be honored for any single service and time slot.-->
+<!--                                Any duplicate appointments for the same service at different times will be-->
+<!--                                <strong>disregarded.</strong>-->
+<!--                            </li>-->
+<!--                            <li>Once an appointment is created, it cannot be canceled, deleted, nor rescheduled due to-->
+<!--                                the busy schedules of our dentists.-->
+<!--                            </li>-->
+                        </ul>
+
+                        <h6 class="mt-4 cl-dark-green">5. Walk-in Policy</h6>
+                        <ul>
+                            <li>Walk-ins are accepted based on availability, with priority given to scheduled appointments.</li>
+<!--                            <li>Walk-ins are accepted but will be served based on availability.</li>-->
+<!--                            <li>Scheduled appointments will take priority over walk-ins.</li>-->
+                        </ul>
+
+                        <h6 class="mt-4 cl-dark-green">6. Late Arrivals</h6>
+                        <ul>
+                            <li>Arrive 15 minutes early. Website bookings get priority.</li>
+<!--                            <li>Patients are requested to arrive at least 15 minutes before their scheduled appointment.</li>-->
+<!--                            <li>Patients who book through our clinic's website will receive priority based on their-->
+<!--                                selected date and time.-->
+<!--                            </li>-->
+                        </ul>
+
+                        <h6 class="mt-4 cl-dark-green">7. No-Show Policy</h6>
+                        <ul>
+                            <li>Canceled the next day if not attended. Repeated no-shows may restrict your account.</li>
+<!--                            <li>If a patient is a no-show, their appointment will be canceled the following day.</li>-->
+<!--                            <li>If a patient is unable to attend their appointment and might be considered a no-show,-->
+<!--                                they must contact the clinic in advance to inform them.</li>-->
+<!--                            <li>Repeated no-shows may result in a restricted account and limited booking options.</li>-->
+<!--                            <ul>-->
+<!--                                <li>Three Consecutive times &#45;&#45; 12hrs account restriction</li>-->
+<!--                                <li>Five Consecutive times &#45;&#45; 24hrs account restriction</li>-->
+<!--                            </ul>-->
+                        </ul>
+
+                        <h6 class="mt-4 cl-dark-green">8. Emergencies</h6>
+                        <ul>
+                            <li>Emergency cases are prioritized and may be referred elsewhere if no slots are available.</li>
+<!--                            <li>Emergency cases will be prioritized and accommodated as soon as possible.</li>-->
+<!--                            <li>If no available slots exists, emergency patients may be referred to the nearest available clinic.</li>-->
+                        </ul>
+
+                        <h6 class="mt-4 cl-dark-green">9. Service Duration</h6>
+                        <ul>
+                            <li>Check service estimates (e.g., Extractions: 10mins, Braces: 1hr & 10mins).</li>
+<!--                            <li>Tooth Extraction &#45;&#45; 10mins</li>-->
+<!--                            <li>Tooth Filling &#45;&#45; 15mins</li>-->
+<!--                            <li>Odontectomy &#45;&#45; 30mins</li>-->
+<!--                            <li>Dentures &#45;&#45; 20mins</li>-->
+<!--                            <li>Veneers &#45;&#45; 20mins</li>-->
+<!--                            <li>Ortho Braces (Upper and Lower) &#45;&#45; 1hr and 10mins</li>-->
+<!--                            <li>Ortho Braces (Upper or Lower) &#45;&#45; 40mins</li>-->
+<!--                            <li>Crowns Fixed Bridge &#45;&#45; 20mins</li>-->
+<!--                            <li>Denture Repair &#45;&#45; 15mins</li>-->
+<!--                            <li>Oral Prophylaxis (Moderate) &#45;&#45; 45mins</li>-->
+<!--                            <li>Oral Prophylaxis (Hard) &#45;&#45; 1hr</li>-->
+<!--                            <li>Root Canal Treatment (Anterior) &#45;&#45; 1hr</li>-->
+<!--                            <li>Root Canal Treatment (Posteriors) &#45;&#45; 1hr and 30mins</li>-->
+                        </ul>
+
+                        <h6 class="mt-4 cl-dark-green">10. Privacy</h6>
+                        <ul>
+                            <li>Patient information is confidential and only used for appointments and treatment.</li>
+<!--                            <li>Patient information is kept confidential and used solely for appointment scheduling and-->
+<!--                                treatment purposes.-->
+<!--                            </li>-->
+<!--                            <li>Patients are <strong>required</strong> to update their contact details to ensure timely-->
+<!--                                communication.-->
+<!--                            </li>-->
+                        </ul>
+
+                        <h6 class="mt-4 cl-dark-green">11. Inquiries</h6>
+                        <ul>
+                            For questions or assistance, contact us via the "Contacts" section.
+<!--                            <li>We welcome feedback to continuously improve our services.</li>-->
+<!--                            <li>You can contact us through the "Contacts" section on our clinic website via Gmail, phone-->
+<!--                                call, or connect with us on Facebook for updates.-->
+<!--                            </li>-->
+                        </ul>
+
+                        <h6 class="mt-4 cl-dark-green">12. Preparation</h6>
+                        <ul>
+                            <li>Screenshot your approved appointment for check-in.</li>
+<!--                            <li><strong>Take a screenshot</strong> of your approved appointment confirmation for easy-->
+<!--                                reference during check-in.</li>-->
+                        </ul>
+
+                        <h6 class="mt-4 cl-dark-green">13. Follow-ups</h6>
+                        <ul>
+                            <li>Schedule follow-ups promptly to stay track with your treatment plan.</li>
+<!--                            <li>If you have any follow-up appointments, please schedule as soon as possible to maintain-->
+<!--                                your treatment plan.</li>-->
+                        </ul>
+
+                        {% if request.user.is_authenticated and not user.has_agreed_privacy_policy %}
+                            <div class="form-check mt-3">
+                                <input class="form-check-input" type="checkbox" id="agreeCheckbox">
+                                <label class="form-check-label cl-dark-green" for="agreeCheckbox">
+                                    <strong>I have read and agree to the Policy and Agreement of Jaylon Dental Clinic.</strong>
+                                </label>
+                            </div>
+                        {% endif %}
+                    </div>
+                    <div class="modal-footer">
+                        {% if request.user.is_authenticated and not user.has_agreed_privacy_policy %}
+                            <button type="button" class="btn btn-primary" id="agreeButton" disabled>I Agree</button>
+                        {% else %}
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Medical Questionnaire Modal -->
+        <div id="medicalQuestionnaireModal" class="modal fade" tabindex="-1" aria-labelledby="medicalQuestionnaireModalLabel" aria-hidden="true" data-bs-backdrop="static" data-bs-keyboard="false">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title cl-dark-green" id="medicalQuestionnaireModalLabel">
+                    <i class="fa-light fa-files-medical" style="animation: iconGreenAnimation 5s infinite alternate"></i> Medical-Dental Questionnaire
+                </h5>
+<!--                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" id="closeMedicalButton"></button>-->
+            </div>
+            <div class="modal-body" style="max-height: 70vh; overflow-y: auto;">
+                <p class="text-muted mb-4">Your safety is our top priority, and knowing your medical history helps us provide the best, most personalized care for you. Please take a moment to answer the following questions <strong>honestly</strong>.</p>
+                <form method="post" id="medicalQuestionnaireForm">
+                    {% csrf_token %}
+                    {% for question in medical_questions %}
+                        <div class="mb-4">
+                            <label class="form-label cl-dark-green">{{ question.text }}</label>
+                            {% if question.type == 'yes_no' %}
+                                <div class="btn-group w-100" role="group">
+                                    <input type="radio" class="btn-check" name="q{{ forloop.counter }}" id="q{{ forloop.counter }}_yes" value="Yes" required>
+                                    <label class="btn btn-outline-success" for="q{{ forloop.counter }}_yes">Yes</label>
+                                    <input type="radio" class="btn-check" name="q{{ forloop.counter }}" id="q{{ forloop.counter }}_no" value="No" required>
+                                    <label class="btn btn-outline-danger" for="q{{ forloop.counter }}_no">No</label>
+                                </div>
+                            {% elif question.type == 'health_status' %}
+                                <div class="btn-group w-100" role="group">
+                                    <input type="radio" class="btn-check" name="q{{ forloop.counter }}" id="q{{ forloop.counter }}_good" value="Good" required>
+                                    <label class="btn btn-outline-success" for="q{{ forloop.counter }}_good">Good</label>
+                                    <input type="radio" class="btn-check" name="q{{ forloop.counter }}" id="q{{ forloop.counter }}_fair" value="Fair" required>
+                                    <label class="btn btn-outline-warning" for="q{{ forloop.counter }}_fair">Fair</label>
+                                    <input type="radio" class="btn-check" name="q{{ forloop.counter }}" id="q{{ forloop.counter }}_poor" value="Poor" required>
+                                    <label class="btn btn-outline-danger" for="q{{ forloop.counter }}_poor">Poor</label>
+                                </div>
+                            {% endif %}
+                        </div>
+                    {% endfor %}
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" id="submitMedicalQuestionnaire">Submit</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+        <!-- Logout Confirmation Modal -->
+        <div class="modal fade" id="logoutConfirmModal" tabindex="-1" aria-labelledby="logoutConfirmModalLabel" aria-hidden="true">
+          <div class="modal-dialog">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title cl-dark-green" id="logoutConfirmModalLabel"><i class="fa-light fa-face-worried"></i> You clicked Log Out!</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+              </div>
+              <div class="modal-body">
+                Are you sure you want to log out?
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                <a href="{% url 'client_logout' %}" class="btn btn-danger">Log Out</a>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Appointment Success Modal -->
+        <div class="modal fade" id="appointmentSuccessModal" tabindex="-1" aria-labelledby="appointmentSuccessModalLabel" aria-hidden="true">
+          <div class="modal-dialog">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title cl-dark-green" id="appointmentSuccessModalLabel">
+                    <i class="fa-light fa-calendar-check"></i> Appointment Submitted
+                </h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+              </div>
+              <div class="modal-body">
+                Your appointment is under review. You will be notified once approved or cancelled. Thank you!
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-success" data-bs-dismiss="modal">Close</button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <footer class="bg-dark-green text-light py-3" data-aos="fade-down">
+            <div class="container">
+                <div class="row justify-content-center">
+                    <div class="col-md-8 text-center">
+                        <h5 class="mb-4">Follow us on Facebook for updates.</h5>
+                        <div class="d-flex justify-content-center">
+                            <a href="https://www.facebook.com/profile.php?id=100083282165584" target="_blank"
+                               class="social-icon mx-3">
+                                <i class="fab fa-facebook fa-2x" title="Facebook"></i>
+                            </a>
+<!--                            <a href="https://www.instagram.com/dr_jaylon?utm_source=ig_web_button_share_sheet&igsh=ZDNlZDc0MzIxNw=="-->
+<!--                               target="_blank" class="social-icon mx-3">-->
+<!--                                <i class="fab fa-instagram fa-2x" title="Instagram"></i>-->
+<!--                            </a>-->
+                        </div>
+                        <br>
+                        <p class="mt-2">&copy; 2024 Jaylon Dental Clinic. All rights reserved.</p>
+                    </div>
+                </div>
+            </div>
+        </footer>
+
+        <!-- Bootstrap JS -->
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+                integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
+                crossorigin="anonymous"></script>
+
+        <!-- DataTable JS -->
+        <script type="text/javascript" src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.min.js"></script>
+        <script type="text/javascript" src="https://cdn.datatables.net/1.11.5/js/dataTables.bootstrap5.min.js"></script>
+
+        <!-- Initialize DataTable -->
+        <script>
+            $(document).ready(function() {
+                $('#appointmentHistoryTable').DataTable({
+                    "order": [[1, "desc"]], // Sort by date column (index 1) in descending order
+                    "pageLength": 5, // Show 5 entries per page
+                    "lengthChange": false, // Remove the "Show X entries" dropdown
+                    "language": {
+                        "info": "Showing _START_ to _END_ of _TOTAL_ appointments",
+                        "infoEmpty": "Showing 0 to 0 of 0 appointments",
+                        "infoFiltered": "(filtered from _MAX_ total appointments)"
+                    }
+                });
+            });
+        </script>
+
+        <!-- AOS JS -->
+        <script src="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.js"></script>
+        <script>
+            AOS.init({
+                duration: 1500,
+                offset: 100,
+            });
+        </script>
+
+        <!-- Toastr JS -->
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
+
+        <!--Toastr Configuration-->
+        <script>
+            toastr.options = {
+              "closeButton": true,
+              "debug": false,
+              "newestOnTop": true,
+              "progressBar": true,
+              "positionClass": "toast-top-right",
+              "preventDuplicates": false,
+              "onclick": null,
+              "showDuration": "300",
+              "hideDuration": "1000",
+              "timeOut": "10000",
+              "extendedTimeOut": "1000",
+              "showEasing": "swing",
+              "hideEasing": "linear",
+              "showMethod": "fadeIn",
+              "hideMethod": "fadeOut"
+            }
+
+            // Check for success message in Django messages
+            {% if messages %}
+                {% for message in messages %}
+                    {% if message.tags == 'success' %}
+                        toastr.success("{{ message }}");
+                    {% elif message.tags == 'error' %}
+                        toastr.error("{{ message }}");
+                    {% endif %}
+                {% endfor %}
+            {% endif %}
+        </script>
+
+        <!--updateTimeSlots-->
+        <script>
+            $(document).ready(function() {
+                // Handle service selection change
+                $('#serviceSelect').change(function() {
+                    var selectedService = $(this).val();
+                    if (selectedService === 'other') {
+                        $('#otherServiceDiv').show();
+                        $('#otherServiceInput').prop('required', true);
+                    } else {
+                        $('#otherServiceDiv').hide();
+                        $('#otherServiceInput').prop('required', false);
+                    }
+                });
+
+                // Handle appointment form submission
+                $('#appointment-form').submit(function(e) {
+                    e.preventDefault();
+                    var form = $(this);
+                    $.ajax({
+                        type: 'POST',
+                        url: window.location.href,
+                        data: form.serialize(),
+                        headers: {
+                            'X-Requested-With': 'XMLHttpRequest'
+                        },
+                        success: function(response) {
+                            if (response.success) {
+                                $('#appointmentSuccessModal').modal('show');
+                                form[0].reset();
+                                // Update the appointment table with new data
+                                var table = $('#appointmentHistoryTable').DataTable();
+                                var newData = response.appointments.map(function(apt) {
+                                    var serviceCell = apt.service;
+                                    if (apt.service === 'Custom Concern') {
+                                        if (apt.custom_concern.length > 50) {
+                                            serviceCell = 'Custom Concern: ' +
+                                                '<span class="text-muted concern-preview-' + apt.id + '">' + apt.custom_concern.substring(0, 50) + '...</span>' +
+                                                '<span class="text-muted concern-full-' + apt.id + '" style="display: none;">' + apt.custom_concern + '</span>' +
+                                                '<button class="btn btn-link btn-xs p-0 m-0" data-id="' + apt.id + '" onclick="toggleConcern(this)">' +
+                                                '<i class="fa-light fa-eye toggle-icon-' + apt.id + '" style="font-size: 16px;"></i></button>';
+                                        } else {
+                                            serviceCell = 'Custom Concern: <span class="text-muted">' + apt.custom_concern + '</span>';
+                                        }
+                                    }
+                                    
+                                    var statusCell = '';
+                                    if (apt.status === 'Approved' && apt.attended) {
+                                        statusCell = '<span class="badge bg-success"><i class="fa-light fa-check-double"></i> Done</span>';
+                                    } else if (apt.status === 'Approved') {
+                                        statusCell = '<span class="badge bg-success"><i class="fa-light fa-circle-check"></i> ' + apt.status + '</span>';
+                                    } else if (apt.status === 'Pending') {
+                                        statusCell = '<span class="badge bg-warning"><i class="fa-light fa-clock"></i> ' + apt.status + '</span>';
+                                    } else {
+                                        statusCell = '<span class="badge bg-danger"><i class="fa-light fa-circle-xmark"></i> ' + apt.status + '</span>';
+                                    }
+                                    
+                                    return [
+                                        serviceCell,
+                                        apt.date,
+                                        apt.start_time + ' - ' + apt.end_time,
+                                        statusCell
+                                    ];
+                                });
+                                
+                                table.clear();
+                                table.rows.add(newData);
+                                table.draw();
+                            } else {
+                                toastr.error(response.message || 'An error occurred. Please try again.');
+                            }
+                        },
+                        error: function() {
+                            toastr.error('An error occurred. Please try again.');
+                        }
+                    });
+                });
+
+                function updateTimeSlots(data) {
+                    var timeSlotSelect = $('#timeSlotSelect');
+                    timeSlotSelect.empty();
+                    timeSlotSelect.append($('<option></option>').attr('value', '').text('--Select Time--'));
+                    if (data.available_slots && data.available_slots.length > 0) {
+                        $.each(data.available_slots, function(index, slot) {
+                            var optionText = slot.start + ' - ' + slot.end;
+                            console.log('Adding option:', optionText);
+                            timeSlotSelect.append($('<option></option>').attr('value', optionText).text(optionText));
+                        });
+                    } else {
+                        console.log('No available slots');
+                        timeSlotSelect.append($('<option></option>').attr('value', '').text('No available slots'));
+                    }
+
+                    // Try to refresh the enhanced select plugin
+                    try {
+                        timeSlotSelect.selectpicker('refresh');
+                    } catch (e) {
+                        console.log('SelectPicker not available, falling back to native select');
+                        // If the plugin is not available or throws an error, show the native select
+                        timeSlotSelect.show();
+                    }
+
+                    console.log('Time slot options:', timeSlotSelect.html());
+                }
+
+                $('#serviceSelect, #dateInput').change(function() {
+                    var serviceId = $('#serviceSelect').val();
+                    var date = $('#dateInput').val();
+
+                    console.log('Service ID:', serviceId);
+                    console.log('Date:', date);
+
+                    if (serviceId && date) {
+                        // Show loading state in time slot select
+                        var timeSlotSelect = $('#timeSlotSelect');
+                        timeSlotSelect.empty();
+                        timeSlotSelect.append($('<option></option>').attr('value', '').text('Loading time slots...'));
+
+                        $.ajax({
+                            url: '{% url "client_get_available_time_slots" %}',
+                            data: {
+                                'service_id': serviceId,
+                                'date': date
+                            },
+                            dataType: 'json',
+                            success: function(data) {
+                                console.log('Received data:', data);
+                                updateTimeSlots(data);
+                            },
+                            error: function(jqXHR, textStatus, errorThrown) {
+                                console.error('AJAX error:', textStatus, errorThrown);
+                                toastr.error('Error fetching time slots. Please try again.');
+                                timeSlotSelect.empty();
+                                timeSlotSelect.append($('<option></option>').attr('value', '').text('--Select Time--'));
+                            }
+                        });
+                    } else {
+                        console.log('Service ID or Date not selected');
+                        updateTimeSlots({available_slots: []});
+                    }
+                });
+            });
+        </script>
+
+        <script src="https://www.google.com/recaptcha/api.js" async defer></script>
+
+        <!--galleryModal-->
+        <script>
+            document.addEventListener('DOMContentLoaded', function() {
+              var galleryModal = document.getElementById('galleryModal');
+              var carousel = document.getElementById('galleryCarousel');
+
+              galleryModal.addEventListener('show.bs.modal', function(event) {
+                var button = event.relatedTarget;
+                var slideIndex = button.getAttribute('data-bs-slide-to');
+                var carouselInstance = bootstrap.Carousel.getInstance(carousel);
+                carouselInstance.to(parseInt(slideIndex));
+              });
+            });
+        </script>
+
+        <!--servicesModal-->
+        <script>
+            document.addEventListener('DOMContentLoaded', function() {
+              var servicesModal = document.getElementById('servicesModal');
+              var carousel = document.getElementById('servicesCarousel');
+
+              servicesModal.addEventListener('show.bs.modal', function(event) {
+                var button = event.relatedTarget;
+                var slideIndex = button.getAttribute('data-bs-slide-to');
+                var carouselInstance = bootstrap.Carousel.getInstance(carousel);
+                carouselInstance.to(parseInt(slideIndex));
+              });
+            });
+        </script>
+
+        <!-- Remove the duplicate script and merge the functionality -->
+        <script>
+            document.addEventListener('DOMContentLoaded', function() {
+                const privacyModal = document.getElementById('privacyModal');
+                const medicalModal = document.getElementById('medicalQuestionnaireModal');
+                const bootstrapPrivacyModal = new bootstrap.Modal(privacyModal);
+                const bootstrapMedicalModal = new bootstrap.Modal(medicalModal);
+
+                {% if show_privacy_modal %}
+                    bootstrapPrivacyModal.show();
+                {% endif %}
+
+                // Handle privacy policy agreement
+                if (!{{ user.has_agreed_privacy_policy|yesno:"true,false" }}) {
+                    const agreeCheckbox = document.getElementById('agreeCheckbox');
+                    const agreeButton = document.getElementById('agreeButton');
+
+                    // Enable/disable agree button based on checkbox
+                    agreeCheckbox.addEventListener('change', function() {
+                        agreeButton.disabled = !this.checked;
+                    });
+
+                    agreeButton.addEventListener('click', function() {
+                        fetch('{% url "save_privacy_agreement" %}', {
+                            method: 'POST',
+                            headers: {
+                                'Content-Type': 'application/json',
+                                'X-CSRFToken': '{{ csrf_token }}'
+                            },
+                            body: JSON.stringify({agreed: true})
+                        })
+                        .then(response => response.json())
+                        .then(data => {
+                            if (data.success) {
+                                bootstrapPrivacyModal.hide();
+                                // Show medical questionnaire modal if it hasn't been filled out
+                                {% if not has_medical_questionnaire %}
+                                    setTimeout(() => {
+                                        bootstrapMedicalModal.show();
+                                    }, 500); // Add small delay for better UX
+                                {% else %}
+                                    location.reload();
+                                {% endif %}
+                            } else {
+                                toastr.error('There was an error saving your agreement. Please try again.');
+                            }
+                        })
+                        .catch(error => {
+                            console.error('Error:', error);
+                            toastr.error('There was an error saving your agreement. Please try again.');
+                        });
+                    });
+                }
+
+                // Handle medical questionnaire submission
+                document.getElementById('submitMedicalQuestionnaire').addEventListener('click', function() {
+                    const form = document.getElementById('medicalQuestionnaireForm');
+                    const formData = new FormData(form);
+
+                    fetch('{% url "update_medical_questionnaire" %}', {
+                        method: 'POST',
+                        body: formData,
+                        headers: {
+                            'X-CSRFToken': '{{ csrf_token }}'
+                        }
+                    })
+                    .then(response => response.json())
+                    .then(data => {
+                        if (data.success) {
+                            // Remove the hide event listener before hiding the modal
+                            medicalModal.removeEventListener('hide.bs.modal', preventHide);
+                            bootstrapMedicalModal.hide();
+                            toastr.success('Medical questionnaire submitted successfully!');
+                            location.reload();
+                        } else {
+                            toastr.error('Please fill out all questions.');
+                        }
+                    })
+                    .catch(error => {
+                        console.error('Error:', error);
+                        toastr.error('An error occurred. Please try again.');
+                    });
+                });
+
+                // Prevent closing medical questionnaire modal if it's required
+                {% if not has_medical_questionnaire %}
+                // Define the prevent hide function separately so we can remove it later
+                const preventHide = function(event) {
+                    if (!{{ has_medical_questionnaire|yesno:"true,false" }}) {
+                        event.preventDefault();
+                        toastr.warning('Please complete the medical questionnaire before proceeding.');
+                    }
+                };
+
+                medicalModal.addEventListener('hide.bs.modal', preventHide);
+                {% endif %}
+            });
+        </script>
+
+        <!-- Custom JavaScript for toggling concern visibility -->
+        <script>
+            function toggleConcern(button) {
+                var id = button.getAttribute('data-id');
+                var preview = document.querySelector('.concern-preview-' + id);
+                var full = document.querySelector('.concern-full-' + id);
+                var icon = document.querySelector('.toggle-icon-' + id);
+
+                if (preview.style.display !== 'none') {
+                    preview.style.display = 'none';
+                    full.style.display = 'inline';
+                    icon.classList.remove('fa-eye');
+                    icon.classList.add('fa-eye-slash');
+                } else {
+                    preview.style.display = 'inline';
+                    full.style.display = 'none';
+                    icon.classList.remove('fa-eye-slash');
+                    icon.classList.add('fa-eye');
+                }
+            }
+        </script>
+
+    </body>
+</html>

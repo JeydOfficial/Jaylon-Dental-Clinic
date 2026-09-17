@@ -1,0 +1,29 @@
+# Ignore compiled bytecode
+*.pyc
+__pycache__/
+
+
+# Ignore virtual environment
+env/
+
+# Ignore database files
+db.sqlite3
+
+# Ignore media files (optional)
+media/
+
+# Ignore collected static files
+staticfiles/
+
+# Ignore Django migrations
+*/migrations/*.pyc
+*/migrations/*.pyo
+*/migrations/*.log
+
+# Ignore IDE specific files
+.vscode/
+.idea/
+
+# Ignore OS-specific files
+.DS_Store
+Thumbs.db

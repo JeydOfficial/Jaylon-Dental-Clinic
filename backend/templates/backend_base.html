@@ -1,0 +1,710 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+    <head>
+        <!-- Tab Title -->
+        <title>Admin | Jaylon Dental Clinic</title>
+
+        <!-- Meta Tags -->
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=Edge">
+        <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+
+        <!-- Favicon-->
+        <link rel="icon" href="{% static 'images/favicon.png' %}" type="image/x-icon">
+
+        <!-- Google Fonts -->
+            <!-- Roboto Font -->
+<!--        <link href="https://fonts.googleapis.com/css?family=Roboto:400,700&subset=latin,cyrillic-ext" rel="stylesheet" type="text/css">-->
+            <!-- Material Icons -->
+        <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" type="text/css">
+            <!-- Poppins Font -->
+        <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+            <!-- Rubik Font -->
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Rubik:ital,wght@0,300..900;1,300..900&display=swap" rel="stylesheet">
+
+        <!-- Bootstrap Core Css -->
+        <link href="{% static 'plugins/bootstrap/css/bootstrap.css' %}" rel="stylesheet">
+
+        <!-- Waves Effect Css -->
+        <link href="{% static 'plugins/node-waves/waves.css' %}" rel="stylesheet"/>
+
+        <!-- Animation Css -->
+        <link href="{% static 'plugins/animate-css/animate.css' %}" rel="stylesheet"/>
+
+        <!-- Bootstrap Material Datetime Picker Css -->
+        <link href="{% static 'plugins/bootstrap-material-datetimepicker/css/bootstrap-material-datetimepicker.css' %}" rel="stylesheet"/>
+
+        <!-- Bootstrap DatePicker Css -->
+        <link href="{% static 'plugins/bootstrap-datepicker/css/bootstrap-datepicker.css' %}" rel="stylesheet"/>
+
+        <!-- Wait Me Css -->
+        <link href="{% static 'plugins/waitme/waitMe.css" rel="stylesheet' %}"/>
+
+        <!-- Bootstrap Select Css -->
+        <link href="{% static 'plugins/bootstrap-select/css/bootstrap-select.css' %}" rel="stylesheet"/>
+
+        <!-- JQuery DataTable Css -->
+        <link href="{% static 'plugins/jquery-datatable/skin/bootstrap/css/dataTables.bootstrap.css' %}" rel="stylesheet">
+
+        <!-- Custom Css -->
+        <link href="{% static 'css/style.css' %}" rel="stylesheet">
+
+        <!-- AdminBSB Themes. You can choose a theme from css/themes instead of get all themes -->
+        <link href="{% static 'css/themes/all-themes.css' %}" rel="stylesheet"/>
+
+        <!-- Toastr CSS -->
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
+
+        <!-- Font Awesome -->
+<!--        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">-->
+        <link rel="stylesheet" href="https://site-assets.fontawesome.com/releases/v6.6.0/css/all.css">
+        <link rel="stylesheet" href="https://site-assets.fontawesome.com/releases/v6.6.0/css/sharp-duotone-solid.css">
+        <link rel="stylesheet" href="https://site-assets.fontawesome.com/releases/v6.6.0/css/sharp-thin.css">
+        <link rel="stylesheet" href="https://site-assets.fontawesome.com/releases/v6.6.0/css/sharp-solid.css">
+        <link rel="stylesheet" href="https://site-assets.fontawesome.com/releases/v6.6.0/css/sharp-regular.css">
+        <link rel="stylesheet" href="https://site-assets.fontawesome.com/releases/v6.6.0/css/sharp-light.css">
+
+        <style>
+            * {
+                font-family: 'Poppins', sans-serif;
+            }
+            body {
+                background-color: #8eb69b;
+            }
+            nav {
+                background-color: #daf1de;
+            }
+            .image-container {
+                position: relative;
+                display: inline-block;
+                width: 100%;
+                max-width: 500px; /* Limit the maximum width of the image */
+                height: 300px;
+            }
+            .badge-delete-button {
+                position: absolute;
+                top: 1%;
+                right: 1%;
+                background: red;
+                color: white;
+                border: none;
+                border-radius: 50%;
+                width: 30px;
+                height: 30px;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                cursor: pointer;
+                z-index: 10; /* Ensure it stays on top of the image */
+                transition: background 0.3s ease, transform 0.3s ease; /* Smooth transition for hover effects */
+            }
+            .badge-delete-button:hover {
+                text-decoration: none;
+            }
+            .img-responsive {
+                width: 100%; /* Make the image fully responsive */
+                height: 100%;
+                object-fit: cover; /* Maintain aspect ratio and cover the container */
+            }
+            .sidebar {
+                background-color: #daf1de;
+            }
+            .header {
+                background-color: #daf1de;
+            }
+            input::-ms-reveal,
+            input::-ms-clear {
+                display: none;
+            }
+            input[readonly] {
+                background-color: #e9ecef;
+                cursor: not-allowed;
+            }
+
+            /* KEYFRAMES */
+            @keyframes iconGreenAnimation {
+                0% {
+                        color: #6c7a5f;
+                }
+                20% {
+                        color: #4f5d40;
+                }
+                40% {
+                        color: #5a6e4d;
+                }
+                60% {
+                        color: #3f4a32;
+                }
+                80% {
+                        color: #4a5a3f;
+                }
+                100% {
+                        color: #2e3b24;
+                }
+            }
+        </style>
+    </head>
+    <body>
+        <!-- Page Loader -->
+        <div class="page-loader-wrapper">
+            <div class="loader">
+                <div class="preloader">
+                    <div class="spinner-layer pl-red">
+                        <div class="circle-clipper left">
+                            <div class="circle"></div>
+                        </div>
+                        <div class="circle-clipper right">
+                            <div class="circle"></div>
+                        </div>
+                    </div>
+                </div>
+                <p>Please wait...</p>
+            </div>
+        </div>
+
+        <!-- Overlay For Sidebars -->
+        <div class="overlay"></div>
+
+        <!-- Top Bar -->
+        <nav class="navbar">
+            <div class="container-fluid">
+                <div class="navbar-header">
+                    <a href="javascript:void(0);" class="navbar-toggle collapsed" data-toggle="collapse"
+                       data-target="#navbar-collapse" aria-expanded="false" style="color: black"></a>
+                    <a href="javascript:void(0);" class="bars" style="color: black"></a>
+                    <a class="navbar-brand fa-sharp fa-light fa-tooth" href="{% url 'appointment_dashboard' %}"
+                       style="animation: iconGreenAnimation 5s infinite alternate"><strong> JAYLON DENTAL CLINIC</strong></a>
+                </div>
+                <div class="collapse navbar-collapse" id="navbar-collapse">
+                    <ul class="nav navbar-nav navbar-right">
+                        <li>
+                            <a href="{% url 'admin_profile' %}" toggle="tooltip" placement="bottom" title="Profile">
+                                <i class="material-icons" style="color: black">person</i>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#" toggle="tooltip" placement="bottom" title="Sign-out" data-toggle="modal" data-target="#adminLogoutConfirmModal">
+                                <i class="material-icons" style="color: black;">input</i></a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+
+        <section>
+            <!-- Left Sidebar -->
+            <aside id="leftsidebar" class="sidebar">
+
+                <!-- User Info -->
+                <div class="" style="display: flex; justify-content: center; align-items: center;">
+                    <div class="image">
+                        <img src="{% static 'images/threedocs.jpg' %}" width="300" height="150" alt="User"/>
+                    </div>
+                </div>
+
+                <!-- Menu -->
+                <div class="menu">
+                    <ul class="list">
+                        <li class="header">DENTIST'S NAVIGATION</li>
+
+                        <li class="{% if request.resolver_match.url_name == 'appointment_dashboard' %}active{% endif %}">
+                            <a href="{% url 'appointment_dashboard' %}">
+                                <i class="material-icons">event</i>
+                                <span>Appointment Dashboard</span>
+                            </a>
+                        </li>
+                        <li class="{% if request.resolver_match.url_name == 'appointment_history' %}active{% endif %}">
+                            <a href="{% url 'appointment_history' %}">
+                                <i class="material-icons">history</i>
+                                <span>Appointment History</span>
+                            </a>
+                        </li>
+                        <li class="{% if request.resolver_match.url_name == 'services' %}active{% endif %}">
+                            <a href="{% url 'services' %}">
+                                <i class="material-icons">medical_services</i>
+                                <span>Services</span>
+                            </a>
+                        </li>
+                        <li class="{% if request.resolver_match.url_name == 'gallery' %}active{% endif %}">
+                            <a href="{% url 'gallery' %}">
+                                <i class="material-icons">photo_library</i>
+                                <span>Gallery</span>
+                            </a>
+                        </li>
+                        <li class="{% if request.resolver_match.url_name == 'accounts' %}active{% endif %}">
+                            <a href="{% url 'accounts' %}">
+                                <i class="material-icons">group</i>
+                                <span>Accounts</span>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+
+                <!-- Footer -->
+                <div class="legal">
+                    <div class="copyright">
+                        &copy; 2025 <a href="{% url 'client_dashboard' %}" target="_blank">Jaylon Dental Clinic</a>.
+                    </div>
+                    <div class="version">
+                        <b>Version: </b> 2.0
+                    </div>
+                </div>
+            </aside>
+        </section>
+
+        <!-- Admin Logout Confirmation Modal -->
+        <div class="modal fade" id="adminLogoutConfirmModal" tabindex="-1" role="dialog">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header bg-red">
+                        <h5 class="modal-title p-b-10" id="adminLogoutConfirmModalLabel"><i class="fa-light fa-right-from-bracket"></i> Confirm Log Out</h5>
+                    </div>
+                        <div class="modal-body" style="padding-bottom: 0px;">
+                        Are you sure you want to log out?
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-link waves-effect" data-dismiss="modal">CANCEL</button>
+                            <a href="{% url 'logout' %}" class="btn btn-danger waves-effect">SUBMIT</a>
+                        </div>
+                </div>
+            </div>
+        </div>
+
+        {% block content %}{% endblock %}
+
+        <!-- Jquery Core Js -->
+        <script src="{% static 'plugins/jquery/jquery.min.js' %}"></script>
+
+        <!-- Bootstrap Core Js -->
+        <script src="{% static 'plugins/bootstrap/js/bootstrap.js' %}"></script>
+
+        <!-- Select Plugin Js -->
+        <script src="{% static 'plugins/bootstrap-select/js/bootstrap-select.js' %}"></script>
+
+        <!-- Slimscroll Plugin Js -->
+        <script src="{% static 'plugins/jquery-slimscroll/jquery.slimscroll.js' %}"></script>
+
+        <!-- Waves Effect Plugin Js -->
+        <script src="{% static 'plugins/node-waves/waves.js' %}"></script>
+
+        <!-- Jquery CountTo Plugin Js -->
+        <script src="{% static 'plugins/jquery-countto/jquery.countTo.js' %}"></script>
+
+        <!-- Morris Plugin Js -->
+        <script src="{% static 'plugins/raphael/raphael.min.js' %}"></script>
+        <script src="{% static 'plugins/morrisjs/morris.js' %}"></script>
+
+        <!-- Jquery DataTable Plugin Js -->
+        <script src="{% static 'plugins/jquery-datatable/jquery.dataTables.js' %}"></script>
+        <script src="{% static 'plugins/jquery-datatable/skin/bootstrap/js/dataTables.bootstrap.js' %}"></script>
+        <script src="{% static 'plugins/jquery-datatable/extensions/export/dataTables.buttons.min.js' %}"></script>
+        <script src="{% static 'plugins/jquery-datatable/extensions/export/buttons.flash.min.js' %}"></script>
+        <script src="{% static 'plugins/jquery-datatable/extensions/export/jszip.min.js' %}"></script>
+        <script src="{% static 'plugins/jquery-datatable/extensions/export/pdfmake.min.js' %}"></script>
+        <script src="{% static 'plugins/jquery-datatable/extensions/export/vfs_fonts.js' %}"></script>
+        <script src="{% static 'plugins/jquery-datatable/extensions/export/buttons.html5.min.js' %}"></script>
+        <script src="{% static 'plugins/jquery-datatable/extensions/export/buttons.print.min.js' %}"></script>
+
+        <!-- Autosize Plugin Js -->
+        <script src="{% static 'plugins/autosize/autosize.js' %}"></script>
+
+        <!-- Moment Plugin Js -->
+        <script src="{% static 'plugins/momentjs/moment.js' %}"></script>
+
+        <!-- Bootstrap Material Datetime Picker Plugin Js -->
+        <script src="{% static 'plugins/bootstrap-material-datetimepicker/js/bootstrap-material-datetimepicker.js' %}"></script>
+
+        <!-- Bootstrap Datepicker Plugin Js -->
+        <script src="{% static 'plugins/bootstrap-datepicker/js/bootstrap-datepicker.js' %}"></script>
+
+        <!-- Custom Js -->
+        <script src="{% static 'js/admin.js' %}"></script>
+        <script src="{% static 'js/pages/tables/jquery-datatable.js' %}"></script>
+        <script src="{% static 'js/pages/forms/basic-form-elements.js' %}"></script>
+
+        <!-- Demo Js -->
+        <script src="{% static 'js/demo.js' %}"></script>
+
+        <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+        <!-- Toastr JS -->
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
+
+        <script>
+            // Responsive font size calculation
+            function calculateFontSize() {
+                return window.innerWidth < 768 ? 10 : 12;
+            }
+
+            // Common chart options
+            const commonOptions = {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: {
+                        display: false
+                    },
+                    tooltip: {
+                        backgroundColor: 'rgba(0, 0, 0, 0.8)',
+                        titleFont: {
+                            size: 14,
+                            weight: 'bold'
+                        },
+                        bodyFont: {
+                            size: 12
+                        },
+                        padding: 10,
+                        cornerRadius: 4,
+                        displayColors: false
+                    }
+                },
+                scales: {
+                    x: {
+                        grid: {
+                            display: false
+                        },
+                        ticks: {
+                            font: {
+                                size: calculateFontSize()
+                            },
+                            color: '#666'
+                        }
+                    },
+                    y: {
+                        beginAtZero: true,
+                        grid: {
+                            color: 'rgba(0, 0, 0, 0.1)',
+                            drawBorder: false
+                        },
+                        ticks: {
+                            font: {
+                                size: calculateFontSize()
+                            },
+                            color: '#666',
+                            padding: 10
+                        },
+                        title: {
+                            display: true,
+                            text: 'Number of Appointments',
+                            color: '#333',
+                            font: {
+                                size: calculateFontSize() + 2,
+                                weight: 'bold'
+                            }
+                        }
+                    }
+                }
+            };
+
+            // Monthly Appointments Chart
+            const ctxMonthly = document.getElementById('monthlyAppointmentsChart').getContext('2d');
+            const gradientFill = ctxMonthly.createLinearGradient(0, 0, 0, 400);
+            gradientFill.addColorStop(0, 'rgba(75, 192, 192, 0.6)');
+            gradientFill.addColorStop(1, 'rgba(75, 192, 192, 0.1)');
+
+            const monthlyAppointmentsChart = new Chart(ctxMonthly, {
+                type: 'line',
+                data: {
+                    labels: {{ months|safe }},
+                    datasets: [{
+                        label: 'Monthly Appointments',
+                        data: {{ monthly_totals|safe }},
+                        backgroundColor: gradientFill,
+                        borderColor: 'rgba(75, 192, 192, 1)',
+                        borderWidth: 2,
+                        pointBackgroundColor: 'rgba(75, 192, 192, 1)',
+                        pointBorderColor: '#fff',
+                        pointBorderWidth: 2,
+                        pointRadius: 4,
+                        pointHoverRadius: 6,
+                        fill: true,
+                        tension: 0.4
+                    }]
+                },
+                options: {
+                    ...commonOptions,
+                    plugins: {
+                        ...commonOptions.plugins,
+                        title: {
+                            display: true,
+                            text: 'Monthly Appointment Analysis',
+                            font: {
+                                size: calculateFontSize() + 4,
+                                weight: 'bold'
+                            },
+                            padding: {
+                                top: 10,
+                                bottom: 30
+                            }
+                        }
+                    }
+                }
+            });
+
+            // Daily Appointments Chart
+            const ctxDaily = document.getElementById('dailyAppointmentsChart').getContext('2d');
+            const dailyGradient = ctxDaily.createLinearGradient(0, 0, 0, 400);
+            dailyGradient.addColorStop(0, 'rgba(54, 162, 235, 0.8)');
+            dailyGradient.addColorStop(1, 'rgba(54, 162, 235, 0.2)');
+
+            const dailyAppointmentsChart = new Chart(ctxDaily, {
+                type: 'bar',
+                data: {
+                    labels: {{ days|safe }},
+                    datasets: [{
+                        label: 'Daily Appointments',
+                        data: {{ daily_totals|safe }},
+                        backgroundColor: dailyGradient,
+                        borderColor: 'rgba(54, 162, 235, 1)',
+                        borderWidth: 1,
+                        borderRadius: 4,
+                        barThickness: 'flex',
+                        maxBarThickness: 30
+                    }]
+                },
+                options: {
+                    ...commonOptions,
+                    plugins: {
+                        ...commonOptions.plugins,
+                        title: {
+                            display: true,
+                            text: 'Daily Appointment Analysis',
+                            font: {
+                                size: calculateFontSize() + 4,
+                                weight: 'bold'
+                            },
+                            padding: {
+                                top: 10,
+                                bottom: 30
+                            }
+                        }
+                    }
+                }
+            });
+
+            // Resize listener for responsiveness
+            window.addEventListener('resize', () => {
+                const newFontSize = calculateFontSize();
+                [monthlyAppointmentsChart, dailyAppointmentsChart].forEach(chart => {
+                    chart.options.scales.x.ticks.font.size = newFontSize;
+                    chart.options.scales.y.ticks.font.size = newFontSize;
+                    chart.options.scales.y.title.font.size = newFontSize + 2;
+                    chart.options.plugins.title.font.size = newFontSize + 4;
+                    chart.update();
+                });
+            });
+        </script>
+        <script>
+            // Toastr configuration
+            toastr.options = {
+              "closeButton": true,
+              "debug": false,
+              "newestOnTop": true,
+              "progressBar": true,
+              "positionClass": "toast-top-right",
+              "preventDuplicates": false,
+              "onclick": null,
+              "showDuration": "300",
+              "hideDuration": "1000",
+              "timeOut": "5000",
+              "extendedTimeOut": "1000",
+              "showEasing": "swing",
+              "hideEasing": "linear",
+              "showMethod": "fadeIn",
+              "hideMethod": "fadeOut"
+            }
+
+            // Check for success message in Django messages
+            {% if messages %}
+                {% for message in messages %}
+                    {% if message.tags == 'success' %}
+                        toastr.success("{{ message }}");
+                    {% elif message.tags == 'error' %}
+                        toastr.error("{{ message }}");
+                    {% endif %}
+                {% endfor %}
+            {% endif %}
+        </script>
+        <script>
+            $(document).ready(function() {
+                function updateTimeSlots(data) {
+                    var timeSlotSelect = $('#timeSlotSelect');
+                    timeSlotSelect.empty();
+                    timeSlotSelect.append($('<option></option>').attr('value', '').text('--Select Time--'));
+                    if (data.available_slots && data.available_slots.length > 0) {
+                        $.each(data.available_slots, function(index, slot) {
+                            var optionText = slot.start + ' - ' + slot.end;
+                            console.log('Adding option:', optionText);
+                            timeSlotSelect.append($('<option></option>').attr('value', optionText).text(optionText));
+                        });
+                    } else {
+                        console.log('No available slots');
+                        timeSlotSelect.append($('<option></option>').attr('value', '').text('No available slots'));
+                    }
+
+                    // Try to refresh the enhanced select plugin
+                    try {
+                        timeSlotSelect.selectpicker('refresh');
+                    } catch (e) {
+                        console.log('SelectPicker not available, falling back to native select');
+                        // If the plugin is not available or throws an error, show the native select
+                        timeSlotSelect.show();
+                    }
+
+                    console.log('Time slot options:', timeSlotSelect.html());
+                }
+
+                $('#serviceSelect, #dateInput').change(function() {
+                    var serviceId = $('#serviceSelect').val();
+                    var date = $('#dateInput').val();
+
+                    console.log('Service ID:', serviceId);
+                    console.log('Date:', date);
+
+                    if (serviceId && date) {
+                        $.ajax({
+                            url: '{% url "get_available_time_slots" %}',
+                            data: {
+                                'service_id': serviceId,
+                                'date': date
+                            },
+                            dataType: 'json',
+                            success: function(data) {
+                                console.log('Received data:', data);
+                                updateTimeSlots(data);
+                            },
+                            error: function(jqXHR, textStatus, errorThrown) {
+                                console.error('AJAX error:', textStatus, errorThrown);
+                                alert('Error fetching time slots. Please try again.');
+                            }
+                        });
+                    } else {
+                        console.log('Service ID or Date not selected');
+                        updateTimeSlots({available_slots: []});
+                    }
+                });
+            });
+        </script>
+        <script>
+        // Function to create password toggle
+        function createPasswordToggle(passwordInputId, toggleButtonId, toggleIconId) {
+            const passwordInput = document.getElementById(passwordInputId);
+            const passwordToggleIcon = document.getElementById(toggleIconId);
+            const passwordToggle = document.getElementById(toggleButtonId);
+
+            if (passwordToggle && passwordInput) {
+                passwordToggle.addEventListener('click', function() {
+                    if (passwordInput.type === 'password') {
+                        passwordInput.type = 'text';
+                        passwordToggleIcon.classList.remove('fa-eye');
+                        passwordToggleIcon.classList.add('fa-eye-slash');
+                    } else {
+                        passwordInput.type = 'password';
+                        passwordToggleIcon.classList.remove('fa-eye-slash');
+                        passwordToggleIcon.classList.add('fa-eye');
+                    }
+                });
+            }
+        }
+
+        // Initialize all password toggles
+        document.addEventListener('DOMContentLoaded', function() {
+            // Both password and confirm_password fields
+            createPasswordToggle('password', 'passwordToggle', 'passwordToggleIcon');
+            createPasswordToggle('confirm_password', 'confirmPasswordToggle', 'confirmPasswordToggleIcon');
+        });
+    </script>
+
+    <!-- Automatic age calculation -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const birthdayInput = document.getElementById('birthday');
+            const ageInput = document.getElementById('age');
+
+            // Function to calculate age
+            function calculateAge(birthDate) {
+                const today = new Date();
+                const birth = new Date(birthDate);
+
+                // Calculate age
+                let age = today.getFullYear() - birth.getFullYear();
+                const monthDiff = today.getMonth() - birth.getMonth();
+
+                // Adjust age if birthday hasn't occurred this year
+                if (monthDiff < 0 || (monthDiff === 0 && today.getDate() < birth.getDate())) {
+                    age--;
+                }
+
+                return age;
+            }
+
+            // Function to update age
+            function updateAge() {
+                if (birthdayInput.value) {
+                    const age = calculateAge(birthdayInput.value);
+                    if (age >= 0) {
+                        ageInput.value = age;
+                    } else {
+                        ageInput.value = '';
+                        birthdayInput.value = '';
+                        toastr.error('Please select a valid birth date');
+                    }
+                } else {
+                    ageInput.value = '';
+                }
+            }
+
+            // Calculate age on page load if birthday is set
+            if (birthdayInput.value) {
+                updateAge();
+            }
+
+            // Add event listener for birthday changes
+            birthdayInput.addEventListener('change', updateAge);
+        });
+    </script>
+
+    <!-- Custom JavaScript for handling "Other" service option -->
+    <script>
+        $(document).ready(function() {
+            // Handle service selection change
+            $('#serviceSelect').change(function() {
+                var selectedService = $(this).val();
+                if (selectedService === 'other') {
+                    $('#otherServiceDiv').show();
+                    $('#otherServiceInput').prop('required', true);
+                } else {
+                    $('#otherServiceDiv').hide();
+                    $('#otherServiceInput').prop('required', false);
+                }
+            });
+        });
+    </script>
+
+    <!-- Custom JavaScript for toggling concern visibility -->
+    <script>
+        function toggleConcern(button) {
+            var id = button.getAttribute('data-id');
+            var preview = document.querySelector('.concern-preview-' + id);
+            var full = document.querySelector('.concern-full-' + id);
+            var icon = document.querySelector('.toggle-icon-' + id);
+            
+            if (preview.style.display !== 'none') {
+                preview.style.display = 'none';
+                full.style.display = 'inline';
+                icon.classList.remove('fa-eye');
+                icon.classList.add('fa-eye-slash');
+            } else {
+                preview.style.display = 'inline';
+                full.style.display = 'none';
+                icon.classList.remove('fa-eye-slash');
+                icon.classList.add('fa-eye');
+            }
+        }
+    </script>
+
+    </body>
+</html>
